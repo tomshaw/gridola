@@ -102,10 +102,10 @@ class App_Grid_Db
 		return $columnData;
 	}
 	
-	public function postedArrayNotation($params)
+	public function postedArrayNotation()
 	{
 		$postedArrayNotation = array();
-		foreach($params as $key => $values) {
+		foreach($this->getRequest()->getPost() as $key => $values) {
 			if(in_array($key, $this->_arrayNotationKeys)) {
 				foreach($values as $column => $value) {
 					if(empty($value)) {
@@ -137,7 +137,7 @@ class App_Grid_Db
 				
 		$params = $this->getRequest()->getPost();
 			
-		$arrayNotation = $this->postedArrayNotation($params);
+		$arrayNotation = $this->postedArrayNotation();
 
 		foreach($params as $_index => $value) {
 			if(empty($value)) {
