@@ -42,14 +42,14 @@ Actions <select id="massaction">
     <?php $data = $value->toArray(); ?>
     <?php $colour = $this->cycle($this->cycleColors)->next(); ?>
     <tr <?php if(sizeof($this->rowClickUrl)): ?>data-href="<?php echo $this->rowClickUrl['url'] ?><?php if(isset($data[$this->rowClickUrl['field']])): echo $data[$this->rowClickUrl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onMouseOverColor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
-      <?php $hasMassAction = false; ?>
+      <?php $hasMassActionCheckBox = false; ?>
       <?php if(sizeof($this->massActions) && !$hasMassAction): ?>
       <td style="text-align:center;">
         <?php if(isset($data[$this->massActionField])): ?>
         <input type="checkbox" name="selected[]" value="<?php echo $this->escape($data[$this->massActionField]); ?>">
+        <?php $hasMassActionCheckBox = true; ?>
         <?php endif; ?>  
       </td>
-      <?php $hasMassAction = true; ?>
       <?php endif; ?>
       <?php foreach($this->gridElements as $column): ?>
       <?php if(isset($data[$column['index']])): ?>
