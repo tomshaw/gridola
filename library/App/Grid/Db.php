@@ -132,12 +132,10 @@ class App_Grid_Db
 	protected function searchResults()
 	{
 		$columnData = $this->getColumnsToTable();
-				
-		$params = $this->getRequest()->getPost();
 			
 		$postedArrayNotation = $this->postedArrayNotation();
 
-		foreach($params as $_index => $value) {
+		foreach($this->getRequest()->getPost() as $_index => $value) {
 			if(empty($value)) {
 				continue;
 			}
