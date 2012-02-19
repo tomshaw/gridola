@@ -1,8 +1,8 @@
 <!-- 
 /*!
-* Gidola Zend Framework 1.x Grid
-* Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
-* MIT Licensed
+ * Gridola - Super Simple Grid for Zend Framework 1.x
+ * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
+ * MIT Licensed
 */
 -->
 <?php $colspan = (sizeof($this->massActions)) ? count($this->gridElements)+1 : count($this->gridElements); ?>
@@ -33,7 +33,7 @@ Actions <select id="massaction">
       <?php foreach($this->gridElements as $element): ?>
       <td><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
-      <td style="text-align:center;"><input type="submit" name="submit" value="Submit"></td>
+      <td style="text-align:center;"><input type="submit" name="submit" value="Filter Results"></td>
     </tr>
     <tr>
       <td colspan="<?php echo $colspan ?>" class="paginator"><?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?></td>
