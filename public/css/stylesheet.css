@@ -23,7 +23,9 @@ table {
 }
 
 table th {
+	background-color: #DCEBFE;
 	color: #0088dd;
+	text-transform: uppercase;
 }
 
 table td, table th
