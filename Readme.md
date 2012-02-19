@@ -79,7 +79,7 @@
 
 # API 
 
-Documentation on how to use the API will be coming soon but for now the API is somewhat self explanatory via the examples provided in the controllers.
+Documentation on how to use the API will be coming soon but for now the API is somewhat self explanatory via the example cities grid in the grids namespace.
 
 # Questions or Comments?
 
