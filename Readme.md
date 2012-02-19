@@ -71,11 +71,12 @@
 ## Features
 
   * Built in dynamic and default column ordering and sorting.
-  * Dynamic user defined clickable rows.
+  * Dynamic user defined clickable row routes.
   * Robust data type support including varchar, integer, and date times search fields.
-  * Inline actions with user defined routes and value fields.
-  * Mass action support including user defined value fields.
-  * User defined alternating on mouse over and static row colors.
+  * Inline actions with dynamic routes and custom user defined value fields.
+  * Mass action support with dynamic routes and custom user defined value fields.
+  * User defined alternating on mouse over colors and static alternating row colors.
+  * User defined grid template that allows designers to edit the template directly.
 
 ## More Information
 
