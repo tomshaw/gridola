@@ -39,7 +39,8 @@ class Grid_City extends App_Grid_Abstract
 	{
 		$this->addColumn('id', array(
 			'header' => 'ID',
-			'width' => '100px',
+			'align' => 'center',
+			'width' => '7%',
 			'type'  => 'number',
 			'index' => 'ID',
 		));

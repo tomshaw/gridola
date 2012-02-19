@@ -43,12 +43,12 @@ class App_Grid_Element
 				return '<input type="'.$this->_type.'" name="'.$this->_index.'" id="'.$this->_index.'" value="'.$this->_value.'">';
 				break;
 			case 'number':
-				$number = 'Start <input type="text" name="start['.$this->_index.']" id="'.$this->_index.'" value="'.$this->_start.'" style="width:50%;"><br />';
-				$number.= 'End&nbsp;&nbsp;<input type="text" name="end['.$this->_index.']" id="'.$this->_index.'" value="'.$this->_end.'" style="width:50%;">';
+				$number = 'Start <input type="text" name="start['.$this->_index.']" id="'.$this->_index.'" value="'.$this->_start.'"><br />';
+				$number.= 'End&nbsp;&nbsp;<input type="text" name="end['.$this->_index.']" id="'.$this->_index.'" value="'.$this->_end.'">';
 				return $number;
 				break;
 			case 'options':
-				$select = '<select name="'.$this->_index.'" style="width:100%;">';
+				$select = '<select name="'.$this->_index.'">';
 				$select.= '<option value="-1"></option>';
 				foreach($this->_options as $key => $value) {
 					$selected = ($key == $this->_value) ? 'selected="selected"' : ''; 
@@ -71,18 +71,22 @@ class App_Grid_Element
 	
 	public function addStyle($data)
 	{
-		$style = '';
-		if(isset($data['width']) && isset($data['align'])) {
-			$style = 'style="width:'. $data['width'] . ';text-align:'. $data['align'] . ';"';
-		} elseif(isset($data['width'])) {
-			$style = 'style="width:'. $data['width'] . ';"';
-		} elseif(isset($data['align'])) {
-			$style = 'style="text-align:'. $data['align'] . ';"';
+		$style = 'style="';
+		if(isset($data['align']) && isset($data['width'])) {
+			$style .= 'text-align:'. $data['align'] . ';width:'. $data['width'] . ';';
+		} else {
+			if(isset($data['align'])) {
+				$style .= 'text-align:'. $data['align'] . ';';
+			} else {
+				$style .= 'text-align:left;';
+			}
+			if(isset($data['width'])) {
+				$style .= 'width:'. $data['width'] . ';';
+			} else {
+				$style .= 'width:20%;';
+			}
 		}
-		if(!isset($data['align'])) {
-			$style = 'style="text-align:left;"';
-		}
-		return $style;
+		return $style .= '"';
 	}
-	
+
 }

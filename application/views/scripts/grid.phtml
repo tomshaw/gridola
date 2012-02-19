@@ -17,6 +17,13 @@ Actions <select id="massaction">
 </select> <input class="button2" type="submit" value="Go">
 </fieldset>
 <?php endif;?>
+<?php if(sizeof($this->rows)): ?>
+<table>
+    <tr>
+      <td colspan="<?php echo $colspan ?>" class="paginator"><?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?></td>
+    </tr>
+</table>
+<?php endif; ?>
 <table>
   <thead>
     <tr>
@@ -34,9 +41,6 @@ Actions <select id="massaction">
       <td <?php echo $element['style'] ?>><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
       <td style="text-align:center;"><input type="submit" name="submit" value="Filter Results"></td>
-    </tr>
-    <tr>
-      <td colspan="<?php echo $colspan ?>" class="paginator"><?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?></td>
     </tr>
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>

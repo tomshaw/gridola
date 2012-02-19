@@ -28,7 +28,16 @@ table th {
 	text-transform: uppercase;
 }
 
-table td, table th
+table th
 {
-    padding:5px;
+    padding:2px;
+}
+
+table td
+{
+    padding:5px 2px;
+}
+
+table tbody tr td input {
+	width: 60%;
 }
