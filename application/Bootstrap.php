@@ -18,7 +18,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	}
 	
 	/**
-	 * Relies on appnamespace = "Application" be defined in
+	 * Relies on appnamespace = "Application" being defined in
 	 * system application.ini.
 	 *
 	 * @note Grids and models are namespaced Application_*.
@@ -43,8 +43,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headTitle('Gridola - Zend Framework Grid');
 	
 		$view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
-		 
-		//$view->addHelperPath(APPLICATION_PATH . "/modules/default/views/helpers", "App_View_Helper_");
+
+		/**
+		 * Alternate method of defining view helper paths.
+		 */
+		//$view->addHelperPath(APPLICATION_PATH . "/views/helpers", "App_View_Helper_");
 	
 		$view->jQuery()->enable()
 			->setVersion('1.7.1')
