@@ -66,15 +66,14 @@ class App_Grid_Element
 	
 	public function addStyle($data)
 	{
-		$style = '';
-		if(isset($data['width']) || isset($data['align'])) {
-			if(isset($data['width']) && isset($data['align'])) {
-				$style = 'style="width:'. $data['width'] . ';text-align:'. $data['align'] . ';"';
-			} elseif(isset($data['width'])) {
-				$style = 'style="width:'. $data['width'] . ';"';
-			} elseif(isset($data['align'])) {
-				$style= 'style="text-align:'. $data['align'] . ';"';
-			}
+		if(isset($data['width']) && isset($data['align'])) {
+			$style = 'style="width:'. $data['width'] . ';text-align:'. $data['align'] . ';"';
+		} elseif(isset($data['width'])) {
+			$style = 'style="width:'. $data['width'] . ';"';
+		} elseif(isset($data['align'])) {
+			$style= 'style="text-align:'. $data['align'] . ';"';
+		} else {
+			$style = '';
 		}
 		return $style;
 	}
