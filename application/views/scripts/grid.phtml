@@ -31,7 +31,7 @@ Actions <select id="massaction">
     <tr>
       <?php if(sizeof($this->massactions)): ?><td style="text-align:center;"><input type="checkbox" id="checkall" value=""></td><?php endif; ?>
       <?php foreach($this->datagrid as $element): ?>
-      <td><?php echo $element['element']; ?></td>
+      <td <?php echo $element['style'] ?>><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
       <td style="text-align:center;"><input type="submit" name="submit" value="Filter Results"></td>
     </tr>
