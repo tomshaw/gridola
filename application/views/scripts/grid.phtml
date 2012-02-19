@@ -20,7 +20,7 @@ Actions <select id="massaction">
 <table>
   <thead>
     <tr>
-      <?php if(sizeof($this->massActions)): ?><th style="width:50px;text-align:center;"><a href="#">Check</a></th><?php endif; ?>
+      <?php if(sizeof($this->massActions)): ?><th style="width:50px;text-align:center;">Check</th><?php endif; ?>
       <?php foreach($this->gridElements as $element): ?>
       <th <?php echo $element['style'] ?>><a href="<?php echo $this->gridRoute; ?>/order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
       <?php endforeach; ?>
