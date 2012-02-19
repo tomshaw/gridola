@@ -82,6 +82,7 @@
 
   Gridoa was developed with these technologies:
 
+  * [MySQL World Database](http://dev.mysql.com/doc/world-setup/en/world-setup.html) Copyright © 2005, 2011, Oracle and/or its affiliates. All rights reserved.
   * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
   * [Zend Framework-1.11.11](http://framework.zend.com/) My framework of choice!
   * [PHP 5.3.10](http://www.php.net/) Will test with 5.4 Release Candidates.
