@@ -46,7 +46,7 @@
 
 ## Installation
 
-    The database is located in the docs folder. Other documentation concerning installation and how to initialise a grid in your application will be coming soon.
+  The database is located in the docs folder. Other documentation concerning installation and how to initialise a grid in your application will be coming soon.
 
 ## Todo
 
