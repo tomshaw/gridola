@@ -70,6 +70,7 @@ class Grid_City extends App_Grid_Abstract
 		
 		$this->addColumn('population', array(
 			'header' => 'Population',
+			'align' => 'left',
 			'width' => '200px',
 			'type'  => 'text',
 			'index' => 'Population',
