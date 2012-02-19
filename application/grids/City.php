@@ -38,22 +38,23 @@ class Grid_City extends App_Grid_Abstract
 	protected function _prepareColumns()
 	{
 		$this->addColumn('id', array(
-			'header'=> 'ID',
+			'header' => 'ID',
 			'width' => '100px',
 			'type'  => 'number',
 			'index' => 'ID',
 		));
 		
 		$this->addColumn('name', array(
-			'header'=> 'City Name',
+			'header' => 'City Name',
+			'align' => 'right',
 			'width' => '200px',
 			'type'  => 'text',
 			'index' => 'Name',
 		));
 		
 		$this->addColumn('code', array(
-			'header'=> 'Country Code',
-			'align' => 'right',
+			'header' => 'Country Code',
+			'align' => 'center',
 			'width' => '200px',
 			'type'  => 'options',
 			'index' => 'CountryCode',
@@ -61,21 +62,21 @@ class Grid_City extends App_Grid_Abstract
 		));
 		
 		$this->addColumn('district', array(
-			'header'=> 'District',
+			'header' => 'District',
 			'width' => '200px',
 			'type'  => 'text',
 			'index' => 'District',
 		));
 		
 		$this->addColumn('population', array(
-			'header'=> 'Population',
+			'header' => 'Population',
 			'width' => '200px',
 			'type'  => 'text',
 			'index' => 'Population',
 		));
 		
 		$this->addColumn('region', array(
-			'header'=> 'Region',
+			'header' => 'Region',
 			'width' => '200px',
 			'type'  => 'text',
 			'index' => 'Region',
