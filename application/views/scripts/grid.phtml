@@ -53,7 +53,7 @@ Actions <select id="massaction">
       <?php endif; ?>
       <?php foreach($this->datagrid as $column): ?>
       <?php if(isset($data[$column['index']])): ?>
-      <td><?php echo $this->escape($data[$column['index']]); ?></td>
+      <td <?php echo $column['style'] ?>><?php echo $this->escape($data[$column['index']]); ?></td>
       <?php endif; ?>
       <?php endforeach; ?>
       <?php if(sizeof($this->actions)): ?>

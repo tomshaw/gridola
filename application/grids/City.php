@@ -53,7 +53,7 @@ class Grid_City extends App_Grid_Abstract
 		
 		$this->addColumn('code', array(
 			'header'=> 'Country Code',
-			'align' => 'center',
+			'align' => 'right',
 			'width' => '200px',
 			'type'  => 'options',
 			'index' => 'CountryCode',
