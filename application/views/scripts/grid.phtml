@@ -24,7 +24,7 @@ Actions <select id="massaction">
       <?php foreach($this->gridElements as $element): ?>
       <th <?php echo $element['style'] ?>><a href="<?php echo $this->gridRoute; ?>/order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
       <?php endforeach; ?>
-      <th style="width:100px;text-align:center;"><a href="#">Actions</a></th>
+      <th style="width:100px;text-align:center;">Actions</th>
     </tr>
   </thead>
   <tbody>
