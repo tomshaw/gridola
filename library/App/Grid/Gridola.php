@@ -138,7 +138,11 @@ abstract class App_Grid_Gridola
 		if(sizeof($this->_actions)) {
 			foreach($this->_actions as $_index => $value) {
 				if(sizeof($value['url'])) {
-					$this->_actions[$_index]['url'] = $this->getUrlHelper()->url($value['url']);
+					if(isset($value['url']['action'])) {
+						$action = $value['url']['action'];
+						$url = $this->getUrlHelper()->simple($action);
+						$this->_actions[$_index]['url'] = $url;
+					}
 				}
 			}
 		}
