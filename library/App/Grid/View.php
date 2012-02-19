@@ -20,81 +20,31 @@ class App_Grid_View
 		return $this->_view;
 	}
 	
-	public function assignResults($paginator)
+	function __call($method, $params)
 	{
-		$this->getView()->rows = $paginator;
+		if (substr($method, 0, 3) == 'set') {
+			$method = strtolower(substr($method, 3));
+			$this->getView()->{$method} = $params[0];
+		}
 	}
 	
-	public function assignGrid($elements)
-	{
-		$this->getView()->gridElements = $elements;
-	}
-	
-	public function assignSort($sort)
-	{
-		$this->getView()->sort = $sort;
-	}
-	
-	public function assignActions($actions)
-	{
-		$this->getView()->actions = $actions;
-	}
-	
-	public function assignMassActions($massactions)
-	{
-		$this->getView()->massActions = $massactions;
-	}
-	
-	public function assignMassActionField($field)
-	{
-		$this->getView()->massActionField = $field;
-	}
-	
-	public function assignFormId($formId)
-	{
-		$this->getView()->formId = $formId;
-	}
-	
-	public function assignFormAction($path)
-	{
-		$this->getView()->formAction = $path;
-	}
-	
-	public function assignRoute($route)
-	{
-		$this->getView()->gridRoute = $route;
-	}
-	
-	public function assignJsonActions($jsonActions)
+	public function setJsonActions($jsonActions)
 	{
 		$this->getView()->headScript()->appendScript('var jsonActions = ' . $jsonActions);
 	}
 	
-	public function assignHeadScript($formId)
-	{	
+	public function setJavascriptFormVariable($formId)
+	{
 		$this->getView()->headScript()->appendScript('var gridolaFormId = "#'.$formId.'";');
-		
-		$this->getView()->headScript()->appendFile('/js/gridola.js');
 	}
 	
-	public function assignRowClickData($rowClickData)
-	{
-		$this->getView()->rowClickUrl = $rowClickData;
-	}
-	
-	public function assignCyclecolors($cycleColors)
-	{
-		$this->getView()->cycleColors = $cycleColors;
-	}
-	
-	public function assignOnMouseOverColor($onMouseOverColor)
-	{
-		$this->getView()->onMouseOverColor = $onMouseOverColor;
+	public function setJavascriptInclude($javascriptFile)
+	{			
+		$this->getView()->headScript()->appendFile($javascriptFile);
 	}
 	
 	public function render($template)
 	{
 		return $this->getView()->render($template);
 	}
-	
 }

@@ -1,8 +1,8 @@
 <?php
 /*!
- * Gridola - Super Simple Grid for Zend Framework 1.x
- * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
- * MIT Licensed
+* Gidola Zend Framework 1.x Grid
+* Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
+* MIT Licensed
 */
 abstract class App_Grid_Gridola
 {	
@@ -110,7 +110,7 @@ abstract class App_Grid_Gridola
 		$this->buildActionUrls();
 		$this->encodeJsonMassaction();
 		$this->prepareRowClickUrl();
-		$this->buildGrid();
+		$this->initView();
 	}
 	
 	protected function buildGridElements()
@@ -184,42 +184,48 @@ abstract class App_Grid_Gridola
 		$this->_rowSets = $this->getDb()->paginateResults();
 	}
 	
-	protected function buildGrid()
+	protected function initView()
 	{	
-		$this->getView()->assignResults($this->_rowSets);
+		$this->getView()->setRows($this->_rowSets);
 		
-		$this->getView()->assignGrid($this->getGrid());
+		$this->getView()->setDataGrid($this->getGrid());
 		
-		$this->getView()->assignSort($this->getRequestedSort());
+		$this->getView()->setSort($this->getRequestedSort());
 		
-		$this->getView()->assignActions($this->getActions());
+		$this->getView()->setActions($this->getActions());
 		
-		$this->getView()->assignMassActions($this->getMassActions());
+		$this->getView()->setMassActions($this->getMassActions());
 		
-		$this->getView()->assignMassActionField($this->getMassactionField());
+		$this->getView()->setMassActionField($this->getMassactionField());
 		
-		$this->getView()->assignFormId($this->getFormId());
+		$this->getView()->setFormId($this->getFormId());
 		
-		$this->getView()->assignFormAction($this->getRoute());
-
-		$this->getView()->assignRoute($this->getRoute());
+		$this->getView()->setFormAction($this->getRoute());
+		
+		$this->getView()->setRoute($this->getRoute());
 		
 		if(sizeof($this->_jsonActions)) {
-			$this->getView()->assignJsonActions($this->_jsonActions);
+			$this->getView()->setJsonActions($this->_jsonActions);
 		}
 		
-		$this->getView()->assignHeadScript($this->getFormId());
+		$this->getView()->setJavascriptFormVariable($this->getFormId());
 		
-		$this->getView()->assignRowClickData($this->getRowClickUrl());
+		$this->getView()->setJavascriptInclude('/js/gridola.js');
 		
-		$this->getView()->assignCycleColors($this->getCycleColors());
+		$this->getView()->setRowClickData($this->getRowClickUrl());
 		
-		$this->getView()->assignOnMouseOverColor($this->getOnMouseOverColor());
+		$this->getView()->setCycleColors($this->getCycleColors());
+		
+		$this->getView()->setOnMouseOverColor($this->getOnMouseOverColor());
 	}
 	
 	public function __toString()
 	{
-		return $this->getView()->render($this->_template);
+		try {
+			return $this->getView()->render($this->getTemplate());
+		} catch(Exception $e) {
+			throw new App_Grid_Exception($e);
+		}
 	}
 	
 }

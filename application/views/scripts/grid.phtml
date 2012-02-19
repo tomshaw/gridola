@@ -1,17 +1,17 @@
 <!-- 
 /*!
- * Gridola - Super Simple Grid for Zend Framework 1.x
- * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
- * MIT Licensed
+* Gidola Zend Framework 1.x Grid
+* Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
+* MIT Licensed
 */
 -->
-<?php $colspan = (sizeof($this->massActions)) ? count($this->gridElements)+1 : count($this->gridElements); ?>
-<form method="post" id="<?php echo $this->formId ?>" action="<?php echo $this->formAction ?>">
-<?php if(sizeof($this->massActions)): ?>
+<?php $colspan = (sizeof($this->massactions)) ? count($this->datagrid)+1 : count($this->datagrid); ?>
+<form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->formaction ?>">
+<?php if(sizeof($this->massactions)): ?>
 <fieldset class="quick" style="border:none;text-align:right;">
 Actions <select id="massaction">
   <option value="-1"></option>
-  <?php foreach($this->massActions as $_index => $value): ?>
+  <?php foreach($this->massactions as $_index => $value): ?>
   <option value="<?php echo $_index ?>"><?php echo $value['label'] ?></option>
   <?php endforeach; ?>
 </select> <input class="button2" type="submit" value="Go">
@@ -20,17 +20,17 @@ Actions <select id="massaction">
 <table>
   <thead>
     <tr>
-      <?php if(sizeof($this->massActions)): ?><th style="width:50px;text-align:center;">Check</th><?php endif; ?>
-      <?php foreach($this->gridElements as $element): ?>
-      <th <?php echo $element['style'] ?>><a href="<?php echo $this->gridRoute; ?>/order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
+      <?php if(sizeof($this->massactions)): ?><th style="width:50px;text-align:center;">Check</th><?php endif; ?>
+      <?php foreach($this->datagrid as $element): ?>
+      <th <?php echo $element['style'] ?>><a href="<?php echo $this->route; ?>/order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
       <?php endforeach; ?>
       <th style="width:100px;text-align:center;">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <?php if(sizeof($this->massActions)): ?><td style="text-align:center;"><input type="checkbox" id="checkall" value=""></td><?php endif; ?>
-      <?php foreach($this->gridElements as $element): ?>
+      <?php if(sizeof($this->massactions)): ?><td style="text-align:center;"><input type="checkbox" id="checkall" value=""></td><?php endif; ?>
+      <?php foreach($this->datagrid as $element): ?>
       <td><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
       <td style="text-align:center;"><input type="submit" name="submit" value="Filter Results"></td>
@@ -40,18 +40,18 @@ Actions <select id="massaction">
     </tr>
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>
-    <?php $colour = $this->cycle($this->cycleColors)->next(); ?>
-    <tr <?php if(sizeof($this->rowClickUrl)): ?>data-href="<?php echo $this->rowClickUrl['url'] ?><?php if(isset($data[$this->rowClickUrl['field']])): echo $data[$this->rowClickUrl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onMouseOverColor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
+    <?php $colour = $this->cycle($this->cyclecolors)->next(); ?>
+    <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo $data[$this->rowclickurl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onMouseOverColor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
       <?php $hasMassActionCheckBox = false; ?>
-      <?php if(sizeof($this->massActions) && $hasMassActionCheckBox === false): ?>
+      <?php if(sizeof($this->massactions) && $hasMassActionCheckBox === false): ?>
       <td style="text-align:center;">
-        <?php if(isset($data[$this->massActionField])): ?>
-        <input type="checkbox" name="selected[]" value="<?php echo $this->escape($data[$this->massActionField]); ?>">
+        <?php if(isset($data[$this->massactionfield])): ?>
+        <input type="checkbox" name="selected[]" value="<?php echo $this->escape($data[$this->massactionfield]); ?>">
         <?php $hasMassActionCheckBox = true; ?>
         <?php endif; ?>  
       </td>
       <?php endif; ?>
-      <?php foreach($this->gridElements as $column): ?>
+      <?php foreach($this->datagrid as $column): ?>
       <?php if(isset($data[$column['index']])): ?>
       <td><?php echo $this->escape($data[$column['index']]); ?></td>
       <?php endif; ?>
