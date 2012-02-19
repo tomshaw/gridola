@@ -71,7 +71,10 @@
   * Add check all and checked remember cookie support.
   * Add export functionality.
   * Currency support.
-  * Refactor view object.
+  * Ditch alot of lame code. Could be much lighter weight.
+  * Consider caching paginated results.
+  * Review any security concerns.
+  * Unit test.
 
 ## Features
 
