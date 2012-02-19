@@ -54,6 +54,7 @@
 
  List of todo items:
 
+  * Add check all and checked remember cookie support.
   * Add export functionality.
   * Currency support.
   * Refactor view object.
