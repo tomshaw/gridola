@@ -14,8 +14,6 @@
   * User defined alternating on mouse over colors and static alternating row colors.
   * Pure HTML grid templates that allows designers to edit markup directly.
   
-##
-  
   Example grid:
      
     protected $_exportTypes = array('csv','xml');
@@ -94,7 +92,7 @@
 
   * [MySQL World Database](http://dev.mysql.com/doc/world-setup/en/world-setup.html) Copyright (c) 2005, 2011, Oracle and/or its affiliates. All rights reserved.
   * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
-  * [Zend Framework-1.11.11](http://framework.zend.com/) My framework of choice!
+  * [Zend Framework-1.11.11](http://framework.zend.com/) I don't always use frameworks but when I do I choose Zend Framework.
   * [PHP 5.3.10](http://www.php.net/) Will test with 5.4 Release Candidates.
   
 # Requirements
