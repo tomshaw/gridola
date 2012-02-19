@@ -18,4 +18,11 @@ body {
 
 table {
 	width: 95%;
+	background-color:#fff;
+    border-collapse: collapse;
+}
+
+table td, table th
+{
+    padding:5px;
 }
