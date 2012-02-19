@@ -76,6 +76,11 @@ abstract class App_Grid_Gridola
 		return $this->_searchParams;
 	}
 	
+	protected function getJsonActions()
+	{
+		return $this->_jsonActions;
+	}
+	
 	protected function getRequestedSort()
 	{
 		return ($this->getRequest()->getParam('sort') == 'desc') ? 'asc' : 'desc';
@@ -176,15 +181,7 @@ abstract class App_Grid_Gridola
 			}
 			$this->_jsonActions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
 		}
-		return $this->_jsonActions;
-	}
-	
-	protected function getJsonActions()
-	{
-		if ($this->_jsonActions === null) {
-			$this->_jsonActions = $this->encodeJsonMassaction();
-		}
-		return $this->_jsonActions;
+		return $this;
 	}
 	
 	protected function initSelect()
@@ -214,7 +211,7 @@ abstract class App_Grid_Gridola
 		
 		$this->getView()->setRoute($this->getRoute());
 		
-		$this->getView()->setJsonActions($this->getJsonActions());
+		$this->getView()->setJsonActions($this->encodeJsonMassaction()->getJsonActions());
 		
 		$this->getView()->setJavascriptFormVariable($this->getFormId());
 		
