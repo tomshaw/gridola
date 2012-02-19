@@ -22,6 +22,10 @@ table {
     border-collapse: collapse;
 }
 
+table th {
+	color: #0088dd;
+}
+
 table td, table th
 {
     padding:5px;
