@@ -76,7 +76,7 @@
   * Inline actions with dynamic routes and custom user defined value fields.
   * Mass action support with dynamic routes and custom user defined value fields.
   * User defined alternating on mouse over colors and static alternating row colors.
-  * User defined grid template that allows designers to edit the template directly.
+  * Pure HTML grid templates that allows designers to edit markup directly.
 
 ## More Information
 
