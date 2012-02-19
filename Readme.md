@@ -50,7 +50,7 @@
 
 ## Todo
 
- The Gridola project was hastily developed over a single star bucks red bull guzzling weekend, like must of my projects are. In other words it was slammed together without much thought other that getting it to work. That being said the code base could use some very close scrutiny. Any input, help, push requests or ideas from the general public would be greatly appreciated. 
+ The Gridola project was hastily developed over a single star bucks red bull guzzling weekend. In other words it was slammed together without much thought other that getting it to work. That being said the code base could use some very close scrutiny. Any input, help, push requests or ideas from the general public would be greatly appreciated. 
 
  List of todo items:
 
