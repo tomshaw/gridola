@@ -14,8 +14,7 @@ class Grid_City extends App_Grid_Abstract
 			'module' => 'default',
 			'controller' => 'index', 
 			'action' => 'edit'
-		)
-	);
+    ));
 	
 	protected $_cycleColors = array("#EFEFEF","#F9F9F9");
 	

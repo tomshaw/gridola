@@ -8,7 +8,13 @@
      
     protected $_exportTypes = array('csv','xml');
 	
-    protected $_rowClickUrl = array('module'=>'default','controller'=>'index','action'=>'edit','field'=>'ID');
+    protected $_rowClickUrl = array(
+        'field' => 'ID', 
+        'url' => array(
+            'module' => 'default',
+            'controller' => 'index', 
+            'action' => 'edit'
+    ));
 	
     protected $_cycleColors = array("#EFEFEF","#F9F9F9");
 	
