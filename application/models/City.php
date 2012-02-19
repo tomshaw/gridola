@@ -13,14 +13,14 @@ class Model_City extends Zend_Db_Table_Abstract
 	{
 		return $this->select()
 			->setIntegrityCheck(false)
-			->from($this->_name, array('ID','Name','CountryCode','District','Population','created_at'));
+			->from($this->_name, array('ID','Name','CountryCode','District','Population'));
 	}
 	
 	public function findCityData()
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from($this->_name, array('ID','Name','CountryCode','District','Population','created_at'))
+			->from($this->_name, array('ID','Name','CountryCode','District','Population'))
 			->joinLeft(array('country'=>'country'), 'country.Code = city.CountryCode', array('Region','Continent'));
 		return $select;
 	}
