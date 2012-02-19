@@ -162,13 +162,16 @@ abstract class App_Grid_Gridola
 	
 	protected function prepareRowClickUrl()
 	{	
-		if(sizeof($this->getRowClickUrl())) {
-			if(!array_key_exists('field', $this->getRowClickUrl())) {
+		$rowClickUrl = $this->getRowClickUrl();
+		if(sizeof($rowClickUrl)) {
+			if(!array_key_exists('field', $rowClickUrl)) {
 				throw new App_Grid_Exception('A database field name must be specified when creating a clickable row.');
 			}
-			foreach($this->getRowClickUrl() as $_index => $value) {
-				if(in_array($_index, array('module','controller','action'))) {
-					$data[$_index] = $value;
+			if(isset($rowClickUrl['url']) && is_array($rowClickUrl['url'])) {
+				foreach($rowClickUrl['url'] as $_index => $value) {
+					if(in_array($_index, array('module','controller','action'))) {
+						$data[$_index] = $value;
+					}
 				}
 			}
 			$this->_rowClickUrl['url'] = $this->getUrlHelper()->url($data) . '/' . $this->_rowClickUrl['field'] . '/';
