@@ -80,12 +80,15 @@
 
 ## More Information
 
-  * [twitter-bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
-  * [zend-framework](http://framework.zend.com/) My framework of choice!
+  Gridoa was developed with these technologies:
+
+  * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
+  * [Zend Framework-1.11.11](http://framework.zend.com/) My framework of choice!
+  * [PHP 5.3.10](http://www.php.net/) Will test with 5.4 Release Candidates.
   
 # Requirements
 
-  * Gridola has been tested and developed using PHP 5.3.10 and using Zend Framework 1.11.11.
+  * Nothing special.
 
 # API 
 
