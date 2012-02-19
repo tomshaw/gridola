@@ -14,6 +14,8 @@
   * User defined alternating on mouse over colors and static alternating row colors.
   * Pure HTML grid templates that allows designers to edit markup directly.
   
+##
+  
   Example grid:
      
     protected $_exportTypes = array('csv','xml');
