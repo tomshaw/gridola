@@ -34,7 +34,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	
 		//$view = new Zend_View();
 	
-		$view->docType('HTML5');
+		$view->doctype('HTML5');
 	
 		$view->headTitle('Gridola - Zend Framework Grid');
 	
