@@ -173,9 +173,9 @@ abstract class App_Grid_Gridola
 						$data[$_index] = $value;
 					}
 				}
+				$this->_rowClickUrl['url'] = $this->getUrlHelper()->url($data) . '/' . $this->_rowClickUrl['field'] . '/';
+				$this->_rowClickUrl = array_slice($this->_rowClickUrl, 3, null, true);
 			}
-			$this->_rowClickUrl['url'] = $this->getUrlHelper()->url($data) . '/' . $this->_rowClickUrl['field'] . '/';
-			$this->_rowClickUrl = array_slice($this->_rowClickUrl, 3, null, true);
 		}
 	}
 	
