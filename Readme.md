@@ -3,6 +3,16 @@
   Gridola is a simple to use generic grid developed to be used with Zend Framework 1.x series. It was somewhat hastily developed out of curiosity in that I wondered how much code would actually be required to develop a fully functional grid. Having developed Magento applications for several years and being accustomed to using their grids, I decided to use the same array initialization strategy that Magento uses. My goals for the project were to develop a grid that supported in line actions, mass actions and clickable rows. To also support generic simple data types including integers and date time fields that could be used to narrow down query results from a start and finish or greater than less than perspective. 
   
   The included sample application was built with [Twitter Bootstrap](http://twitter.github.com/bootstrap/), a simple and flexible HTML, CSS, and Javascript rapid application development framework and is copyright by Twitter. Gridola has been tested using Zend Framework 1.11.11 and PHP 5.3.10. I'm sure it will also work with the PHP 5.4 release candidates. 
+ 
+## Features
+
+  * Built in dynamic and default column ordering and sorting.
+  * Dynamic user defined clickable row routes.
+  * Robust data type support including varchar, integer, and date times search fields.
+  * Inline actions with dynamic routes and custom user defined value fields.
+  * Mass action support with dynamic routes and custom user defined value fields.
+  * User defined alternating on mouse over colors and static alternating row colors.
+  * Pure HTML grid templates that allows designers to edit markup directly.
   
   Example grid:
      
@@ -75,16 +85,6 @@
   * Consider caching paginated results.
   * Review any security concerns.
   * Unit test.
-
-## Features
-
-  * Built in dynamic and default column ordering and sorting.
-  * Dynamic user defined clickable row routes.
-  * Robust data type support including varchar, integer, and date times search fields.
-  * Inline actions with dynamic routes and custom user defined value fields.
-  * Mass action support with dynamic routes and custom user defined value fields.
-  * User defined alternating on mouse over colors and static alternating row colors.
-  * Pure HTML grid templates that allows designers to edit markup directly.
 
 ## More Information
 

@@ -20,8 +20,8 @@ $(document).ready(function() {
 });
 
 /**
- * Allows for the creation of table row data-href clickable functionality. Also removes the 
- * clickable class in table elements using inputs. Namely checkboxes for mass actions.
+ * Removes the clickable row functionality in table elements using inputs. 
+ * Namely checkboxes for mass actions.
  */
 jQuery( function($) { 
     $('tbody tr[data-href]').addClass('clickable').click( function() { 
