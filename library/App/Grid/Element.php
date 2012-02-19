@@ -72,10 +72,8 @@ class App_Grid_Element
 				$style = 'style="width:'. $data['width'] . ';text-align:'. $data['align'] . ';"';
 			} elseif(isset($data['width'])) {
 				$style = 'style="width:'. $data['width'] . ';"';
-			} else {
-				if(isset($data['align'])) {
-					$style= 'style="text-align:'. $data['align'] . ';"';
-				}
+			} elseif(isset($data['align'])) {
+				$style= 'style="text-align:'. $data['align'] . ';"';
 			}
 		}
 		return $style;
