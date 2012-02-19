@@ -3,6 +3,10 @@
 * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
 * MIT Licensed
 */
+
+/**
+ * Dynamically injects a new grid action based on the mass action select url value. 
+ */
 $(document).ready(function() {
 	$('#massaction').change(function() {
 		var action = $(this).val();
@@ -15,6 +19,9 @@ $(document).ready(function() {
 	});
 });
 
+/**
+ * Removes the clickable table row functionality in table data elements using inputs, namely checkboxes.
+ */
 jQuery( function($) { 
     $('tbody tr[data-href]').addClass('clickable').click( function() { 
         window.location = $(this).attr('data-href'); 
