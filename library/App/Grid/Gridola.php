@@ -167,6 +167,7 @@ abstract class App_Grid_Gridola
 			if(!array_key_exists('field', $rowClickUrl)) {
 				throw new App_Grid_Exception('A database field name must be specified when creating a clickable row.');
 			}
+			//Zend_Debug::dump($this->_rowClickUrl);
 			if(isset($rowClickUrl['url']) && is_array($rowClickUrl['url'])) {
 				foreach($rowClickUrl['url'] as $_index => $value) {
 					if(in_array($_index, array('module','controller','action'))) {
@@ -174,7 +175,6 @@ abstract class App_Grid_Gridola
 					}
 				}
 				$this->_rowClickUrl['url'] = $this->getUrlHelper()->url($data) . '/' . $this->_rowClickUrl['field'] . '/';
-				$this->_rowClickUrl = array_slice($this->_rowClickUrl, 3, null, true);
 			}
 		}
 	}
