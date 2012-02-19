@@ -20,7 +20,7 @@ abstract class App_Grid_Gridola
 	
 	protected $_searchParams = array();
 	
-	protected $_rowSets = null;
+	protected $_rows = null;
 	
 	protected $_urlHelper = null;
 	
@@ -103,18 +103,16 @@ abstract class App_Grid_Gridola
 		return $this->_route;
 	}
 	
-	protected function _prepareData()
+	protected function getRows()
 	{
-		$this->buildData();
-		$this->buildGridElements();
-		$this->buildActionUrls();
-		$this->encodeJsonMassaction();
-		$this->prepareRowClickUrl();
-		$this->initView();
+		if ($this->_rows === null) {
+			$this->_rows = $this->initSelect();
+		}
+		return $this->_rows;
 	}
 	
-	protected function buildGridElements()
-	{	
+	protected function _prepareData()
+	{
 		$searchParams = $this->getSearchParams();
 		foreach($this->getGrid() as $_index => $column) {
 				
@@ -131,35 +129,12 @@ abstract class App_Grid_Gridola
 				$this->_grid[$_index]['style'] = $this->getElement()->addStyle($column);
 			}
 		}
-	}
-	
-	protected function buildActionUrls()
-	{
-		if(sizeof($this->_actions)) {
-			foreach($this->_actions as $_index => $value) {
-				if(sizeof($value['url'])) {
-					if(isset($value['url']['action'])) {
-						$this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
-					}
-				}
-			}
-		}
-	}
-	
-	protected function encodeJsonMassaction()
-	{
-		if(sizeof($this->_massactions)) {
-			foreach($this->_massactions as $_index => $value) {
-				if(sizeof($value['url'])) {
-					$this->_massactions[$_index]['url'] = $this->getUrlHelper()->url($value['url']);
-				}
-			}
-			$this->_jsonActions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
-		}
+
+		$this->initView();
 	}
 	
 	protected function prepareRowClickUrl()
-	{	
+	{
 		$rowClickUrl = $this->getRowClickUrl();
 		if(sizeof($rowClickUrl)) {
 			if(!array_key_exists('field', $rowClickUrl)) {
@@ -174,25 +149,60 @@ abstract class App_Grid_Gridola
 				$this->_rowClickUrl['url'] = $this->getUrlHelper()->url($data) . '/' . $this->_rowClickUrl['field'] . '/';
 			}
 		}
+		return $this;
 	}
 	
-	protected function buildData()
+	protected function prepareActionUrls()
 	{
-		$this->getDb()->setSelect($this->getSelect());
-		$this->getDb()->init();
+		if(sizeof($this->_actions)) {
+			foreach($this->_actions as $_index => $value) {
+				if(sizeof($value['url'])) {
+					if(isset($value['url']['action'])) {
+						$this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
+					}
+				}
+			}
+		}
+		return $this;
+	}
+	
+	protected function encodeJsonMassaction()
+	{
+		if(sizeof($this->_massactions)) {
+			foreach($this->_massactions as $_index => $value) {
+				if(sizeof($value['url'])) {
+					$this->_massactions[$_index]['url'] = $this->getUrlHelper()->url($value['url']);
+				}
+			}
+			$this->_jsonActions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
+		}
+		return $this->_jsonActions;
+	}
+	
+	protected function getJsonActions()
+	{
+		if ($this->_jsonActions === null) {
+			$this->_jsonActions = $this->encodeJsonMassaction();
+		}
+		return $this->_jsonActions;
+	}
+	
+	protected function initSelect()
+	{
+		$this->getDb()->setSelect($this->getSelect())->init();
 		$this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
-		$this->_rowSets = $this->getDb()->paginateResults();
+		return $this->getDb()->paginateResults();
 	}
 	
 	protected function initView()
 	{	
-		$this->getView()->setRows($this->_rowSets);
+		$this->getView()->setRows($this->getRows());
 		
 		$this->getView()->setDataGrid($this->getGrid());
 		
 		$this->getView()->setSort($this->getRequestedSort());
 		
-		$this->getView()->setActions($this->getActions());
+		$this->getView()->setActions($this->prepareActionUrls()->getActions());
 		
 		$this->getView()->setMassActions($this->getMassActions());
 		
@@ -204,15 +214,13 @@ abstract class App_Grid_Gridola
 		
 		$this->getView()->setRoute($this->getRoute());
 		
-		if(sizeof($this->_jsonActions)) {
-			$this->getView()->setJsonActions($this->_jsonActions);
-		}
+		$this->getView()->setJsonActions($this->getJsonActions());
 		
 		$this->getView()->setJavascriptFormVariable($this->getFormId());
 		
 		$this->getView()->setJavascriptInclude('/js/gridola.js');
 		
-		$this->getView()->setRowClickData($this->getRowClickUrl());
+		$this->getView()->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl());
 		
 		$this->getView()->setCycleColors($this->getCycleColors());
 		
