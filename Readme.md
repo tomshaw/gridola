@@ -57,6 +57,7 @@
   Please pay close attention to the bootstrap file and how the grids namespace is initialized. 
   
   * Download the [MySQL World Database](http://dev.mysql.com/doc/world-setup/en/world-setup.html) and load it.
+  * Install [Zend Extras](http://framework.zend.com/) into the library folder. Google it if you have any difficulties.
   
   Other documentation concerning installation and how to initialise a grid in your application will be coming soon.
 
