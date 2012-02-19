@@ -108,16 +108,10 @@ abstract class App_Grid_Gridola
 		return $this->_route;
 	}
 	
-	protected function getRows()
-	{
-		if ($this->_rows === null) {
-			$this->_rows = $this->initSelect();
-		}
-		return $this->_rows;
-	}
-	
 	protected function _prepareData()
 	{
+		$this->initSelect();
+		
 		$searchParams = $this->getSearchParams();
 		foreach($this->getGrid() as $_index => $column) {
 				
@@ -136,6 +130,21 @@ abstract class App_Grid_Gridola
 		}
 
 		$this->initView();
+	}
+	
+	protected function getRows()
+	{
+		if ($this->_rows === null) {
+			$this->_rows = $this->initSelect();
+		}
+		return $this->_rows;
+	}
+	
+	protected function initSelect()
+	{
+		$this->getDb()->setSelect($this->getSelect())->init();
+		$this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
+		$this->_rows = $this->getDb()->paginateResults();
 	}
 	
 	protected function prepareRowClickUrl()
@@ -182,13 +191,6 @@ abstract class App_Grid_Gridola
 			$this->_jsonActions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
 		}
 		return $this;
-	}
-	
-	protected function initSelect()
-	{
-		$this->getDb()->setSelect($this->getSelect())->init();
-		$this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
-		return $this->getDb()->paginateResults();
 	}
 	
 	protected function initView()
