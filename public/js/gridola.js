@@ -1,3 +1,8 @@
+/*!
+* Gidola Zend Framework 1.x Grid
+* Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
+* MIT Licensed
+*/
 $(document).ready(function() {
 	$('#massaction').change(function() {
 		var action = $(this).val();

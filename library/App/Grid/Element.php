@@ -1,5 +1,9 @@
 <?php
-
+/*!
+* Gidola Zend Framework 1.x Grid
+* Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
+* MIT Licensed
+*/
 class App_Grid_Element
 {
 	protected $_type = null;
