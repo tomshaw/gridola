@@ -1,0 +1,63 @@
+<?php $colspan = (sizeof($this->massActions)) ? count($this->gridElements)+1 : count($this->gridElements); ?>
+<form method="post" id="<?php echo $this->formId ?>" action="<?php echo $this->formAction ?>">
+<?php if(sizeof($this->massActions)): ?>
+<fieldset class="quick" style="border:none;text-align:right;">
+Actions <select id="massaction">
+  <option value="-1"></option>
+  <?php foreach($this->massActions as $_index => $value): ?>
+  <option value="<?php echo $_index ?>"><?php echo $value['label'] ?></option>
+  <?php endforeach; ?>
+</select> <input class="button2" type="submit" value="Go">
+</fieldset>
+<?php endif;?>
+<table>
+  <thead>
+    <tr>
+      <?php if(sizeof($this->massActions)): ?><th style="width:50px;text-align:center;"><a href="#">Check</a></th><?php endif; ?>
+      <?php foreach($this->gridElements as $element): ?>
+      <th <?php echo $element['style'] ?>><a href="<?php echo $this->gridRoute; ?>/order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
+      <?php endforeach; ?>
+      <th style="width:100px;text-align:center;"><a href="#">Actions</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <?php if(sizeof($this->massActions)): ?><td style="text-align:center;"><input type="checkbox" id="checkall" value=""></td><?php endif; ?>
+      <?php foreach($this->gridElements as $element): ?>
+      <td><?php echo $element['element']; ?></td>
+      <?php endforeach; ?>
+      <td style="text-align:center;"><input type="submit" name="submit" value="Submit"></td>
+    </tr>
+    <tr>
+      <td colspan="<?php echo $colspan ?>" class="paginator"><?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?></td>
+    </tr>
+    <?php foreach($this->rows as $_index => $value): ?>
+    <?php $data = $value->toArray(); ?>
+    <?php $colour = $this->cycle($this->cycleColors)->next(); ?>
+    <tr <?php if(sizeof($this->rowClickUrl)): ?>data-href="<?php echo $this->rowClickUrl['url'] ?><?php if(isset($data[$this->rowClickUrl['field']])): echo $data[$this->rowClickUrl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onMouseOverColor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
+      <?php $hasMassAction = false; ?>
+      <?php if(sizeof($this->massActions) && !$hasMassAction): ?>
+      <td style="text-align:center;">
+        <?php if(isset($data[$this->massActionField])): ?>
+        <input type="checkbox" name="selected[]" value="<?php echo $this->escape($data[$this->massActionField]); ?>">
+        <?php endif; ?>  
+      </td>
+      <?php $hasMassAction = true; ?>
+      <?php endif; ?>
+      <?php foreach($this->gridElements as $column): ?>
+      <?php if(isset($data[$column['index']])): ?>
+      <td><?php echo $this->escape($data[$column['index']]); ?></td>
+      <?php endif; ?>
+      <?php endforeach; ?>
+      <?php if(sizeof($this->actions)): ?>
+      <td style="text-align:center;">
+      <?php $i = 1; foreach($this->actions as $action): ?>
+      	<a href="<?php echo $action['url']; ?>/<?php echo $action['field']; ?>/<?php echo $data[$action['field']]; ?>"><?php echo $action['label']; ?></a><?php if($i<count($this->actions)): ?> | <?php endif; ?>
+      <?php $i++; endforeach; ?>
+      </td>
+      <?php endif; ?>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+</form>

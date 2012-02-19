@@ -1,0 +1,50 @@
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center; width:5%;">Count</th>
+      <th style="text-align: left; width:80%;">&nbsp;SQL Statement</th>
+      <th style="text-align: center; width:15%;">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<?php foreach($this->queries as $out): ?>
+    <tr>
+      <td style="text-align: center;"><?= $out['count'] ?>.</td>
+      <td><?= $out['query'] ?></td>
+      <td><i><?= $out['seconds'] ?></i></td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+<br />
+<table>
+  <thead>
+    <tr>
+      <th style="width: 85%">&nbsp;Statistic</th>
+      <th style="text-align: center; width: 15%">Value</th>
+    </tr>
+  </thead>	
+  <tbody>
+    <tr>
+      <td>Total milliseconds:</td>
+      <td><?= $this->elapsed_milliseconds ?></td>
+    </tr>
+    <tr>
+      <td>Average query time:</td>
+      <td><?= $this->average_query_time ?></td>
+    </tr>
+    <tr>
+      <td>Queries per second:</td>
+      <td><?= $this->queries_per_second ?></td>
+    </tr>
+    <tr>
+      <td>Longest query time:</td>
+      <td><?= $this->longest_query_time ?></td>
+    </tr>
+    <tr>
+      <td>Longest query id:</td>
+      <td>#<?= $this->longest_query_id ?>.</td>
+    </tr>
+  </tbody>
+</table>
+<br />
