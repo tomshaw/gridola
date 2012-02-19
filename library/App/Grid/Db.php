@@ -121,13 +121,11 @@ class App_Grid_Db
 	public function init()
 	{
 		if($this->getRequest()->isPost()) {
-			unset($this->getSession()->data);
-			$this->searchResults();
+			$this->clearSession()->searchResults();
+		} elseif((null === $this->getParam('page')) && (null === ($this->getParam('sort')))) {
+			$this->clearSession();
 		} else {
-			if((null === $this->getParam('page')) && (null === ($this->getParam('sort')))) {
-				unset($this->getSession()->data);
-			}
-			$this->results();
+			$this->results();	
 		}
 	}
 	
@@ -222,6 +220,12 @@ class App_Grid_Db
 		$paginator->setItemCountPerPage(10);
 		
 		return $paginator;
+	}
+	
+	protected function clearSession()
+	{
+		unset($this->getSession()->data);
+		return $this;
 	}
 	
 }
