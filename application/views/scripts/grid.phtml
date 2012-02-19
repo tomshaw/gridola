@@ -41,7 +41,7 @@ Actions <select id="massaction">
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>
     <?php $colour = $this->cycle($this->cyclecolors)->next(); ?>
-    <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo $data[$this->rowclickurl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onMouseOverColor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
+    <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo $data[$this->rowclickurl['field']] ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" onmouseover="this.style.background='<?php echo $this->onmouseovercolor ?>';" onmouseout="this.style.background='<?= $colour ?>';">
       <?php $hasMassActionCheckBox = false; ?>
       <?php if(sizeof($this->massactions) && $hasMassActionCheckBox === false): ?>
       <td style="text-align:center;">
