@@ -82,12 +82,12 @@ class Grid_City extends App_Grid_Abstract
 			'index' => 'Continent',
 		));
 		
-		$this->addColumn('created_at', array(
-			'header'=> 'Created',
-			'width' => '200px',
-			'type'  => 'datetime',
-			'index' => 'created_at',
-		));
+// 		$this->addColumn('created_at', array(
+// 			'header'=> 'Created',
+// 			'width' => '200px',
+// 			'type'  => 'datetime',
+// 			'index' => 'created_at',
+// 		));
 	}
 	
 	protected function _prepareActions()
