@@ -20,6 +20,11 @@ class App_Grid_Element
 	
 	protected $_end = null;
 	
+	/**
+	 * @todo Add Zend View Helpers for all inputs.
+	 * 
+	 * @param unknown_type $options
+	 */
 	public function addElement($options)
 	{
 		$this->_type 	= (isset($options['type'])) ? $options['type'] : null;
