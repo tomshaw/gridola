@@ -6,8 +6,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initAppAutoload ()
 	{
 		$loader = new Zend_Application_Module_Autoloader(array(
-				'namespace' => '',
-				'basePath' => APPLICATION_PATH
+			'namespace' => '',
+			'basePath' => APPLICATION_PATH
 		));
 		$loader->addResourceType('grid','grids','Grid');
 		return $loader;
@@ -49,18 +49,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			->uiEnable();
 	
 		$view->headLink()->appendStylesheet('/css/stylesheet.css');
-		//$view->headLink()->appendStylesheet('/css/bootstrap-responsive.css');
 	
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
 			'ViewRenderer'
 		);
-		 
-		//$view->headScript()->prependFile('/js/main.js');
 	
 		$viewRenderer->setView($view);
 	
 		return $view;
 	}
-	
 }
-
