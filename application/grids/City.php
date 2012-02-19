@@ -166,9 +166,9 @@ class Grid_City extends App_Grid_Abstract
 		
 		$data = array();
 		foreach($rows as $row) {
-			$out[$row->CountryCode] = $row->CountryCode; 
+			$data[$row->CountryCode] = $row->CountryCode; 
 		}
-		return $out;
+		return $data;
 	}
 
 }
