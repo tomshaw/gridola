@@ -135,7 +135,7 @@ class App_Grid_Db
 				
 		$params = $this->getRequest()->getPost();
 			
-		$arrayNotation = $this->postedArrayNotation();
+		$postedArrayNotation = $this->postedArrayNotation();
 
 		foreach($params as $_index => $value) {
 			if(empty($value)) {
@@ -152,8 +152,8 @@ class App_Grid_Db
 					if(empty($val)) {
 						continue;
 					}
-					if(isset($arrayNotation[$key])) {
-						$this->getSession()->data{$key} = $arrayNotation[$key];
+					if(isset($postedArrayNotation[$key])) {
+						$this->getSession()->data{$key} = $postedArrayNotation[$key];
 					}
 					if(in_array($_index, $this->_arrayNotationKeys)) {
 						if($_index == $this->_arrayNotationKeys[0]) {
