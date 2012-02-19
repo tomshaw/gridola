@@ -139,9 +139,7 @@ abstract class App_Grid_Gridola
 			foreach($this->_actions as $_index => $value) {
 				if(sizeof($value['url'])) {
 					if(isset($value['url']['action'])) {
-						$action = $value['url']['action'];
-						$url = $this->getUrlHelper()->simple($action);
-						$this->_actions[$_index]['url'] = $url;
+						$this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
 					}
 				}
 			}
@@ -167,7 +165,6 @@ abstract class App_Grid_Gridola
 			if(!array_key_exists('field', $rowClickUrl)) {
 				throw new App_Grid_Exception('A database field name must be specified when creating a clickable row.');
 			}
-			//Zend_Debug::dump($this->_rowClickUrl);
 			if(isset($rowClickUrl['url']) && is_array($rowClickUrl['url'])) {
 				foreach($rowClickUrl['url'] as $_index => $value) {
 					if(in_array($_index, array('module','controller','action'))) {
