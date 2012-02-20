@@ -7,30 +7,30 @@
 /**
  * Dynamically injects a new form action based on the mass action select url key value. 
  */
-$(document).ready(function() {
-	$('#massaction').change(function() {
-		var action = $(this).val();
-		jQuery.each(jsonActions, function(key, val) {
-			if (key == action) {
-				$(gridolaFormId).attr('action', val.url);
-				return false;
-			}
-		});
-	});
+$(document).ready(function () {
+    $('#massaction').change(function () {
+        var action = $(this).val();
+        jQuery.each(jsonActions, function (key, val) {
+            if (key == action) {
+                $(gridolaFormId).attr('action', val.url);
+                return false;
+            }
+        });
+    });
 });
 
 /**
  * Removes the clickable row functionality in table elements using inputs. 
  * Namely checkboxes for mass actions.
  */
-jQuery( function($) { 
-    $('tbody tr[data-href]').addClass('clickable').click( function() { 
-        window.location = $(this).attr('data-href'); 
-    }).find('input').hover( function() { 
-        $(this).parents('tr').unbind('click'); 
-    }, function() { 
-        $(this).parents('tr').click( function() { 
-            window.location = $(this).attr('data-href'); 
-        }); 
-    }); 
+jQuery(function ($) {
+    $('tbody tr[data-href]').addClass('clickable').click(function () {
+        window.location = $(this).attr('data-href');
+    }).find('input').hover(function () {
+        $(this).parents('tr').unbind('click');
+    }, function () {
+        $(this).parents('tr').click(function () {
+            window.location = $(this).attr('data-href');
+        });
+    });
 }); 
