@@ -5,7 +5,7 @@
 */
 
 /**
- * Dynamically injects a new grid action based on the mass action select url value. 
+ * Dynamically injects a new form action based on the mass action select url key value. 
  */
 $(document).ready(function() {
 	$('#massaction').change(function() {
