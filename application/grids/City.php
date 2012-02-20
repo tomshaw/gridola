@@ -23,8 +23,8 @@ class Grid_City extends App_Grid_Abstract
 	public function __construct()
 	{
 		$this->setFormId('city_grid');
-		$this->setOrder('Name');
-		$this->setSort('DESC');
+		$this->setOrder('ID');
+		$this->setSort('ASC');
 		parent::__construct();
 	}
 	
