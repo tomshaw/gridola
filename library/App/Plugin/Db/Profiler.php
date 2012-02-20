@@ -26,15 +26,12 @@ class App_Plugin_Db_Profiler extends Zend_Controller_Plugin_Abstract
         
         $view->placeholder('profiler')->setPrefix('<div id="profiler">')->setPostfix('</div>');
         
-        $sqlData = array();
-        
-        $profiles = $profiler->getQueryProfiles();
-        
-        if (!$profiles) {
+        if (null === ($profiles = $profiler->getQueryProfiles())) {
             return;
         }
         
         $count = 1;
+        $sqlData = array();
         foreach ($profiles as $query) {
             if ($query->getElapsedSecs() > $longestTime) {
                 $longestTime  = $query->getElapsedSecs();
