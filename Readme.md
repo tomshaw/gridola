@@ -17,41 +17,79 @@
   Example grid:
      
     protected $_exportTypes = array('csv','xml');
-	
-    protected $_rowClickUrl = array(
-        'field' => 'ID', 
-        'url' => array(
-            'module' => 'default',
-            'controller' => 'index', 
-            'action' => 'edit'
-    ));
-	
-    protected $_cycleColors = array("#EFEFEF","#F9F9F9");
-	
-    protected $_onMouseOverColor = '#DBDFE2';
-
+    
     public function __construct()
     {
         $this->setFormId('city_grid');
-        $this->setOrder('Name');
-        $this->setSort('DESC');
+        $this->setOrder('ID');
+        $this->setSort('ASC');
+        //$this->setTemplate('index/customgrid');
         parent::__construct();
     }
-	
+    
     protected function _prepareData()
     {
         $model = new Model_City();
         $this->setSelect($model->findCityData());
         return parent::_prepareData();
     }
-	
-	protected function _prepareColumns()
-	{
+    
+    protected function _prepareColumns()
+    {
         $this->addColumn('id', array(
-            'header'=> 'ID',
-            'width' => '100px',
-            'type'  => 'number',
-            'index' => 'ID',
+            'header' => 'ID',
+            'align' => 'center',
+            'width' => '7%',
+            'type' => 'number',
+            'index' => 'ID'
+        ));
+        
+        $this->addColumn('name', array(
+            'header' => 'City Name',
+            'align' => 'right',
+            'width' => '200px',
+            'type' => 'text',
+            'index' => 'Name'
+        ));
+        
+        $this->addColumn('code', array(
+            'header' => 'Country Code',
+            'align' => 'center',
+            'width' => '200px',
+            'type' => 'options',
+            'index' => 'CountryCode',
+            'options' => $this->getCountryCodeOptions()
+        ));
+        
+        $this->addColumn('district', array(
+            'header' => 'District',
+            'width' => '200px',
+            'type' => 'text',
+            'index' => 'District'
+        ));
+        
+        $this->addColumn('population', array(
+            'header' => 'Population',
+            'align' => 'left',
+            'width' => '200px',
+            'type' => 'text',
+            'index' => 'Population'
+        ));
+        
+        $this->addColumn('region', array(
+            'header' => 'Region',
+            'width' => '200px',
+            'type' => 'options',
+            'index' => 'Region',
+            'options' => $this->fetchUniqueRegions()
+        ));
+        
+        $this->addColumn('continent', array(
+            'header' => 'Continent',
+            'width' => '200px',
+            'type' => 'options',
+            'index' => 'Continent',
+            'options' => $this->fetchUniqueContinents()
         ));
         
         $this->addColumn('created_at', array(
