@@ -87,16 +87,16 @@ abstract class App_Grid_Gridola
         return $this->_urlHelper;
     }
     
-    protected function getUrl($action, $params)
+    protected function getUrl($params)
     {
-        return $this->getUrlHelper()->simple($action, null, null, $params);
+        return $this->getUrlHelper()->url($params);
     }
     
     protected function getRoute($params = array())
     {
         if ($this->_route === null) {
             $action = $this->getRequest()->getActionName();
-            $this->_route = $this->getUrl($action, null, null, $params);
+            $this->_route = $this->getUrlHelper()->simple($action, null, null, $params);
         }
         return $this->_route;
     }
@@ -200,8 +200,6 @@ abstract class App_Grid_Gridola
         $this->getView()->setMassActionField($this->getMassactionField());
         
         $this->getView()->setFormId($this->getFormId());
-        
-        $this->getView()->setFormAction($this->getRoute());
         
         $this->getView()->setRoute($this->getRoute());
         
