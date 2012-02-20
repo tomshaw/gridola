@@ -26,6 +26,7 @@ class App_Grid_View
             $method = strtolower(substr($method, 3));
             $this->getView()->{$method} = $params[0];
         }
+        return $this;
     }
     
     public function setJsonActions($jsonActions)

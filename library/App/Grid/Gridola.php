@@ -187,23 +187,16 @@ abstract class App_Grid_Gridola
     
     protected function initView()
     {
-        $this->getView()->setRows($this->getRows());
-        
-        $this->getView()->setDataGrid($this->getGrid());
-        
-        $this->getView()->setSort($this->getRequestedSort());
-        
-        $this->getView()->setActions($this->prepareActionUrls()->getActions());
-        
-        $this->getView()->setMassActions($this->getMassActions());
-        
-        $this->getView()->setMassActionField($this->getMassactionField());
-        
-        $this->getView()->setFormId($this->getFormId());
-        
-        $this->getView()->setRoute($this->getRoute());
-        
-        $this->getView()->setJsonActions($this->encodeMassactions()->getMassActions());
+        $this->getView()
+            ->setRows($this->getRows())
+            ->setDataGrid($this->getGrid())
+            ->setSort($this->getRequestedSort())
+            ->setActions($this->prepareActionUrls()->getActions())
+            ->setMassActions($this->getMassActions())
+            ->setMassActionField($this->getMassactionField())
+            ->setFormId($this->getFormId())
+            ->setRoute($this->getRoute())
+            ->setJsonActions($this->encodeMassactions()->getMassActions());
         
         $this->getView()->setJavascriptFormVariable($this->getFormId());
         
