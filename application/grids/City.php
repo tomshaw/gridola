@@ -144,7 +144,7 @@ class Grid_City extends App_Grid_Abstract
                 'module' => 'default', 
                 'controller' => 'index', 
                 'action' => 'edit')
-        	)
+            )
         );
     }
     
