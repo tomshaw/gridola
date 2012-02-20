@@ -74,11 +74,6 @@ abstract class App_Grid_Gridola
         return $this->_searchParams;
     }
     
-    protected function getJsonActions()
-    {
-        return isset($this->_massactions['encoded']) ? $this->_massactions['encoded'] : array();
-    }
-    
     protected function getRequestedSort()
     {
         return ($this->getRequest()->getParam('sort') == 'desc') ? 'asc' : 'desc';
@@ -177,15 +172,15 @@ abstract class App_Grid_Gridola
         return $this;
     }
     
-    protected function encodeJsonMassaction()
+    protected function encodeMassactions()
     {
-        if (sizeof($this->_massactions)) {
-            foreach ($this->_massactions as $_index => $value) {
+        if (sizeof($this->getMassActions())) {
+            foreach ($this->getMassActions() as $_index => $value) {
                 if (sizeof($value['url'])) {
                     $this->_massactions[$_index]['url'] = $this->getUrlHelper()->url($value['url']);
                 }
             }
-            $this->_massactions['encoded'] = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
+            $this->_massactions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
         }
         return $this;
     }
@@ -210,7 +205,7 @@ abstract class App_Grid_Gridola
         
         $this->getView()->setRoute($this->getRoute());
         
-        $this->getView()->setJsonActions($this->encodeJsonMassaction()->getJsonActions());
+        $this->getView()->setJsonActions($this->encodeMassactions()->getMassActions());
         
         $this->getView()->setJavascriptFormVariable($this->getFormId());
         
