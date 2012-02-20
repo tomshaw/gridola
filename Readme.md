@@ -115,11 +115,10 @@
 
  List of todo items:
 
-  * Cleanup alot of the code.
+  * Refactor Db and Element objects.
   * Add check all and checked remember cookie support.
   * Add export functionality.
   * Currency support.
-  * Ditch alot of lame code. Could be much lighter weight.
   * Consider caching paginated results.
   * Review any security concerns.
   * Unit test.
