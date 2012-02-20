@@ -197,17 +197,12 @@ abstract class App_Grid_Gridola
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
             ->setRoute($this->getRoute())
-            ->setJsonActions($this->encodeMassactions()->getMassActions());
-        
-        $this->getView()->setJavascriptFormVariable($this->getFormId());
-        
-        $this->getView()->setJavascriptInclude();
-        
-        $this->getView()->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl());
-        
-        $this->getView()->setCycleColors($this->getCycleColors());
-        
-        $this->getView()->setOnMouseOverColor($this->getOnMouseOverColor());
+            ->setJsonActions($this->encodeMassactions()->getMassActions())
+            ->setJavascriptFormVariable($this->getFormId())
+            ->setJavascriptInclude()
+            ->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl())
+            ->setCycleColors($this->getCycleColors())
+            ->setOnMouseOverColor($this->getOnMouseOverColor());
     }
     
     public function __toString()

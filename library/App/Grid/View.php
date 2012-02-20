@@ -32,16 +32,19 @@ class App_Grid_View
     public function setJsonActions($jsonActions)
     {
         $this->getView()->headScript()->appendScript('var jsonActions = ' . $jsonActions);
+        return $this;
     }
     
     public function setJavascriptFormVariable($formId)
     {
         $this->getView()->headScript()->appendScript('var gridolaFormId = "#' . $formId . '";');
+        return $this;
     }
     
     public function setJavascriptInclude()
     {
         $this->getView()->headScript()->appendFile('/js/gridola.js');
+        return $this;
     }
     
     public function render($template)
