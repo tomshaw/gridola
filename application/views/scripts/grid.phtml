@@ -18,11 +18,7 @@ Actions <select id="massaction">
 </fieldset>
 <?php endif;?>
 <?php if(sizeof($this->rows)): ?>
-<table>
-    <tr>
-      <td colspan="<?php echo $colspan ?>" class="paginator"><?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?></td>
-    </tr>
-</table>
+<?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?>
 <?php endif; ?>
 <table <?php if($this->tableclass): ?>class="<?php echo $this->tableclass ?>"<?php endif; ?>>
   <thead>
