@@ -12,7 +12,9 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_formId = 'gridola';
     
-    protected $_template = 'grid.phtml';
+    protected $_template = 'grid';
+    
+    protected $_templateExtension = '.phtml';
     
     protected $_exportTypes = array();
     
@@ -84,7 +86,12 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected function getTemplate()
     {
-        return $this->_template;
+        return $this->_template . $this->getTemplateExtension();
+    }
+    
+    protected function getTemplateExtension()
+    {
+    	return $this->_templateExtension;
     }
     
     protected function setExportTypes($exportTypes = array())

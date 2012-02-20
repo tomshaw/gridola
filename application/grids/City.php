@@ -19,7 +19,7 @@ class Grid_City extends App_Grid_Abstract
         $this->setFormId('city_grid');
         $this->setOrder('ID');
         $this->setSort('ASC');
-        //$this->setTemplate('index/customgrid.phtml');
+        //$this->setTemplate('index/customgrid');
         parent::__construct();
     }
     
