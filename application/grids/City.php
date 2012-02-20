@@ -88,7 +88,9 @@ class Grid_City extends App_Grid_Abstract
 			'header'=> 'Continent',
 			'width' => '200px',
 			'type'  => 'text',
+			'type'  => 'options',
 			'index' => 'Continent',
+			'options' => $this->fetchUniqueContinents(),
 		));
 		
 // 		$this->addColumn('created_at', array(
@@ -167,6 +169,18 @@ class Grid_City extends App_Grid_Abstract
 	/**
 	 * Encapsulated functionality.
 	 */
+	
+	private function fetchUniqueContinents()
+	{
+		$model = new Model_Country();
+		$rows = $model->fetchUniqueContinents();
+	
+		$data = array();
+		foreach($rows as $row) {
+			$data[$row->Continent] = $row->Continent;
+		}
+		return $data;
+	}
 	
 	private function getCountryCodeOptions()
 	{

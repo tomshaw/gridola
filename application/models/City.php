@@ -32,5 +32,4 @@ class Model_City extends Zend_Db_Table_Abstract
 			->order('CountryCode ASC');
 		return $this->fetchAll($select);
 	}
-	
 }
