@@ -8,12 +8,6 @@ class Grid_City extends App_Grid_Abstract
 {
     protected $_exportTypes = array('csv', 'xml');
     
-    protected $_rowClickUrl = array('field' => 'ID', 'url' => array('module' => 'default', 'controller' => 'index', 'action' => 'edit'));
-    
-    protected $_cycleColors = array("#EFEFEF", "#F9F9F9");
-    
-    protected $_onMouseOverColor = '#DBDFE2';
-    
     public function __construct()
     {
         $this->setFormId('city_grid');
@@ -144,17 +138,24 @@ class Grid_City extends App_Grid_Abstract
     
     protected function _prepareRowClickUrl()
     {
-        return $this->_rowClickUrl;
+        $this->setRowClickUrl(array(
+            'field' => 'ID', 
+            'url' => array(
+                'module' => 'default', 
+                'controller' => 'index', 
+                'action' => 'edit')
+        	)
+        );
     }
     
     protected function _prepareCycleColors()
     {
-        return $this->_cycleColors;
+        $this->setCycleColors(array("#EFEFEF", "#F9F9F9"));
     }
     
     protected function _prepareOnMouseOverColor()
     {
-        return $this->_onMouseOverColor;
+        $this->setOnMouseOverColor('#DBDFE2');
     }
     
     /**

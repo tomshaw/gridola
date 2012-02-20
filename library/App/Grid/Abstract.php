@@ -44,21 +44,6 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         return $this->_grid;
     }
     
-    protected function getRowClickUrl()
-    {
-        return $this->_rowClickUrl;
-    }
-    
-    protected function getCycleColors()
-    {
-        return $this->_cycleColors;
-    }
-    
-    protected function getOnMouseOverColor()
-    {
-        return $this->_onMouseOverColor;
-    }
-    
     protected function setSelect(Zend_Db_Table_Select $select)
     {
         $this->_select = $select;
@@ -144,6 +129,36 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         return $this->_massactions;
     }
     
+    protected function setRowClickUrl($url)
+    {
+    	$this->_rowClickUrl = $url;
+    }
+    
+    protected function getRowClickUrl()
+    {
+    	return $this->_rowClickUrl;
+    }
+    
+    protected function setCycleColors($cycleColors)
+    {
+    	$this->_cycleColors = $cycleColors;
+    }
+    
+    protected function getCycleColors()
+    {
+    	return $this->_cycleColors;
+    }
+    
+    protected function setOnMouseOverColor($onMouseOverColor)
+    {
+    	$this->_onMouseOverColor = $onMouseOverColor;
+    }
+    
+    protected function getOnMouseOverColor()
+    {
+    	return $this->_onMouseOverColor;
+    }
+    
     protected function _prepareData()
     {
         if (is_null($this->getSelect())) {
@@ -152,9 +167,20 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         if (!sizeof($this->getGrid())) {
             $this->_prepareColumns();
         }
-        if (sizeof($this->getGrid())) {
+        if (!sizeof($this->getActions())) {
             $this->_prepareActions();
+        }
+        if (!sizeof($this->getMassActions())) {
             $this->_prepareMassActions();
+        }
+        if (!sizeof($this->getRowClickUrl())) {
+            $this->_prepareRowClickUrl();
+        }
+        if (!sizeof($this->getCycleColors())) {
+            $this->_prepareCycleColors();
+        }
+        if (is_null($this->getOnMouseOverColor())) {
+            $this->_prepareOnMouseOverColor();
         }
         return parent::_prepareData();
     }
