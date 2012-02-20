@@ -100,6 +100,74 @@
             'index' => 'created_at',
         ));
     }
+    
+    protected function _prepareActions()
+    {
+        $this->addAction('delete', array(
+            'label' => 'Delete',
+            'field' => 'ID',
+            'url' => array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'delete'
+            )
+        ));
+        
+        $this->addAction('edit', array(
+            'label' => 'Edit',
+            'field' => 'ID',
+            'url' => array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'edit'
+            )
+        ));
+    }
+    
+    protected function _prepareMassActions()
+    {
+        $this->setMassactionField('ID');
+        
+        $this->addMassAction('delete_selected', array(
+            'label' => 'Delete Selected',
+            'url' => array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'delete'
+            )
+        ));
+        
+        $this->addMassAction('edit_selected', array(
+            'label' => 'Edit Selected',
+            'url' => array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'edit'
+            )
+        ));
+    }
+    
+    protected function _prepareRowClickUrl()
+    {
+        $this->setRowClickUrl(array(
+            'field' => 'ID', 
+            'url' => array(
+                'module' => 'default', 
+                'controller' => 'index', 
+                'action' => 'edit')
+            )
+        );
+    }
+    
+    protected function _prepareCycleColors()
+    {
+        $this->setCycleColors(array("#EFEFEF", "#F9F9F9"));
+    }
+    
+    protected function _prepareOnMouseOverColor()
+    {
+        $this->setOnMouseOverColor('#DBDFE2');
+    }
 
 ## Installation
 
