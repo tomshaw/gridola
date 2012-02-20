@@ -1,11 +1,9 @@
 <?php if ($this->pageCount): ?>
-<div class="dataTables_paginate paging_bootstrap pagination" style="float:left;margin-right:10px;margin-left:10px;">
+<div class="dataTables_paginate paging_bootstrap pagination" style="margin-right:10px;margin-left:10px;">
   <ul>
     <li class="prev"><a href="#">Results: <?= $this->firstItemNumber; ?>/<?= $this->lastItemNumber; ?></a></li>
     <li class="prev"><a href="#">Total: <?= $this->totalItemCount; ?></a></li>
   </ul>
-</div>
-<div class="dataTables_paginate paging_bootstrap pagination">
   <ul>
     <?php if (isset($this->previous)): ?>
     <li class="prev"><a href="<?= $this->url(array('page' => $this->first)); ?>">First</a></li>

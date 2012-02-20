@@ -8,6 +8,7 @@
 <?php $colspan = (sizeof($this->massactions)) ? count($this->datagrid)+1 : count($this->datagrid); ?>
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->route ?>">
 <?php if(sizeof($this->massactions)): ?>
+<div style="float:right;">
 <fieldset class="quick" style="border:none;text-align:right;">
 Actions <select id="massaction">
   <option value="-1"></option>
@@ -16,9 +17,10 @@ Actions <select id="massaction">
   <?php endforeach; ?>
 </select> <input class="button2" type="submit" value="Go">
 </fieldset>
+</div>
 <?php endif;?>
 <?php if(sizeof($this->rows)): ?>
-<?= $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?>
+<?php echo $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?>
 <?php endif; ?>
 <table <?php if($this->tableclass): ?>class="<?php echo $this->tableclass ?>"<?php endif; ?>>
   <thead>
