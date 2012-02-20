@@ -205,5 +205,4 @@ class Grid_City extends App_Grid_Abstract
 		}
 		return $data;
 	}
-
 }
