@@ -43,8 +43,8 @@ class App_Grid_Element
                 return '<input type="' . $this->_type . '" name="' . $this->_index . '" id="' . $this->_index . '" value="' . $this->_value . '">';
                 break;
             case 'number':
-                $number = 'Start <input type="text" name="start[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_start . '"><br />';
-                $number .= 'End&nbsp;&nbsp;<input type="text" name="end[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_end . '">';
+                $number = '<input type="text" name="start[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_start . '" title="Starting value.">';
+                $number .= ' <input type="text" name="end[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_end . '" title="Ending value.">';
                 return $number;
                 break;
             case 'options':
