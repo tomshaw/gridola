@@ -80,14 +80,14 @@ class Grid_City extends App_Grid_Abstract
 		$this->addColumn('region', array(
 			'header' => 'Region',
 			'width' => '200px',
-			'type'  => 'text',
+			'type'  => 'options',
 			'index' => 'Region',
+			'options' => $this->fetchUniqueRegions(),
 		));
 		
 		$this->addColumn('continent', array(
 			'header'=> 'Continent',
 			'width' => '200px',
-			'type'  => 'text',
 			'type'  => 'options',
 			'index' => 'Continent',
 			'options' => $this->fetchUniqueContinents(),
@@ -169,6 +169,18 @@ class Grid_City extends App_Grid_Abstract
 	/**
 	 * Encapsulated functionality.
 	 */
+	
+	private function fetchUniqueRegions()
+	{
+		$model = new Model_Country();
+		$rows = $model->fetchUniqueRegions();
+	
+		$data = array();
+		foreach($rows as $row) {
+			$data[$row->Region] = $row->Region;
+		}
+		return $data;
+	}
 	
 	private function fetchUniqueContinents()
 	{
