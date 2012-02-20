@@ -94,6 +94,7 @@ class Grid_City extends App_Grid_Abstract
     {
         $this->addAction('delete', array(
             'label' => 'Delete',
+            'title' => 'Delete This Entry',
             'field' => 'ID',
             'url' => array(
                 'module' => 'default',
@@ -104,6 +105,7 @@ class Grid_City extends App_Grid_Abstract
         
         $this->addAction('edit', array(
             'label' => 'Edit',
+            'title' => 'Edit This Row',
             'field' => 'ID',
             'url' => array(
                 'module' => 'default',

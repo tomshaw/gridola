@@ -64,7 +64,7 @@ Actions <select id="massaction">
       <?php if(sizeof($this->actions)): ?>
       <td style="text-align:center;">
       <?php $i = 1; foreach($this->actions as $action): ?>
-      	<a href="<?php echo $action['url']; ?>/<?php echo $action['field']; ?>/<?php echo urlencode($this->escape($data[$action['field']])); ?>" title="<?php echo $action['label']; ?>"><?php echo $action['label']; ?></a><?php if($i<count($this->actions)): ?> | <?php endif; ?>
+      	<a href="<?php echo $action['url']; ?>/<?php echo $action['field']; ?>/<?php echo urlencode($this->escape($data[$action['field']])); ?>" <?php if(isset($action['title'])): ?>title="<?php echo $action['title']; ?>"<?php endif; ?>><?php echo $action['label']; ?></a><?php if($i<count($this->actions)): ?> | <?php endif; ?>
       <?php $i++; endforeach; ?>
       </td>
       <?php endif; ?>
