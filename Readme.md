@@ -19,6 +19,8 @@
      
     protected $_exportTypes = array('csv','xml');
     
+    protected $_tableClass = 'table table-striped table-bordered';
+    
     public function __construct()
     {
         $this->setFormId('city_grid');

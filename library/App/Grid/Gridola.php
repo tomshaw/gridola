@@ -195,6 +195,7 @@ abstract class App_Grid_Gridola
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
             ->setFormId($this->getFormId())
+            ->setTableClass($this->getTableClass())
             ->setRoute($this->getRoute())
             ->setJsonActions($this->encodeMassactions()->getMassActions());
         

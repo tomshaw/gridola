@@ -34,6 +34,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_onMouseOverColor = null;
     
+    protected $_tableClass = null;
+    
     public function __construct()
     {
         $this->_prepareData();
@@ -72,6 +74,11 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     protected function getTemplate()
     {
         return $this->_template . $this->getTemplateExtension();
+    }
+    
+    protected function getTableClass()
+    {
+    	return $this->_tableClass;
     }
     
     protected function getTemplateExtension()
@@ -185,19 +192,19 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         return parent::_prepareData();
     }
     
-    protected function addColumn($_index, $data = array())
+    protected function addColumn($key, $data = array())
     {
-        $this->_grid[$_index] = $data;
+        $this->_grid[$key] = $data;
     }
     
-    protected function addAction($actionId, $data = array())
+    protected function addAction($key, $data = array())
     {
-        $this->_actions[$actionId] = $data;
+        $this->_actions[$key] = $data;
     }
     
-    protected function addMassAction($actionId, $data = array())
+    protected function addMassAction($key, $data = array())
     {
-        $this->_massactions[$actionId] = $data;
+        $this->_massactions[$key] = $data;
     }
     
     abstract protected function _prepareColumns();
