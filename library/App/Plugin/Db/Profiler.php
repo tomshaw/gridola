@@ -26,7 +26,7 @@ class App_Plugin_Db_Profiler extends Zend_Controller_Plugin_Abstract
         
         $view->placeholder('profiler')->setPrefix('<div id="profiler">')->setPostfix('</div>');
         
-        if (null === ($profiles = $profiler->getQueryProfiles())) {
+        if (false === ($profiles = $profiler->getQueryProfiles())) {
             return;
         }
         
