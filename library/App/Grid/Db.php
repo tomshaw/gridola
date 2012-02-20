@@ -170,7 +170,7 @@ class App_Grid_Db
                 }
             } else {
                 if (isset($columnData[$_index])) {
-                    $table                             = $columnData[$_index];
+                    $table = $columnData[$_index];
                     $this->getSession()->data{$_index} = $value;
                     $this->getSelect()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
                 }
