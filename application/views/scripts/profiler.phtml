@@ -1,9 +1,10 @@
+<div style="width:95%;margin:0 auto;">
 <table>
   <thead>
     <tr>
       <th style="text-align: center; width:5%;">Count</th>
       <th style="text-align: left; width:80%;">&nbsp;SQL Statement</th>
-      <th style="text-align: center; width:15%;">Time</th>
+      <th style="text-align: left; width:15%;">Time</th>
     </tr>
   </thead>
   <tbody>
@@ -16,35 +17,36 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-<br />
+</div>
+<div style="width:95%;margin:0 auto;">
 <table>
   <thead>
     <tr>
-      <th style="width: 85%">&nbsp;Statistic</th>
-      <th style="text-align: center; width: 15%">Value</th>
+      <th style="text-align:left; width: 85%">&nbsp;Statistic</th>
+      <th style="text-align:left; width: 15%">Value</th>
     </tr>
   </thead>	
   <tbody>
     <tr>
       <td>Total milliseconds:</td>
-      <td><?= $this->elapsed_milliseconds ?></td>
+      <td style="text-align:left;"><?= $this->elapsed_milliseconds ?></td>
     </tr>
     <tr>
       <td>Average query time:</td>
-      <td><?= $this->average_query_time ?></td>
+      <td style="text-align:left;"><?= $this->average_query_time ?></td>
     </tr>
     <tr>
       <td>Queries per second:</td>
-      <td><?= $this->queries_per_second ?></td>
+      <td style="text-align:left;"><?= $this->queries_per_second ?></td>
     </tr>
     <tr>
       <td>Longest query time:</td>
-      <td><?= $this->longest_query_time ?></td>
+      <td style="text-align:left;"><?= $this->longest_query_time ?></td>
     </tr>
     <tr>
       <td>Longest query id:</td>
-      <td>#<?= $this->longest_query_id ?>.</td>
+      <td style="text-align:left;">#<?= $this->longest_query_id ?>.</td>
     </tr>
   </tbody>
 </table>
-<br />
+</div>
