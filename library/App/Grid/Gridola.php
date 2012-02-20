@@ -201,7 +201,7 @@ abstract class App_Grid_Gridola
         
         $this->getView()->setJavascriptFormVariable($this->getFormId());
         
-        $this->getView()->setJavascriptInclude('/js/gridola.js');
+        $this->getView()->setJavascriptInclude();
         
         $this->getView()->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl());
         

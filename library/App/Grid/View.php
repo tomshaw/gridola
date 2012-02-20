@@ -39,9 +39,9 @@ class App_Grid_View
         $this->getView()->headScript()->appendScript('var gridolaFormId = "#' . $formId . '";');
     }
     
-    public function setJavascriptInclude($javascriptFile)
+    public function setJavascriptInclude()
     {
-        $this->getView()->headScript()->appendFile($javascriptFile);
+        $this->getView()->headScript()->appendFile('/js/gridola.js');
     }
     
     public function render($template)
