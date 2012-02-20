@@ -37,8 +37,8 @@
   </div>
 </div>
 <div class="container">
-  <?= $this->inlineScript(); ?>
-  <?= $this->layout()->content ?>
+  <?php echo $this->inlineScript(); ?>
+  <?php echo $this->layout()->content ?>
   <hr>
   <footer>
     <p>Gridola - Zend Framework Grid &copy; Tom Shaw 2012</p>
@@ -49,6 +49,6 @@
     ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
 <script src="/js/bootstrap.js"></script> 
-<?= $this->placeholder('profiler') ?>
+<?php echo $this->placeholder('profiler') ?>
 </body>
 </html>
