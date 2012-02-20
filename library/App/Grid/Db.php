@@ -215,7 +215,7 @@ class App_Grid_Db
         
         $paginator->setCurrentPageNumber($this->getPage());
         
-        $paginator->setItemCountPerPage(10);
+        $paginator->setItemCountPerPage(20);
         
         return $paginator;
     }
