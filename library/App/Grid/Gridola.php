@@ -16,8 +16,6 @@ abstract class App_Grid_Gridola
     
     protected $_element = null;
     
-    protected $_jsonActions = null;
-    
     protected $_searchParams = array();
     
     protected $_rows = null;
@@ -78,7 +76,7 @@ abstract class App_Grid_Gridola
     
     protected function getJsonActions()
     {
-        return $this->_jsonActions;
+        return isset($this->_massactions['encoded']) ? $this->_massactions['encoded'] : array();
     }
     
     protected function getRequestedSort()
@@ -187,7 +185,7 @@ abstract class App_Grid_Gridola
                     $this->_massactions[$_index]['url'] = $this->getUrlHelper()->url($value['url']);
                 }
             }
-            $this->_jsonActions = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
+            $this->_massactions['encoded'] = str_replace('\\/', '/', Zend_Json::encode($this->_massactions));
         }
         return $this;
     }
