@@ -187,6 +187,12 @@ abstract class App_Grid_Gridola
     	return $this;
     }
     
+    protected function preparePaginatorPartial()
+    {
+    	// Contemplating extra functionality here.
+    	return $this;
+    }
+    
     protected function initView()
     {
         $this->getView()
@@ -206,7 +212,8 @@ abstract class App_Grid_Gridola
             ->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl())
             ->setCycleColors($this->getCycleColors())
             ->setOnMouseOverColor($this->getOnMouseOverColor())
-        	->setScrollType($this->prepareScrollType()->getScrollType());
+        	->setScrollType($this->prepareScrollType()->getScrollType())
+            ->setPaginatorPartial($this->preparePaginatorPartial()->getPaginatorPartial());
     }
     
     public function __toString()

@@ -40,6 +40,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_scrollType = null;
     
+    protected $_paginatorPartial = 'gridpagination';
+    
     public function __construct()
     {
     	parent::__construct();
@@ -189,6 +191,16 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     protected function getScrollType()
     {
     	return $this->_scrollType;
+    }
+    
+    protected function setPaginatorPartial($partial)
+    {
+    	$this->_paginatorPartial = $partial;
+    }
+    
+    protected function getPaginatorPartial()
+    {
+    	return $this->_paginatorPartial  . $this->getTemplateExtension();
     }
     
     protected function _prepareData()
