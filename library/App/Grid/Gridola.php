@@ -22,6 +22,11 @@ abstract class App_Grid_Gridola
     
     protected $_url = null;
     
+    public function __construct() 
+    {
+    	
+    }
+    
     protected function getRequest()
     {
         if ($this->_request === null) {
@@ -144,8 +149,8 @@ abstract class App_Grid_Gridola
     
     protected function prepareActionUrls()
     {
-        if (sizeof($this->_actions)) {
-            foreach ($this->_actions as $_index => $value) {
+        if (sizeof($this->getActions())) {
+            foreach ($this->getActions() as $_index => $value) {
                 if (sizeof($value['url'])) {
                     if (isset($value['url']['action'])) {
                         $this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
@@ -169,6 +174,19 @@ abstract class App_Grid_Gridola
         return $this;
     }
     
+    protected function prepareScrollType()
+    {
+    	if(null == $this->getScrollType()) {
+    		$this->setScrollType($this->getScrollingTypes(2));
+    	} else {
+    		$scrollTypes = array_flip($this->getScrollingTypes());
+    		if(!isset($scrollTypes[$this->getScrollType()])) {
+    			throw New App_Grid_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
+    		}
+    	}
+    	return $this;
+    }
+    
     protected function initView()
     {
         $this->getView()
@@ -187,7 +205,8 @@ abstract class App_Grid_Gridola
             ->setJavascriptInclude()
             ->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl())
             ->setCycleColors($this->getCycleColors())
-            ->setOnMouseOverColor($this->getOnMouseOverColor());
+            ->setOnMouseOverColor($this->getOnMouseOverColor())
+        	->setScrollType($this->prepareScrollType()->getScrollType());
     }
     
     public function __toString()

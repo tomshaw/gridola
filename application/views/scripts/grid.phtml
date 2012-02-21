@@ -19,7 +19,7 @@
 <div style="float:right;margin-top:10px;margin-right:5px;"><input type="submit" name="submit" value="Filter Results"></div>
 <?php endif;?>
 <?php if(sizeof($this->rows)): ?>
-<?php echo $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?>
+<?php echo $this->paginationControl($this->rows, $this->scrolltype, 'gridpage.phtml'); ?>
 <?php endif; ?>
 <table <?php if($this->tableclass): ?>class="<?php echo $this->tableclass ?>"<?php endif; ?>>
   <thead>

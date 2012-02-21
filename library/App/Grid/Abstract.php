@@ -36,8 +36,13 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_tableClass = null;
     
+    protected $_scrollingTypes = array('All','Elastic','Jumping','Sliding');
+    
+    protected $_scrollType = null;
+    
     public function __construct()
     {
+    	parent::__construct();
         $this->_prepareData();
     }
     
@@ -164,6 +169,26 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     protected function getOnMouseOverColor()
     {
     	return $this->_onMouseOverColor;
+    }
+    
+    protected function getScrollingTypes($index = null)
+    {
+    	if($index) {
+    		if(isset($this->_scrollingTypes[$index])) {
+    			return $this->_scrollingTypes[$index]; 
+    		}
+    	}
+    	return $this->_scrollingTypes;
+    }
+    
+    protected function setScrollType($scrollType)
+    {
+    	$this->_scrollType = $scrollType;
+    }
+    
+    protected function getScrollType()
+    {
+    	return $this->_scrollType;
     }
     
     protected function _prepareData()
