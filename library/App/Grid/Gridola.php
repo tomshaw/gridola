@@ -177,7 +177,7 @@ abstract class App_Grid_Gridola
     protected function prepareScrollType()
     {
         if(null == $this->getScrollType()) {
-            $this->setScrollType($this->getScrollingTypes(2));
+            $this->setScrollType($this->getScrollingTypes($jumping = 2));
         } else {
             $scrollTypes = array_flip($this->getScrollingTypes());
             if(!isset($scrollTypes[$this->getScrollType()])) {
