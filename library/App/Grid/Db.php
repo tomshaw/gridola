@@ -133,7 +133,7 @@ class App_Grid_Db
                 }
             }
             if(sizeof($errors)) {
-                throw new App_Grid_Exception('The following grid columns have been created but do not exist in your database query: ' . implode(', ', $errors) . '.');
+                throw new App_Grid_Exception('The following grid columns do not exist in your database select statement: ' . implode(', ', $errors) . '.');
             }
         }
         return $this;
