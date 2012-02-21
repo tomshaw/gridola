@@ -76,9 +76,10 @@ abstract class App_Grid_Gridola
         return $this->_searchParams;
     }
     
-    protected function getRequestedSort()
+    protected function dynamicSort()
     {
-        return ($this->getRequest()->getParam('sort') == 'desc') ? 'asc' : 'desc';
+        $this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
+        return $this;
     }
     
     protected function getUrlHelper()
@@ -203,7 +204,7 @@ abstract class App_Grid_Gridola
         $this->getView()
             ->setRows($this->getRows())
             ->setDataGrid($this->getGrid())
-            ->setSort($this->getRequestedSort())
+            ->setSort($this->dynamicSort()->getSort())
             ->setActions($this->prepareActionUrls()->getActions())
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
