@@ -72,11 +72,11 @@ abstract class App_Grid_Gridola
     
     protected function getUrl($controller = null, $module = null, array $params = array())
     {
-        if ($this->_route === null) {
+        if ($this->_url === null) {
             $action = $this->getRequest()->getActionName();
-            $this->_route = $this->getUrlHelper()->simple($action, $controller, $module, $params);
+            $this->_url = $this->getUrlHelper()->simple($action, $controller, $module, $params);
         }
-        return $this->_route;
+        return $this->_url;
     }
     
     protected function dynamicSort()
@@ -172,6 +172,7 @@ abstract class App_Grid_Gridola
     protected function initView()
     {
         $this->getView()
+            ->setUrl($this->getUrl())
             ->setRows($this->getRows())
             ->setDataGrid($this->getGrid())
             ->setSort($this->dynamicSort()->getSort())
@@ -181,7 +182,6 @@ abstract class App_Grid_Gridola
             ->setMassActionField($this->getMassactionField())
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
-            ->setUrl($this->getUrl())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
             ->setJavascriptFormVariable($this->getFormId())
             ->setJavascriptInclude()
