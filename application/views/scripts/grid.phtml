@@ -5,19 +5,18 @@
 * MIT Licensed
 */
 -->
-<?php $colspan = (sizeof($this->massactions)) ? count($this->datagrid)+1 : count($this->datagrid); ?>
+<?php $colspan = count($this->datagrid); ?>
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->route ?>">
-<?php if(sizeof($this->massactions)): ?>
-<div style="float:right;">
-<fieldset class="quick" style="border:none;text-align:right;">
-Actions <select id="massaction">
+
+<?php if(sizeof($this->massactions) && sizeof($this->actions)): ?>
+<fieldset style="float:right;margin-top:10px;margin-right:5px;">Actions <select id="massaction">
   <option value="-1"></option>
   <?php foreach($this->massactions as $_index => $value): ?>
   <option value="<?php echo $_index ?>"><?php echo $value['label'] ?></option>
   <?php endforeach; ?>
-</select> <input class="button2" type="submit" value="Go">
-</fieldset>
-</div>
+</select> <input class="button2" type="submit" value="Go"> <input type="submit" name="submit" value="Filter Results"></fieldset>
+<?php else: ?>
+<div style="float:right;margin-top:10px;margin-right:5px;"><input type="submit" name="submit" value="Filter Results"></div>
 <?php endif;?>
 <?php if(sizeof($this->rows)): ?>
 <?php echo $this->paginationControl($this->rows, 'Elastic', 'gridpage.phtml'); ?>
@@ -29,7 +28,7 @@ Actions <select id="massaction">
       <?php foreach($this->datagrid as $element): ?>
       <th <?php echo $element['style'] ?>><a href="<?php echo $this->route; ?>order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
       <?php endforeach; ?>
-      <th style="width:10%;text-align:center;">Actions</th>
+      <?php if(sizeof($this->actions)): ?><th style="width:10%;text-align:center;">Actions</th><?php endif; ?>
     </tr>
   </thead>
   <tbody>
@@ -38,7 +37,7 @@ Actions <select id="massaction">
       <?php foreach($this->datagrid as $element): ?>
       <td <?php echo $element['style'] ?>><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
-      <td style="text-align:center;"><input type="submit" name="submit" value="Filter Results"></td>
+      <?php if(sizeof($this->actions)): ?><td>&nbsp;</td><?php endif; ?>
     </tr>
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>

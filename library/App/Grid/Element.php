@@ -59,11 +59,9 @@ class App_Grid_Element
                 break;
             case 'datetime':
                 $datePickerStart = new ZendX_JQuery_Form_Element_DatePicker("'.$this->_index.'", array('value' => $this->_start), array());
-                $datePickerStart->removeDecorator('label')->removeDecorator('HtmlTag');
-                $datePickerStart->setBelongsTo('start');
+                $datePickerStart->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('start');
                 $datePickerEnd = new ZendX_JQuery_Form_Element_DatePicker("'.$this->_index.'", array('value' => $this->_end), array());
-                $datePickerEnd->removeDecorator('label')->removeDecorator('HtmlTag');
-                $datePickerEnd->setBelongsTo('end');
+                $datePickerEnd->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('end');
                 return $datePickerStart . $datePickerEnd;
                 break;
         }
