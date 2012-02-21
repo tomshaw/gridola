@@ -26,7 +26,7 @@
     <tr>
       <?php if(sizeof($this->massactions)): ?><th style="width:50px;text-align:center;">Check</th><?php endif; ?>
       <?php foreach($this->datagrid as $element): ?>
-      <th <?php echo $element['style'] ?>><a href="<?php echo $this->url; ?>order/<?php echo $element['index']; ?>/sort/<?php echo $this->sort; ?>/page/<?php echo $this->page; ?>"><?php echo $element['header']; ?></a></th>
+      <th <?php echo $element['style'] ?>><a href="<?php echo $this->url; ?>order/<?php echo $element['index']; ?>/page/<?php echo $this->page; ?>/sort/<?php echo $this->sort; ?>"><?php echo $element['header']; ?></a></th>
       <?php endforeach; ?>
       <?php if(sizeof($this->actions)): ?><th style="width:10%;text-align:center;">Actions</th><?php endif; ?>
     </tr>
@@ -42,7 +42,7 @@
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>
     <?php $colour = $this->cycle(sizeof($this->cyclecolors) ? $this->cyclecolors : array())->next(); ?>
-    <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo urlencode($this->escape($data[$this->rowclickurl['field']])) ?><?php endif; ?>"<?php endif; ?> style="background:<?= $colour ?>" <?php if($this->onmouseovercolor): ?>onmouseover="this.style.background='<?php echo $this->onmouseovercolor ?>';"<?php endif; ?> <?php if($this->onmouseovercolor): ?>onmouseout="this.style.background='<?= $colour ?>';"<?php endif; ?>>
+    <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo urlencode($this->escape($data[$this->rowclickurl['field']])) ?><?php endif; ?>"<?php endif; ?> style="background-color:<?= $colour ?>" <?php if($this->onmouseovercolor): ?>onmouseover="this.style.background='<?php echo $this->onmouseovercolor ?>';"<?php endif; ?> <?php if($this->onmouseovercolor): ?>onmouseout="this.style.background='<?= $colour ?>';"<?php endif; ?>>
       <?php $hasMassActionCheckBox = false; ?>
       <?php if(sizeof($this->massactions) && $hasMassActionCheckBox === false): ?>
       <td style="text-align:center;">

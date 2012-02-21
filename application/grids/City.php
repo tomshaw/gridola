@@ -8,7 +8,7 @@ class Grid_City extends App_Grid_Abstract
 {
     protected $_exportTypes = array('csv', 'xml');
     
-    protected $_tableClass = 'table table-striped table-bordered';
+    protected $_tableClass = 'table table-bordered'; // table-striped bootstraps alternating row colors I assume.
     
     public function __construct()
     {
