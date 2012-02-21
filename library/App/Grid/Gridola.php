@@ -212,7 +212,7 @@ abstract class App_Grid_Gridola
             ->setRowClickUrl($this->prepareRowClickUrl()->getRowClickUrl())
             ->setCycleColors($this->getCycleColors())
             ->setOnMouseOverColor($this->getOnMouseOverColor())
-        	->setScrollType($this->prepareScrollType()->getScrollType())
+            ->setScrollType($this->prepareScrollType()->getScrollType())
             ->setPaginatorPartial($this->preparePaginatorPartial()->getPaginatorPartial());
     }
     
