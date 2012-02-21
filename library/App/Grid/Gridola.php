@@ -22,6 +22,8 @@ abstract class App_Grid_Gridola
     
     protected $_urlHelper = null;
     
+    protected $_url = null;
+    
     protected $_route = null;
     
     protected function getRequest()
@@ -87,18 +89,25 @@ abstract class App_Grid_Gridola
         return $this->_urlHelper;
     }
     
-    protected function getUrl($params)
-    {
-        return $this->getUrlHelper()->url($params);
-    }
-    
-    protected function getRoute($params = array())
+    protected function getUrl($params = null, $controller = null, $module = null)
     {
         if ($this->_route === null) {
             $action = $this->getRequest()->getActionName();
-            $this->_route = $this->getUrlHelper()->simple($action, null, null, $params);
+            $this->_route = $this->getUrlHelper()->simple($action, $controller, $module, $params);
         }
         return $this->_route;
+    }
+    
+    protected function getSimpleUrl()
+    {
+    	if ($this->_url === null) {
+    		$module = $this->getRequest()->getModuleName();
+    		$controller = $this->getRequest()->getControllerName();
+    		$action = $this->getRequest()->getActionName();
+    		$page = $this->getRequest()->getParam('page', 1);
+    		$this->_url = '/'.$module.'/'.$controller.'/'.$action.'/page/'.$page;
+    	}
+    	return $this->_url;
     }
     
     protected function _prepareData()
@@ -196,7 +205,8 @@ abstract class App_Grid_Gridola
             ->setMassActionField($this->getMassactionField())
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
-            ->setRoute($this->getRoute())
+            ->setRoute($this->getUrl())
+            ->setSortRoute($this->getSimpleUrl())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
             ->setJavascriptFormVariable($this->getFormId())
             ->setJavascriptInclude()
