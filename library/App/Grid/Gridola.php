@@ -16,15 +16,11 @@ abstract class App_Grid_Gridola
     
     protected $_element = null;
     
-    protected $_searchParams = array();
-    
     protected $_rows = null;
     
     protected $_urlHelper = null;
     
     protected $_url = null;
-    
-    protected $_route = null;
     
     protected function getRequest()
     {
@@ -66,22 +62,6 @@ abstract class App_Grid_Gridola
         return $this->_element;
     }
     
-    protected function getSearchParams()
-    {
-        if (!sizeof($this->_searchParams)) {
-            if ($this->getRequest()->isPost()) {
-                $this->_searchParams = $this->getRequest()->getPost();
-            }
-        }
-        return $this->_searchParams;
-    }
-    
-    protected function dynamicSort()
-    {
-        $this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
-        return $this;
-    }
-    
     protected function getUrlHelper()
     {
         if ($this->_urlHelper === null) {
@@ -90,7 +70,7 @@ abstract class App_Grid_Gridola
         return $this->_urlHelper;
     }
     
-    protected function getUrl($params = null, $controller = null, $module = null)
+    protected function getUrl($controller = null, $module = null, array $params = array())
     {
         if ($this->_route === null) {
             $action = $this->getRequest()->getActionName();
@@ -99,27 +79,17 @@ abstract class App_Grid_Gridola
         return $this->_route;
     }
     
-    protected function getSimpleUrl()
+    protected function dynamicSort()
     {
-    	if ($this->_url === null) {
-    		$module = $this->getRequest()->getModuleName();
-    		$controller = $this->getRequest()->getControllerName();
-    		$action = $this->getRequest()->getActionName();
-    		$page = $this->getRequest()->getParam('page', 1);
-    		if($module == 'default') {
-    			$this->_url = '/'.$controller.'/'.$action.'/page/'.$page;
-    		} else {
-    			$this->_url = '/'.$module.'/'.$controller.'/'.$action.'/page/'.$page;
-    		}
-    	}
-    	return $this->_url;
+    	$this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
+    	return $this;
     }
     
     protected function _prepareData()
     {
         $this->initSelect();
         
-        $searchParams = $this->getSearchParams();
+        $searchParams = $this->getRequest()->getPost();
         foreach ($this->getGrid() as $_index => $column) {
             if (isset($searchParams[$column['index']])) {
                 $column['value'] = $searchParams[$column['index']];
@@ -205,13 +175,13 @@ abstract class App_Grid_Gridola
             ->setRows($this->getRows())
             ->setDataGrid($this->getGrid())
             ->setSort($this->dynamicSort()->getSort())
+            ->setPage($this->getRequest()->getParam('page', 1))
             ->setActions($this->prepareActionUrls()->getActions())
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
-            ->setRoute($this->getUrl())
-            ->setSortRoute($this->getSimpleUrl())
+            ->setUrl($this->getUrl())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
             ->setJavascriptFormVariable($this->getFormId())
             ->setJavascriptInclude()
