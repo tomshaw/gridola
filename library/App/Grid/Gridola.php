@@ -176,15 +176,15 @@ abstract class App_Grid_Gridola
     
     protected function prepareScrollType()
     {
-    	if(null == $this->getScrollType()) {
-    		$this->setScrollType($this->getScrollingTypes(2));
-    	} else {
-    		$scrollTypes = array_flip($this->getScrollingTypes());
-    		if(!isset($scrollTypes[$this->getScrollType()])) {
-    			throw New App_Grid_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
-    		}
-    	}
-    	return $this;
+        if(null == $this->getScrollType()) {
+            $this->setScrollType($this->getScrollingTypes(2));
+        } else {
+            $scrollTypes = array_flip($this->getScrollingTypes());
+            if(!isset($scrollTypes[$this->getScrollType()])) {
+                throw New App_Grid_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
+            }
+        }
+        return $this;
     }
     
     protected function preparePaginatorPartial()

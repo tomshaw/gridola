@@ -175,12 +175,12 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected function getScrollingTypes($index = null)
     {
-    	if($index) {
-    		if(isset($this->_scrollingTypes[$index])) {
-    			return $this->_scrollingTypes[$index]; 
-    		}
-    	}
-    	return $this->_scrollingTypes;
+        if($index) {
+            if(isset($this->_scrollingTypes[$index])) {
+                return $this->_scrollingTypes[$index]; 
+            }
+        }
+        return $this->_scrollingTypes;
     }
     
     protected function setScrollType($scrollType)
