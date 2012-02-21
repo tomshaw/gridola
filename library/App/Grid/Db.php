@@ -118,6 +118,27 @@ class App_Grid_Db
         return $postedArrayNotation;
     }
     
+    public function checkData($grid)
+    {
+        $columns = $this->getColumnsToTable();
+        if(sizeof($grid)) {
+            $errors = array();
+            foreach($grid as $_index => $data) {
+                $column = isset($data['index']) ? $data['index'] : null;
+                if(null === $column) {
+                    throw new App_Grid_Exception('A column index must be specified when creating your data grid.');
+                }
+                if(!isset($columns[$column])) {
+                    $errors[] = $column;
+                }
+            }
+            if(sizeof($errors)) {
+                throw new App_Grid_Exception('The following grid columns have been created but do not exist in your database query: ' . implode(', ', $errors) . '.');
+            }
+        }
+        return $this;
+    }
+    
     public function init()
     {
         if ($this->getRequest()->isPost()) {

@@ -134,7 +134,7 @@ abstract class App_Grid_Gridola
     
     protected function initSelect()
     {
-        $this->getDb()->setSelect($this->getSelect())->init();
+        $this->getDb()->setSelect($this->getSelect())->checkData($this->getGrid())->init();
         $this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
         $this->_rows = $this->getDb()->paginateResults();
     }
