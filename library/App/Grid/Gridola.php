@@ -105,7 +105,11 @@ abstract class App_Grid_Gridola
     		$controller = $this->getRequest()->getControllerName();
     		$action = $this->getRequest()->getActionName();
     		$page = $this->getRequest()->getParam('page', 1);
-    		$this->_url = '/'.$module.'/'.$controller.'/'.$action.'/page/'.$page;
+    		if($module == 'default') {
+    			$this->_url = '/'.$controller.'/'.$action.'/page/'.$page;
+    		} else {
+    			$this->_url = '/'.$module.'/'.$controller.'/'.$action.'/page/'.$page;
+    		}
     	}
     	return $this->_url;
     }
