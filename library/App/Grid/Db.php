@@ -118,12 +118,12 @@ class App_Grid_Db
         return $postedArrayNotation;
     }
     
-    public function checkData($grid)
+    public function checkData($dataGrid)
     {
         $columns = $this->getColumnsToTable();
-        if(sizeof($grid)) {
+        if(sizeof($dataGrid)) {
             $errors = array();
-            foreach($grid as $_index => $data) {
+            foreach($dataGrid as $_index => $data) {
                 $column = isset($data['index']) ? $data['index'] : null;
                 if(null === $column) {
                     throw new App_Grid_Exception('A column index must be specified when creating your data grid.');
