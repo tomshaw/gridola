@@ -25,7 +25,7 @@ abstract class App_Grid_Gridola
     public function __construct() 
     {
     	if(null === ($this->getDataSource())) {
-    		$this->_prepareDataSource();
+            $this->_prepareDataSource();
     	}
     }
     
@@ -47,7 +47,7 @@ abstract class App_Grid_Gridola
     protected function getRows()
     {
     	if ($this->_rows === null) {
-    		$this->_rows = $this->initSelect();
+            $this->_rows = $this->initSelect();
     	}
     	return $this->_rows;
     }
@@ -62,7 +62,7 @@ abstract class App_Grid_Gridola
     protected function getDb()
     {
     	if ($this->_db === null) {
-    		$this->_db = new App_Grid_Db();
+            $this->_db = new App_Grid_Db();
     	}
     	return $this->_db;
     }

@@ -55,7 +55,7 @@ class App_Grid_Element
                 $numberStart->setBelongsTo('start');
                 $numberEnd = new Zend_Form_Element_Text($this->_index);
                 $numberEnd->setValue($this->_end);
-                $numberEnd->setAttribs(array('title'=>'Ending value.','style'=>'margin-top:1px;'));
+                $numberEnd->setAttribs(array('title'=>'Ending value.','style'=>'margin-top:0px;'));
                 $numberEnd->removeDecorator('label')->removeDecorator('HtmlTag');
                 $numberEnd->setBelongsTo('end');
                 return $numberStart . $numberEnd;
