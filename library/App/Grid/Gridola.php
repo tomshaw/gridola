@@ -24,7 +24,47 @@ abstract class App_Grid_Gridola
     
     public function __construct() 
     {
+    	if(null === ($this->getDataSource())) {
+    		$this->_prepareDataSource();
+    	}
+    }
+    
+    protected function _prepareDataSource()
+    {
+    	$dataSource = $this->getDataSource();
     	
+    	if (is_array($dataSource)) {
+
+    	} else if($dataSource instanceof Zend_Db_Table_Select) {
+    		//$this->initSelect();
+    	} elseif($dataSource instanceof Zend_Db_Table_Rowset_Abstract) {
+    		//$rowsetArray = $dataSource->toArray();
+    	} else if ($dataSource instanceof Iterator) {
+
+    	}
+    }
+    
+    protected function getRows()
+    {
+    	if ($this->_rows === null) {
+    		$this->_rows = $this->initSelect();
+    	}
+    	return $this->_rows;
+    }
+    
+    protected function initSelect()
+    {
+    	$this->getDb()->setSelect($this->getDataSource())->checkData($this->getGrid())->init();
+    	$this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
+    	$this->_rows = $this->getDb()->paginateResults();
+    }
+    
+    protected function getDb()
+    {
+    	if ($this->_db === null) {
+    		$this->_db = new App_Grid_Db();
+    	}
+    	return $this->_db;
     }
     
     protected function getRequest()
@@ -41,14 +81,6 @@ abstract class App_Grid_Gridola
             $this->_session = new Zend_Session_Namespace('store');
         }
         return $this->_session;
-    }
-    
-    protected function getDb()
-    {
-        if ($this->_db === null) {
-            $this->_db = new App_Grid_Db();
-        }
-        return $this->_db;
     }
     
     protected function getView()
@@ -92,8 +124,8 @@ abstract class App_Grid_Gridola
     
     protected function _prepareData()
     {
-        $this->initSelect();
-        
+    	$this->initSelect();
+    	
         $searchParams = $this->getRequest()->getPost();
         foreach ($this->getGrid() as $_index => $column) {
             if (isset($searchParams[$column['index']])) {
@@ -103,7 +135,6 @@ abstract class App_Grid_Gridola
             } else {
                 $column['value'] = '';
             }
-            
             if (isset($this->_grid[$_index])) {
                 $this->_grid[$_index]['element'] = $this->getElement()->addElement($column);
                 $this->_grid[$_index]['style']   = $this->getElement()->addStyle($column);
@@ -111,21 +142,6 @@ abstract class App_Grid_Gridola
         }
         
         $this->initView();
-    }
-    
-    protected function getRows()
-    {
-        if ($this->_rows === null) {
-            $this->_rows = $this->initSelect();
-        }
-        return $this->_rows;
-    }
-    
-    protected function initSelect()
-    {
-        $this->getDb()->setSelect($this->getSelect())->checkData($this->getGrid())->init();
-        $this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
-        $this->_rows = $this->getDb()->paginateResults();
     }
     
     protected function prepareRowClickUrl()
@@ -136,6 +152,7 @@ abstract class App_Grid_Gridola
                 throw new App_Grid_Exception('A database field name must be specified when creating a clickable row.');
             }
             if (isset($rowClickUrl['url']) && is_array($rowClickUrl['url'])) {
+            	$data = array();
                 foreach ($rowClickUrl['url'] as $_index => $value) {
                     if (in_array($_index, array('module','controller','action'))) {
                         $data[$_index] = $value;
@@ -151,6 +168,9 @@ abstract class App_Grid_Gridola
     {
         if (sizeof($this->getActions())) {
             foreach ($this->getActions() as $_index => $value) {
+            	if (!array_key_exists('url', $value)) {
+            		throw new App_Grid_Exception('A url must be specified when creating inline row actions.');
+            	}
                 if (sizeof($value['url'])) {
                     if (isset($value['url']['action'])) {
                         $this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
@@ -219,11 +239,12 @@ abstract class App_Grid_Gridola
     public function __toString()
     {
         try {
-            return $this->getView()->render($this->getTemplate());
+            $return = $this->getView()->render($this->getTemplate());
+            return $return;
+        } catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
         }
-        catch (Exception $e) {
-            throw new App_Grid_Exception($e);
-        }
+        return '';
     }
     
 }

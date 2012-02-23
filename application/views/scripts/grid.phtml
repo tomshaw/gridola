@@ -6,8 +6,9 @@
 */
 -->
 <?php $colspan = count($this->datagrid); ?>
+<?php if(sizeof($this->massactions)): $colspan++; endif; ?>
+<?php if(sizeof($this->actions)): $colspan++; endif; ?>
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->url ?>">
-
 <?php if(sizeof($this->massactions) && sizeof($this->actions)): ?>
 <fieldset style="float:right;margin-top:10px;margin-right:5px;">Actions <select id="massaction">
   <option value="-1"></option>
@@ -39,6 +40,7 @@
       <?php endforeach; ?>
       <?php if(sizeof($this->actions)): ?><td>&nbsp;</td><?php endif; ?>
     </tr>
+    <?php if(sizeof($this->rows)): ?>
     <?php foreach($this->rows as $_index => $value): ?>
     <?php $data = $value->toArray(); ?>
     <?php $colour = $this->cycle(sizeof($this->cyclecolors) ? $this->cyclecolors : array())->next(); ?>
@@ -67,6 +69,7 @@
       <?php endif; ?>
     </tr>
     <?php endforeach; ?>
+    <?php endif; ?>
   </tbody>
 </table>
 </form>

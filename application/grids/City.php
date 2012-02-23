@@ -21,11 +21,11 @@ class Grid_City extends App_Grid_Abstract
         parent::__construct();
     }
     
-    protected function _prepareData()
+    protected function _prepareDataSource()
     {
         $model = new Model_City();
-        $this->setSelect($model->findCityData());
-        return parent::_prepareData();
+        $this->setDataSource($model->fetchCityData());
+        return parent::_prepareDataSource();
     }
     
     protected function _prepareColumns()

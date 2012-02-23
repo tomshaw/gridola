@@ -8,7 +8,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
 {
     protected $_grid = array();
     
-    protected $_select = null;
+    protected $_dataSource = null;
     
     protected $_formId = 'gridola';
     
@@ -53,14 +53,14 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         return $this->_grid;
     }
     
-    protected function setSelect(Zend_Db_Table_Select $select)
+    protected function setDataSource($dataSource)
     {
-        $this->_select = $select;
+        $this->_dataSource = $dataSource;
     }
     
-    protected function getSelect()
+    protected function getDataSource()
     {
-        return $this->_select;
+        return $this->_dataSource;
     }
     
     protected function setFormId($formId)
@@ -205,9 +205,6 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected function _prepareData()
     {
-        if (is_null($this->getSelect())) {
-            $this->_prepareData();
-        }
         if (!sizeof($this->getGrid())) {
             $this->_prepareColumns();
         }
