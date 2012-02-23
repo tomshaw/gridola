@@ -20,10 +20,10 @@ class App_Grid_Element
     
     protected $_end = null;
     
+    protected $_elementTypes = array('text','number','options','datetime');
+    
     /**
-     * @todo Add Zend View Helpers for all inputs.
-     * 
-     * @param unknown_type $options
+     * @param array $options
      */
     public function addElement($options)
     {
@@ -41,11 +41,6 @@ class App_Grid_Element
                 $input->setValue($this->_value);
                 $input->setAttribs(array('style'=>'width:95%;'));
                 return $input;
-                break;
-            case 'checkbox': // Not really supported...
-                $checkbox = new Zend_Form_Element_Checkbox($this->_index);
-                $checkbox->setValue($this->_value);
-                return $checkbox;
                 break;
             case 'number':
                 $numberStart = new Zend_Form_Element_Text($this->_index);
@@ -74,7 +69,7 @@ class App_Grid_Element
                 return $datePickerStart . $datePickerEnd;
                 break;
             default:
-                throw New App_Grid_Exception('Gridola does not support elments of type: ' . $this->_type);
+                throw New App_Grid_Exception('Only element types of : ' . implode(', ', $this->_elementTypes) . ' are supported.');
         }
     }
     
