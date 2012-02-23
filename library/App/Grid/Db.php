@@ -99,6 +99,9 @@ class App_Grid_Db
             }
             $columnData[$field] = $table;
         }
+        if(isset($columnData['*'])) {
+            throw new App_Grid_Exception('Wild cards column types are not allowed. Please narrow down your query to specific columns.');
+        }
         return $columnData;
     }
     
@@ -121,6 +124,7 @@ class App_Grid_Db
     public function checkData($dataGrid)
     {
         $columns = $this->getColumnsToTable();
+
         if(sizeof($dataGrid)) {
             $errors = array();
             foreach($dataGrid as $_index => $data) {

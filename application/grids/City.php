@@ -173,7 +173,7 @@ class Grid_City extends App_Grid_Abstract
         $model = new Model_Country();
         $rows  = $model->fetchUniqueRegions();
         
-        $data = array();
+        $data = array('-1'=>'');
         foreach ($rows as $row) {
             $data[$row->Region] = $row->Region;
         }
@@ -185,7 +185,7 @@ class Grid_City extends App_Grid_Abstract
         $model = new Model_Country();
         $rows  = $model->fetchUniqueContinents();
         
-        $data = array();
+        $data = array('-1'=>'');
         foreach ($rows as $row) {
             $data[$row->Continent] = $row->Continent;
         }
@@ -197,7 +197,7 @@ class Grid_City extends App_Grid_Abstract
         $model = new Model_City();
         $rows  = $model->getCountryCodeOptions();
         
-        $data = array();
+        $data = array('-1'=>'');
         foreach ($rows as $row) {
             $data[$row->CountryCode] = $row->CountryCode;
         }

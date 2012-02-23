@@ -37,24 +37,33 @@ class App_Grid_Element
         
         switch ($this->_type) {
             case 'text':
-                return '<input type="' . $this->_type . '" name="' . $this->_index . '" id="' . $this->_index . '" value="' . $this->_value . '">';
+                $input = new Zend_Form_Element_Text($this->_index);
+                $input->setValue($this->_value);
+                $input->setAttribs(array('style'=>'width:95%;'));
+                return $input;
                 break;
-            case 'checkbox':
-                return '<input type="' . $this->_type . '" name="' . $this->_index . '" id="' . $this->_index . '" value="' . $this->_value . '">';
+            case 'checkbox': // Not really supported...
+                $checkbox = new Zend_Form_Element_Checkbox($this->_index);
+                $checkbox->setValue($this->_value);
+                return $checkbox;
                 break;
             case 'number':
-                $number = '<input type="text" name="start[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_start . '" title="Starting value.">';
-                $number .= ' <input type="text" name="end[' . $this->_index . ']" id="' . $this->_index . '" value="' . $this->_end . '" title="Ending value.">';
-                return $number;
+                $numberStart = new Zend_Form_Element_Text($this->_index);
+                $numberStart->setValue($this->_start);
+                $numberStart->setAttribs(array('title'=>'Starting value.'));
+                $numberStart->removeDecorator('label')->removeDecorator('HtmlTag');
+                $numberStart->setBelongsTo('start');
+                $numberEnd = new Zend_Form_Element_Text($this->_index);
+                $numberEnd->setValue($this->_end);
+                $numberEnd->setAttribs(array('title'=>'Ending value.','style'=>'margin-top:1px;'));
+                $numberEnd->removeDecorator('label')->removeDecorator('HtmlTag');
+                $numberEnd->setBelongsTo('end');
+                return $numberStart . $numberEnd;
                 break;
             case 'options':
-                $select = '<select name="' . $this->_index . '">';
-                $select .= '<option value="-1"></option>';
-                foreach ($this->_options as $key => $value) {
-                    $selected = ($key == $this->_value) ? 'selected="selected"' : '';
-                    $select .= '<option value="' . $value . '" ' . $selected . '>' . $value . '</option>';
-                }
-                $select .= '</select>';
+                $select = new Zend_Form_Element_Select($this->_index);
+                $select->setValue(array($this->_value));
+                $select->addMultiOptions($this->_options);
                 return $select;
                 break;
             case 'datetime':
@@ -64,6 +73,8 @@ class App_Grid_Element
                 $datePickerEnd->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('end');
                 return $datePickerStart . $datePickerEnd;
                 break;
+            default:
+                throw New App_Grid_Exception('Gridola does not support elments of type: ' . $this->_type);
         }
     }
     
