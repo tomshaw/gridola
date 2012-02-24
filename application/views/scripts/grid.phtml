@@ -55,7 +55,7 @@
       </td>
       <?php endif; ?>
       <?php foreach($this->datagrid as $column): ?>
-      <?php if(isset($data[$column['index']])): ?>
+      <?php if(array_key_exists($column['index'], $data)): ?>
       <td <?php echo $column['style'] ?>><?php echo $this->escape($data[$column['index']]); ?></td>
       <?php continue; ?>
       <?php endif; ?>
