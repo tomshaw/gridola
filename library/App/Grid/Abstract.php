@@ -74,6 +74,11 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         return $this->_dataSource;
     }
     
+    protected function getConfigMethods()
+    {
+    	return $this->_configMethods;
+    }
+    
     protected function setFormId($formId)
     {
         $this->_formId = $formId;
@@ -233,7 +238,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     {
     	$dataGridMethods = $this->getDataGridMethods();
     	
-    	$configMethods = array_flip($this->_configMethods);
+    	$configMethods = array_flip($this->getConfigMethods());
     	
     	foreach($dataGridMethods as $property => $method) {
     		if (!array_key_exists($method, $configMethods)) {
