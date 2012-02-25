@@ -44,7 +44,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_dataGridMethods = null;
     
-    protected $_configurationMethods = array(
+    protected $_configMethods = array(
     	'_prepareDataSource',
     	'_prepareColumns',
     	'_prepareActions',
@@ -233,7 +233,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     {
     	$dataGridMethods = $this->getDataGridMethods();
     	
-    	$configMethods = array_flip($this->_configurationMethods);
+    	$configMethods = array_flip($this->_configMethods);
     	
     	foreach($dataGridMethods as $property => $method) {
     		if (!array_key_exists($method, $configMethods)) {
