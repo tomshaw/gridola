@@ -131,7 +131,7 @@ abstract class App_Grid_Gridola
     	} else if ($dataSource instanceof Iterator) {
     		$adapterClassName = 'Iterator';
     	} else {
-    		throw new App_Grid_Exception('The data source adapter provided is not supported.');
+    		throw new App_Grid_Exception('The data source provider is not supported.');
     	}
     	
     	$this->setAdapterClass($adapterClassName);
