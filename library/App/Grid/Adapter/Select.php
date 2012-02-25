@@ -172,9 +172,9 @@ class App_Grid_Adapter_Select extends App_Grid_DataSource
 	
 	public function setSortOrder($sort, $order)
 	{
-		$this->setOrder($this->getParam('order') ? $this->getParam('order') : $order);
+		$this->setOrder($this->getRequest()->getParam('order') ? $this->getRequest()->getParam('order') : $order);
 	
-		$this->setSort($this->getParam('sort') ? $this->getParam('sort') : $sort);
+		$this->setSort($this->getRequest()->getParam('sort') ? $this->getRequest()->getParam('sort') : $sort);
 	
 		if ($this->getSort() && $this->getOrder()) {
 			$this->getDataSource()->order($this->getOrder() . ' ' . strtoupper($this->getSort()));

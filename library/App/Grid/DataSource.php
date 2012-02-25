@@ -47,16 +47,6 @@ abstract class App_Grid_DataSource
 		return $this->_request;
 	}
 	
-	public function getParam($param, $default = null)
-	{
-		return $this->getRequest()->getParam($param, $default);
-	}
-	
-	protected function getPage()
-	{
-		return $this->getParam('page', '1');
-	}
-	
 	public function getSession()
 	{
 		if ($this->_session === null) {
@@ -69,7 +59,7 @@ abstract class App_Grid_DataSource
 	{
 		if ($this->getRequest()->isPost()) {
 			$this->clearSession()->searchResults();
-		} elseif ((null === $this->getParam('page')) && (null === ($this->getParam('sort')))) {
+		} elseif ((null === $this->getRequest()->getParam('page')) && (null === ($this->getRequest()->getParam('sort')))) {
 			$this->clearSession();
 		} else {
 			$this->results();
@@ -80,7 +70,7 @@ abstract class App_Grid_DataSource
 	{
 		$paginator = Zend_Paginator::factory($this->getDataSource());
 	
-		$paginator->setCurrentPageNumber($this->getPage());
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', '1'));
 	
 		$paginator->setItemCountPerPage(20);
 	
