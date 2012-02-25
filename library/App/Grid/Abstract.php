@@ -6,7 +6,7 @@
  */
 abstract class App_Grid_Abstract extends App_Grid_Gridola
 {
-    protected $_grid = array();
+    protected $_columns = array();
     
     protected $_dataSource = null;
     
@@ -26,7 +26,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_actions = array();
     
-    protected $_massactions = array();
+    protected $_massActions = array();
     
     protected $_rowClickUrl = array();
     
@@ -42,15 +42,26 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_paginatorPartial = 'gridpagination';
     
+    protected $_dataGridMethods = null;
+    
+    protected $_configurationMethods = array(
+    	'_prepareDataSource',
+    	'_prepareColumns',
+    	'_prepareActions',
+    	'_prepareMassActions',
+    	'_prepareRowClickUrl',
+    	'_prepareCycleColors',
+    	'_prepareOnMouseOverColor'
+    );
+    
     public function __construct()
     {
-    	parent::__construct();
-        $this->_prepareData();
+        $this->_processDataGrid();
     }
     
     protected function getGrid()
     {
-        return $this->_grid;
+        return $this->_columns;
     }
     
     protected function setDataSource($dataSource)
@@ -203,32 +214,41 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     	return $this->_paginatorPartial  . $this->getTemplateExtension();
     }
     
-    protected function _prepareData()
+    public function getDataGridMethods()
     {
-        if (!sizeof($this->getGrid())) {
-            $this->_prepareColumns();
-        }
-        if (!sizeof($this->getActions())) {
-            $this->_prepareActions();
-        }
-        if (!sizeof($this->getMassActions())) {
-            $this->_prepareMassActions();
-        }
-        if (!sizeof($this->getRowClickUrl())) {
-            $this->_prepareRowClickUrl();
-        }
-        if (!sizeof($this->getCycleColors())) {
-            $this->_prepareCycleColors();
-        }
-        if (is_null($this->getOnMouseOverColor())) {
-            $this->_prepareOnMouseOverColor();
-        }
-        return parent::_prepareData();
+    	if (null === $this->_dataGridMethods) {
+    		$prefix = '_';
+    		$methodNames = get_class_methods($this);
+    		$this->_dataGridMethods = array();
+    		foreach ($methodNames as $method) {
+    			if ('_prepare' === substr($method, 0, 8)) {
+    				$this->_dataGridMethods[$prefix.lcfirst(substr($method, 8))] = $method;
+    			}
+    		}
+    	}
+    	return $this->_dataGridMethods;
+    }
+    
+    protected function _processDataGrid()
+    {
+    	$dataGridMethods = $this->getDataGridMethods();
+    	
+    	$configMethods = array_flip($this->_configurationMethods);
+    	
+    	foreach($dataGridMethods as $property => $method) {
+    		if (!array_key_exists($method, $configMethods)) {
+    			continue;
+    		}
+    		if(!sizeof($this->$property) || is_null($this->$property)) {
+    			$return = $this->$method();
+    		}
+    	}    	
+        return parent::_processDataGrid();
     }
     
     protected function addColumn($key, $data = array())
     {
-        $this->_grid[$key] = $data;
+        $this->_columns[$key] = $data;
     }
     
     protected function addAction($key, $data = array())

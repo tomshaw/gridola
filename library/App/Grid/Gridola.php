@@ -12,8 +12,6 @@ abstract class App_Grid_Gridola
     
     protected $_view = null;
     
-    protected $_db = null;
-    
     protected $_element = null;
     
     protected $_rows = null;
@@ -22,50 +20,11 @@ abstract class App_Grid_Gridola
     
     protected $_url = null;
     
-    public function __construct() 
-    {
-    	if(null === ($this->getDataSource())) {
-            $this->_prepareDataSource();
-    	}
-    }
+    protected $_resourceLoader = null;
     
-    protected function _prepareDataSource()
-    {
-    	$dataSource = $this->getDataSource();
-    	
-    	if (is_array($dataSource)) {
-
-    	} else if($dataSource instanceof Zend_Db_Table_Select) {
-    		//$this->initSelect();
-    	} elseif($dataSource instanceof Zend_Db_Table_Rowset_Abstract) {
-    		//$rowsetArray = $dataSource->toArray();
-    	} else if ($dataSource instanceof Iterator) {
-
-    	}
-    }
+    protected $_adapterClass = null;
     
-    protected function getRows()
-    {
-    	if ($this->_rows === null) {
-            $this->_rows = $this->initSelect();
-    	}
-    	return $this->_rows;
-    }
-    
-    protected function initSelect()
-    {
-    	$this->getDb()->setSelect($this->getDataSource())->checkData($this->getGrid())->init();
-    	$this->getDb()->setSortOrder($this->getSort(), $this->getOrder());
-    	$this->_rows = $this->getDb()->paginateResults();
-    }
-    
-    protected function getDb()
-    {
-    	if ($this->_db === null) {
-            $this->_db = new App_Grid_Db();
-    	}
-    	return $this->_db;
-    }
+    protected $_dataSet = array();
     
     protected function getRequest()
     {
@@ -89,6 +48,15 @@ abstract class App_Grid_Gridola
             $this->_view = new App_Grid_View();
         }
         return $this->_view;
+    }
+    
+    protected function getResourceLoader()
+    {
+    	if(null === $this->_resourceLoader) {
+    		$loader = new Zend_Loader_PluginLoader();
+    		$this->_resourceLoader = $loader;
+    	}
+    	return $this->_resourceLoader;
     }
     
     protected function getElement()
@@ -116,15 +84,71 @@ abstract class App_Grid_Gridola
         return $this->_url;
     }
     
+    protected function setAdapterClass($adapterClass)
+    {
+    	$this->_adapterClass = $adapterClass;
+    }
+    
+    protected function getAdapterClass()
+    {
+    	return $this->_adapterClass;
+    }
+    
     protected function dynamicSort()
     {
     	$this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
     	return $this;
     }
     
-    protected function _prepareData()
+    protected function showFilter()
     {
-    	$this->initSelect();
+    	return ($this->getAdapterClass()==='Select') ? true : false;
+    }
+    
+    protected function setDataSet($dataSet)
+    {
+    	$this->_dataSet = $dataSet;
+    }
+    
+    protected function getDataSet()
+    {
+    	return $this->_dataSet;
+    }
+    
+    protected function _prepareDataSource()
+    {
+    	$dataSource = $this->getDataSource();
+    	
+    	$loader = $this->getResourceLoader();
+    	$loader->addPrefixPath('App_Grid_Adapter', 'App/Grid/Adapter');
+    	 
+    	if (is_array($dataSource)) {
+    		$adapterClassName = 'Array';
+    	} else if ($dataSource instanceof Zend_Db_Table_Select) {
+    		$adapterClassName = 'Select';
+    	} else if ($dataSource instanceof Zend_Db_Table_Rowset) {
+    		$adapterClassName = 'Table';
+    	} else if ($dataSource instanceof Iterator) {
+    		$adapterClassName = 'Iterator';
+    	} else {
+    		throw new App_Grid_Exception('The data source adapter provided is not supported.');
+    	}
+    	
+    	$this->setAdapterClass($adapterClassName);
+    	
+    	$adapterObject = $loader->load($adapterClassName);
+    	 
+    	$dataSourceAdapter = new $adapterObject($dataSource);
+    	$dataSourceAdapter->checkData($this->getGrid())->init();
+    	$dataSourceAdapter->setSortOrder($this->getSort(), $this->getOrder());
+    	$this->setDataSet($dataSourceAdapter->getData());
+    	
+    	return $this;
+    }
+    
+    protected function _processDataGrid()
+    {
+    	$this->_prepareDataSource();
     	
         $searchParams = $this->getRequest()->getPost();
         foreach ($this->getGrid() as $_index => $column) {
@@ -135,9 +159,9 @@ abstract class App_Grid_Gridola
             } else {
                 $column['value'] = '';
             }
-            if (isset($this->_grid[$_index])) {
-                $this->_grid[$_index]['element'] = $this->getElement()->addElement($column);
-                $this->_grid[$_index]['style']   = $this->getElement()->addStyle($column);
+            if (isset($this->_columns[$_index])) {
+                $this->_columns[$_index]['element'] = $this->getElement()->addElement($column);
+                $this->_columns[$_index]['style']   = $this->getElement()->addStyle($column);
             }
         }
         
@@ -217,7 +241,8 @@ abstract class App_Grid_Gridola
     {
         $this->getView()
             ->setUrl($this->getUrl())
-            ->setRows($this->getRows())
+            ->setRows($this->getDataSet())
+            ->setShowFilter($this->showFilter())
             ->setDataGrid($this->getGrid())
             ->setSort($this->dynamicSort()->getSort())
             ->setPage($this->getRequest()->getParam('page', 1))
