@@ -247,7 +247,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     		if(!sizeof($this->$property) || is_null($this->$property)) {
     			$return = $this->$method();
     		}
-    	}    	
+    	}
+    	    	
         return parent::_processDataGrid();
     }
     

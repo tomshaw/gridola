@@ -52,6 +52,11 @@ abstract class App_Grid_DataSource
 		return $this->getRequest()->getParam($param, $default);
 	}
 	
+	protected function getPage()
+	{
+		return $this->getParam('page', '1');
+	}
+	
 	public function getSession()
 	{
 		if ($this->_session === null) {

@@ -35,11 +35,6 @@ class App_Grid_Adapter_Select extends App_Grid_DataSource
 		return $this->_order;
 	}
 	
-	protected function getPage()
-	{
-		return $this->getParam('page', '1');
-	}
-	
 	public function getColumns()
 	{
 		if (!sizeof($this->_columns)) {
