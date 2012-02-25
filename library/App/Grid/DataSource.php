@@ -18,10 +18,7 @@ abstract class App_Grid_DataSource
 	
 	protected $_sort = null;
 	
-	public function __construct()
-	{
-
-	}
+	public function __construct() {}
 	
 	public function setDataSource($dataSource)
 	{
@@ -32,11 +29,6 @@ abstract class App_Grid_DataSource
 	public function getDataSource()
 	{
 		return $this->_dataSource;
-	}
-	
-	public function getData()
-	{
-		return $this->paginateResults();
 	}
 	
 	public function getRequest()
@@ -66,7 +58,7 @@ abstract class App_Grid_DataSource
 		}
 	}
 	
-	public function paginateResults()
+	public function getData()
 	{
 		$paginator = Zend_Paginator::factory($this->getDataSource());
 	
