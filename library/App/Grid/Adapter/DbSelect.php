@@ -83,6 +83,7 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
     {
         $this->checkData($this->getDataGrid());
         if ($this->getRequest()->isPost()) {
+
             $columnData = $this->getColumnsToTable();
             
             $postedArrayNotation = $this->postedArrayNotation();

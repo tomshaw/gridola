@@ -26,44 +26,9 @@ abstract class App_Grid_Gridola
     
     protected $_dataSet = array();
     
-    protected $_exportType = null;
-    
     public function __construct()
     {
-    	$this->processExport();
-    }
-    
-    protected function processExport()
-    {
-        $export = $this->getRequest()->getParam('export');
-        if($export != '-1') {
-        	$this->_exportType = $export;
-        }
-        
-        if($this->_exportType) {
-        	$this->disableLayouts();
-        	
-        	header('Content-Description: File Transfer');
-        	header('Cache-Control: public, must-revalidate, max-age=0'); // HTTP/1.1
-        	header('Pragma: public');
-        	header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-        	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        	header("Content-Type: application/csv");
-        	header('Content-Disposition: attachment; filename="export_functionality_in_development.' . $this->_exportType . '"');
-        	header('Content-Transfer-Encoding: binary');
 
-        }
-        
-        echo($this->_exportType);
-    }
-    
-    public function disableLayouts()
-    {
-    	if (null !== ($layout = Zend_Layout::getMvcInstance())) {
-    		$layout->disableLayout();
-    	}
-    	Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
-    	return $this;
     }
     
     protected function getRequest()
@@ -152,6 +117,9 @@ abstract class App_Grid_Gridola
     
     protected function getDataSet()
     {
+        if(is_null($this->_dataSet)) {
+        	$this->_initDataSource();
+        }
         return $this->_dataSet;
     }
     
@@ -174,7 +142,7 @@ abstract class App_Grid_Gridola
         } else if ($dataSource instanceof Iterator) {
             $adapterClassName = 'Iterator';
         } else {
-            throw new App_Grid_Exception('Data source provider not supported.' . get_class($dataSource));
+            throw new App_Grid_Exception('The data source provider: ' . get_class($dataSource) . ' is not supported.');
         }
         
         $this->setAdapterClass($adapterClassName);
@@ -183,17 +151,52 @@ abstract class App_Grid_Gridola
         
         $dataSourceAdapter = new $adapterObject($dataSource);
         
-        $dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder(), $this->getItemsPerPage());
+        $dataSourceAdapter->initialize($this->getDataGrid(), $this->getSort(), $this->getOrder(), $this->getItemsPerPage());
         
         $this->setDataSet($dataSourceAdapter->getData());
     }
     
+    protected function processExport()
+    {
+    	$deploymentType = $this->getExportType();
+    	
+    	if(is_null($deploymentType)) {
+    		return;
+    	}
+    	
+    	$loader = $this->getResourceLoader();
+    	
+    	$loader->addPrefixPath('App_Grid_Export', 'App/Grid/Export');
+    	
+    	switch($deploymentType) {
+    		case 'csv':
+    			$deploymentClass = 'Csv';
+    			break;
+    		case 'xml':
+    			$deploymentClass = 'Xml';
+    			break;
+    		default:
+    			throw new App_Grid_Exception('Support for: ' . $deploymentType . ' is not supported.');
+    	}
+    	
+    	$deploymentObject = $loader->load($deploymentClass);
+    	
+    	$deploymentAdapter = new $deploymentObject($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName());
+    	
+    	$deploymentAdapter->export();
+
+    }
+    
     protected function _processData()
     {
-        $this->_initDataSource();
+    	$this->_initDataSource();
+    	
+    	if($this->getExportType()) {
+    		$this->processExport();
+    	}
         
         $searchParams = $this->getRequest()->getPost();
-        foreach ($this->getGrid() as $_index => $column) {
+        foreach ($this->getDataGrid() as $_index => $column) {
             if (isset($searchParams[$column['index']])) {
                 $column['value'] = $searchParams[$column['index']];
             } elseif (isset($this->getSession()->data[$column['index']])) {
@@ -295,7 +298,7 @@ abstract class App_Grid_Gridola
             ->setUrl($this->getUrl())
             ->setRows($this->getDataSet())
             ->setShowFilter($this->showFilter())
-            ->setDataGrid($this->getGrid())
+            ->setDataGrid($this->getDataGrid())
             ->setSort($this->dynamicSort()->getSort())
             ->setPage($this->getRequest()->getParam('page', 1))
             ->setActions($this->prepareActionUrls()->getActions())

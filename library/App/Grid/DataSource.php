@@ -82,6 +82,10 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
         
         $this->setDataGrid($dataGrid);
         
+        if($this->hasExport()) {
+            return $this->processDataSource();
+        }
+        
         if ($this->getRequest()->isPost()) {
             $this->clearSession();
         } elseif ((null === $this->getRequest()->getParam('page')) && (null === ($this->getRequest()->getParam('sort')))) {
@@ -110,6 +114,15 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
         }
         array_multisort($sortColumn, $dir, $dataSets);
         return $dataSets;
+    }
+    
+    protected function hasExport()
+    {
+        $export = $this->getRequest()->getParam('export');
+        if(in_array($export, array('csv','xml','exl'))) {
+            return true;
+        }
+        return false;
     }
     
     protected function clearSession()

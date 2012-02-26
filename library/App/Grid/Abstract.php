@@ -56,15 +56,31 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     	'_prepareOnMouseOverColor'
     );
     
+    protected $_exportType = null;
+    
     public function __construct()
     {
         $this->_processData();
         parent::__construct();
     }
     
-    protected function getGrid()
+    protected function getExportType()
+    {
+    	$export = $this->getRequest()->getParam('export');
+    	if($export != '-1') {
+    		$this->_exportType = $export;
+    	}
+    	return $this->_exportType;
+    }
+    
+    protected function getDataGrid()
     {
         return $this->_columns;
+    }
+    
+    protected function getDataGridName()
+    {
+        return get_class($this);
     }
     
     protected function setDataSource($dataSource)
