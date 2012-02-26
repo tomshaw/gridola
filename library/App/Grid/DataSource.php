@@ -16,6 +16,8 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
     
     protected $_sort = null;
     
+    protected $_itemsPerPage = 10;
+    
     abstract public function processDataSource();
     
     public function setDataSource($dataSource)
@@ -62,9 +64,21 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
         return $this->_order;
     }
     
-    public function initialize($dataGrid, $sort, $order)
+    protected function setItemsPerPage($itemsPerPage)
+    {
+        $this->_itemsPerPage = $itemsPerPage;
+    }
+    
+    protected function getItemsPerPage()
+    {
+        return $this->_itemsPerPage;
+    }
+    
+    public function initialize($dataGrid, $sort, $order, $itemsPerPage)
     {
         $this->setOrder($order)->setSort($sort);
+        
+        $this->setItemsPerPage($itemsPerPage);
         
         $this->setDataGrid($dataGrid);
         
@@ -83,7 +97,7 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
         
         $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', '1'));
         
-        $paginator->setItemCountPerPage(20);
+        $paginator->setItemCountPerPage($this->getItemsPerPage());
         
         return $paginator;
     }

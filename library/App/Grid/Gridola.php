@@ -143,7 +143,7 @@ abstract class App_Grid_Gridola
         
         $dataSourceAdapter = new $adapterObject($dataSource);
         
-        $dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
+        $dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder(), $this->getItemsPerPage());
         
         $this->setDataSet($dataSourceAdapter->getData());
     }

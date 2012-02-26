@@ -22,6 +22,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_Order = null;
     
+    protected $_itemsPerPage = 10;
+    
     protected $_massActionField = null;
     
     protected $_actions = array();
@@ -137,6 +139,16 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     protected function getOrder()
     {
         return $this->_order;
+    }
+    
+    protected function setItemsPerPage($itemsPerPage)
+    {
+    	$this->_itemsPerPage = $itemsPerPage;
+    }
+    
+    protected function getItemsPerPage()
+    {
+    	return $this->_itemsPerPage;
     }
     
     protected function setMassactionField($field)
