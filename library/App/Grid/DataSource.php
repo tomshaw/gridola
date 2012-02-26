@@ -88,6 +88,16 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
 		return $paginator;
 	}
 	
+	protected function arraySortByColumn($dataSets, $column, $dir = SORT_ASC)
+	{
+		$sortColumn = array();
+		foreach ($dataSets as $key=> $row) {
+			$sortColumn[$key] = $row[$column];
+		}
+		array_multisort($sortColumn, $dir, $dataSets);
+		return $dataSets;
+	}
+	
 	protected function clearSession()
 	{
 		unset($this->getSession()->data);

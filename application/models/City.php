@@ -12,7 +12,7 @@ class Model_City extends Zend_Db_Table_Abstract
     	    ->joinLeft(array('country' => 'country'), 'country.Code = city.CountryCode', array('Region','Continent'));
     	return $select; // Zend_Db_Select
     	/**
-    	 * Not supported yet below.
+    	 * Working on support. Testable at this point.
     	 */
     	//return $this->fetchAll($select); // Zend_Db_Table_Rowset
     	//return $this->getAdapter()->fetchAll($select); // Array

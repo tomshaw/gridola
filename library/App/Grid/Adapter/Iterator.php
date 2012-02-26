@@ -10,27 +10,26 @@ class App_Grid_Adapter_Iterator extends App_Grid_DataSource
 	
 	public function processDataSource()
 	{
-		$array = $this->getDataSource();
+		$iterator = $this->getDataSource();
 	
+		$array = array();
+		foreach($iterator as $_index => $value) {
+			if(is_array($value)) {
+				foreach($value as $r) {
+					$array[] = $r;
+				}
+			}
+		}
+
 		$order = $this->getRequest()->getParam('order') ? $this->getRequest()->getParam('order') :  $this->getOrder();
 	
 		$sort = $this->getRequest()->getParam('sort') == 'desc' ? SORT_ASC : SORT_DESC;
+		
+		$data = $this->arraySortByColumn($array, $order, $sort);
 	
-		//$data = $this->arraySortByColumn($array, $order, $sort);
-	
-		//$this->setDataSource($data);
+		$this->setDataSource($data);
 	
 		return $this;
-	}
-	
-	private function arraySortByColumn($dataSets, $column, $dir = SORT_ASC)
-	{
-		$sortColumn = array();
-		foreach ($dataSets as $key=> $row) {
-			$sortColumn[$key] = $row[$column];
-		}
-		array_multisort($sortColumn, $dir, $dataSets);
-		return $dataSets;
 	}
 	
 }

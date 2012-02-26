@@ -23,14 +23,4 @@ class App_Grid_Adapter_Array extends App_Grid_DataSource
 		return $this;
 	}
 	
-	private function arraySortByColumn($dataSets, $column, $dir = SORT_ASC)
-	{
-		$sortColumn = array();
-		foreach ($dataSets as $key=> $row) {
-			$sortColumn[$key] = $row[$column];
-		}
-		array_multisort($sortColumn, $dir, $dataSets);
-		return $dataSets;
-	}
-	
 }
