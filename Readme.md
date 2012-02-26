@@ -17,24 +17,25 @@
   
   Example grid:
      
-    protected $_exportTypes = array('csv','xml');
-    
-    protected $_tableClass = 'table table-striped table-bordered';
+    protected $_exportTypes = array('csv', 'xml');
+    // table-striped table-condensed table-bordered
+    protected $_tableClass = 'table table-condensed';
     
     public function __construct()
     {
         $this->setFormId('city_grid');
         $this->setOrder('ID');
         $this->setSort('ASC');
-        //$this->setTemplate('index/customgrid');
+        $this->setScrollType('Jumping'); // All, Elastic, Jumping, Sliding
+        //$this->setTemplate('index/citiesgrid');
+        //$this->setPaginatorPartial('index/gridpagination');
         parent::__construct();
     }
     
-    protected function _prepareData()
+    protected function _prepareDataSource()
     {
         $model = new Model_City();
-        $this->setSelect($model->findCityData());
-        return parent::_prepareData();
+        $this->setDataSource($model->fetchCityData());
     }
     
     protected function _prepareColumns()
@@ -94,19 +95,13 @@
             'index' => 'Continent',
             'options' => $this->fetchUniqueContinents()
         ));
-        
-        $this->addColumn('created_at', array(
-            'header'=> 'Created',
-            'width' => '200px',
-            'type'  => 'datetime',
-            'index' => 'created_at',
-        ));
     }
     
     protected function _prepareActions()
     {
         $this->addAction('delete', array(
             'label' => 'Delete',
+            'title' => 'Delete This Entry',
             'field' => 'ID',
             'url' => array(
                 'module' => 'default',
@@ -117,6 +112,7 @@
         
         $this->addAction('edit', array(
             'label' => 'Edit',
+            'title' => 'Edit This Row',
             'field' => 'ID',
             'url' => array(
                 'module' => 'default',
