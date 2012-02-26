@@ -8,19 +8,41 @@
 <?php $colspan = count($this->datagrid); ?>
 <?php if(sizeof($this->massactions)): $colspan++; endif; ?>
 <?php if(sizeof($this->actions)): $colspan++; endif; ?>
+
+
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->url ?>">
+
+<?php if(sizeof($this->exporttypes)): ?>
+<fieldset class="grid-elements">
+<select id="export" name="export" class="span2">
+  <option value="-1"></option>
+  <?php foreach($this->exporttypes as $_index => $value): ?>
+  <option value="<?php echo $value ?>"><?php echo $value ?></option>
+  <?php endforeach; ?>
+</select> <button class="btn">Export</button>
+</fieldset><br />
+<?php endif; ?>
+
+
 <?php if(sizeof($this->massactions) && sizeof($this->actions)): ?>
-<fieldset style="float:right;margin-top:10px;margin-right:5px;">
-<select id="massaction" style="margin-top:10px;">
+<fieldset class="grid-elements">
+
+<select id="massaction" name="massaction" class="span3">
   <option value="-1"></option>
   <?php foreach($this->massactions as $_index => $value): ?>
   <option value="<?php echo $_index ?>"><?php echo $value['label'] ?></option>
   <?php endforeach; ?>
-</select> <button class="btn">Go</button> <button id="fat-btn" data-loading-text="filtering..." class="btn btn-primary">Filter Results</button>
+</select>
+ 
+
+<button class="btn">Go</button> <button id="fat-btn" data-loading-text="filtering..." class="btn btn-primary">Filter Results</button>
+
 </fieldset>
+
 <?php else: ?>
-<div style="float:right;margin-top:10px;margin-right:5px;"><button id="fat-btn" data-loading-text="filtering..." class="btn btn-primary">Filter Results</button></div>
+<fieldset class="grid-elements"><button id="fat-btn" data-loading-text="filtering..." class="btn btn-primary">Filter Results</button></fieldset>
 <?php endif; ?>
+
 <?php if(sizeof($this->rows)): ?>
 <?php echo $this->paginationControl($this->rows, $this->scrolltype, $this->paginatorpartial); ?>
 <?php endif; ?>

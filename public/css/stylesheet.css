@@ -29,3 +29,13 @@ table th {
 table tbody tr td input {
 	width: 95%;
 }
+
+fieldset select {
+	margin-top:10px;
+}
+
+.grid-elements {
+	float:right;
+	margin-right:5px;
+	clear:both;
+}

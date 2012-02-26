@@ -11,8 +11,9 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
     	$grid = new Grid_City();
-    	
     	$this->view->grid = $grid;
+    	
+    	//Zend_Debug::dump($this->getRequest()->getParams());
     }
     
     public function editAction()

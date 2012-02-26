@@ -26,6 +26,46 @@ abstract class App_Grid_Gridola
     
     protected $_dataSet = array();
     
+    protected $_exportType = null;
+    
+    public function __construct()
+    {
+    	$this->processExport();
+    }
+    
+    protected function processExport()
+    {
+        $export = $this->getRequest()->getParam('export');
+        if($export != '-1') {
+        	$this->_exportType = $export;
+        }
+        
+        if($this->_exportType) {
+        	$this->disableLayouts();
+        	
+        	header('Content-Description: File Transfer');
+        	header('Cache-Control: public, must-revalidate, max-age=0'); // HTTP/1.1
+        	header('Pragma: public');
+        	header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        	header("Content-Type: application/csv");
+        	header('Content-Disposition: attachment; filename="export_functionality_in_development.' . $this->_exportType . '"');
+        	header('Content-Transfer-Encoding: binary');
+
+        }
+        
+        echo($this->_exportType);
+    }
+    
+    public function disableLayouts()
+    {
+    	if (null !== ($layout = Zend_Layout::getMvcInstance())) {
+    		$layout->disableLayout();
+    	}
+    	Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
+    	return $this;
+    }
+    
     protected function getRequest()
     {
         if ($this->_request === null) {
@@ -243,6 +283,12 @@ abstract class App_Grid_Gridola
         return $this;
     }
     
+    protected function prepareExportTypes()
+    {
+    	$exportTypes = $this->getExportTypes();
+    	return $this;
+    }
+    
     protected function initView()
     {
         $this->getView()
@@ -255,6 +301,7 @@ abstract class App_Grid_Gridola
             ->setActions($this->prepareActionUrls()->getActions())
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
+            ->setExportTypes($this->prepareExportTypes()->getExportTypes())
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
