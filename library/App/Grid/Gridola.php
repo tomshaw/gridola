@@ -115,7 +115,7 @@ abstract class App_Grid_Gridola
     	return $this->_dataSet;
     }
     
-    protected function _prepareDataSource()
+    protected function _initDataSource()
     {
     	$dataSource = $this->getDataSource();
     	
@@ -124,31 +124,32 @@ abstract class App_Grid_Gridola
     	 
     	if (is_array($dataSource)) {
     		$adapterClassName = 'Array';
-    	} else if ($dataSource instanceof Zend_Db_Table_Select) {
+    	} else if ($dataSource instanceof Zend_Db_Select) {
     		$adapterClassName = 'Select';
     	} else if ($dataSource instanceof Zend_Db_Table_Rowset) {
     		$adapterClassName = 'Table';
     	} else if ($dataSource instanceof Iterator) {
     		$adapterClassName = 'Iterator';
     	} else {
-    		throw new App_Grid_Exception('The data source provider is not supported.');
+    		throw new App_Grid_Exception('Data source provider not supported.');
     	}
     	
     	$this->setAdapterClass($adapterClassName);
     	
     	$adapterObject = $loader->load($adapterClassName);
     	 
-    	$dataSourceAdapter = new $adapterObject($dataSource);
-    	$dataSourceAdapter->checkData($this->getGrid())->init();
-    	$dataSourceAdapter->setSortOrder($this->getSort(), $this->getOrder());
+    	$dataSourceAdapter = new $adapterObject($dataSource); // Populate the data source.
+    	
+    	$dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
+    	
     	$this->setDataSet($dataSourceAdapter->getData());
     	
     	return $this;
     }
     
-    protected function _processDataGrid()
+    protected function _processData()
     {
-    	$this->_prepareDataSource();
+    	$this->_initDataSource();
     	
         $searchParams = $this->getRequest()->getPost();
         foreach ($this->getGrid() as $_index => $column) {

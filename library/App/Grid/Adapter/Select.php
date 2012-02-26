@@ -6,33 +6,11 @@
  */
 class App_Grid_Adapter_Select extends App_Grid_DataSource
 {
-	
 	protected $_arrayNotationKeys = array('start', 'end');
 	
 	public function __construct(Zend_Db_Select $dataSource)
 	{
 		$this->setDataSource($dataSource);
-		parent::__construct();
-	}
-	
-	protected function setSort($sort)
-	{
-		$this->_sort = $sort;
-	}
-	
-	protected function getSort()
-	{
-		return $this->_sort;
-	}
-	
-	protected function setOrder($order)
-	{
-		$this->_order = $order;
-	}
-	
-	protected function getOrder()
-	{
-		return $this->_order;
 	}
 	
 	public function getColumns()
@@ -101,80 +79,80 @@ class App_Grid_Adapter_Select extends App_Grid_DataSource
 		return $this;
 	}
 	
-	protected function searchResults()
+	public function processDataSource()
 	{
-		$columnData = $this->getColumnsToTable();
-	
-		$postedArrayNotation = $this->postedArrayNotation();
-	
-		foreach ($this->getRequest()->getPost() as $_index => $value) {
-			if (empty($value)) {
-				continue;
-			}
-			if ($_index == 'selected') {
-				continue;
-			}
-			if ($value == '-1') {
-				continue;
-			}
-			if (is_array($value)) {
-				foreach ($value as $key => $val) {
-					if (empty($val)) {
-						continue;
-					}
-					if (isset($postedArrayNotation[$key])) {
-						$this->getSession()->data{$key} = $postedArrayNotation[$key];
-					}
-					if (in_array($_index, $this->_arrayNotationKeys)) {
-						if ($_index == $this->_arrayNotationKeys[0]) {
-							if (isset($columnData[$key])) {
-								$table = $columnData[$key];
-								$this->getDataSource()->where($table . '.' . $key . ' >= ?', $val);
+		$this->checkData($this->getDataGrid());
+		if ($this->getRequest()->isPost()) {
+
+			$columnData = $this->getColumnsToTable();
+		
+			$postedArrayNotation = $this->postedArrayNotation();
+		
+			foreach ($this->getRequest()->getPost() as $_index => $value) {
+				if (empty($value)) {
+					continue;
+				}
+				if ($_index == 'selected') {
+					continue;
+				}
+				if ($value == '-1') {
+					continue;
+				}
+				if (is_array($value)) {
+					foreach ($value as $key => $val) {
+						if (empty($val)) {
+							continue;
+						}
+						if (isset($postedArrayNotation[$key])) {
+							$this->getSession()->data{$key} = $postedArrayNotation[$key];
+						}
+						if (in_array($_index, $this->_arrayNotationKeys)) {
+							if ($_index == $this->_arrayNotationKeys[0]) {
+								if (isset($columnData[$key])) {
+									$table = $columnData[$key];
+									$this->getDataSource()->where($table . '.' . $key . ' >= ?', $val);
+								}
+							}
+							if ($_index == $this->_arrayNotationKeys[1]) {
+								if (isset($columnData[$key])) {
+									$table = $columnData[$key];
+									$this->getDataSource()->where($table . '.' . $key . ' <= ?', $val);
+								}
 							}
 						}
-						if ($_index == $this->_arrayNotationKeys[1]) {
-							if (isset($columnData[$key])) {
-								$table = $columnData[$key];
-								$this->getDataSource()->where($table . '.' . $key . ' <= ?', $val);
-							}
-						}
+					}
+				} else {
+					if (isset($columnData[$_index])) {
+						$table = $columnData[$_index];
+						$this->getSession()->data{$_index} = $value;
+						$this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
 					}
 				}
-			} else {
-				if (isset($columnData[$_index])) {
-					$table = $columnData[$_index];
-					$this->getSession()->data{$_index} = $value;
-					$this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
+			} 
+			
+		} else {
+
+			$columnData = $this->getColumnsToTable();
+			if (sizeof($this->getSession()->data)) {
+				foreach ($this->getSession()->data as $_column => $value) {
+					if (isset($columnData[$_column])) {
+						$table = $columnData[$_column];
+						if (is_array($value)) {
+							foreach ($value as $key => $var) {
+								$operand = ($key == 'start') ? '>=' : '<=';
+								$this->getDataSource()->where($table . '.' . $_column . ' ' . $operand . ' ?', $var);
+							}
+						} else {
+							$this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') LIKE ?', '%' . strtolower($value) . '%');
+						}
+					}
 				}
 			}
 		}
-	}
+
+		$this->setOrder($this->getRequest()->getParam('order') ? $this->getRequest()->getParam('order') : $this->_order);
 	
-	protected function results()
-	{
-		$columnData = $this->getColumnsToTable();
-		if (sizeof($this->getSession()->data)) {
-			foreach ($this->getSession()->data as $_column => $value) {
-				if (isset($columnData[$_column])) {
-					$table = $columnData[$_column];
-					if (is_array($value)) {
-						foreach ($value as $key => $var) {
-							$operand = ($key == 'start') ? '>=' : '<=';
-							$this->getDataSource()->where($table . '.' . $_column . ' ' . $operand . ' ?', $var);
-						}
-					} else {
-						$this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') LIKE ?', '%' . strtolower($value) . '%');
-					}
-				}
-			}
-		}
-	}
-	
-	public function setSortOrder($sort, $order)
-	{
-		$this->setOrder($this->getRequest()->getParam('order') ? $this->getRequest()->getParam('order') : $order);
-	
-		$this->setSort($this->getRequest()->getParam('sort') ? $this->getRequest()->getParam('sort') : $sort);
+		$this->setSort($this->getRequest()->getParam('sort') ? $this->getRequest()->getParam('sort') : $this->_sort);
 	
 		if ($this->getSort() && $this->getOrder()) {
 			$this->getDataSource()->order($this->getOrder() . ' ' . strtoupper($this->getSort()));

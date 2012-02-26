@@ -56,7 +56,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     public function __construct()
     {
-        $this->_processDataGrid();
+        $this->_processData();
     }
     
     protected function getGrid()
@@ -234,7 +234,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     	return $this->_dataGridMethods;
     }
     
-    protected function _processDataGrid()
+    protected function _processData()
     {
     	$dataGridMethods = $this->getDataGridMethods();
     	
@@ -249,7 +249,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     		}
     	}
     	    	
-        return parent::_processDataGrid();
+        return parent::_processData();
     }
     
     protected function addColumn($key, $data = array())

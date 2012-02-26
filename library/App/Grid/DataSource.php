@@ -4,21 +4,19 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-abstract class App_Grid_DataSource
+abstract class App_Grid_DataSource extends App_Grid_Gridola
 {
 	protected $_dataSource = null;
 	
+	protected $_dataGrid = null;
+	
 	protected $_columns = array();
-	
-	protected $_request = null;
-	
-	protected $_session = null;
 	
 	protected $_order = null;
 	
 	protected $_sort = null;
 	
-	public function __construct() {}
+	abstract public function processDataSource(); 
 	
 	public function setDataSource($dataSource)
 	{
@@ -31,31 +29,52 @@ abstract class App_Grid_DataSource
 		return $this->_dataSource;
 	}
 	
-	public function getRequest()
+	public function setDataGrid($dataGrid)
 	{
-		if ($this->_request === null) {
-			$this->_request = Zend_Controller_Front::getInstance()->getRequest();
-		}
-		return $this->_request;
+		$this->_dataGrid = $dataGrid;
+		return $this;
 	}
 	
-	public function getSession()
+	public function getDataGrid()
 	{
-		if ($this->_session === null) {
-			$this->_session = new Zend_Session_Namespace('store');
-		}
-		return $this->_session;
+		return $this->_dataGrid;
 	}
 	
-	public function init()
+	protected function setSort($sort)
 	{
+		$this->_sort = $sort;
+		return $this;
+	}
+	
+	protected function getSort()
+	{
+		return $this->_sort;
+	}
+	
+	protected function setOrder($order)
+	{
+		$this->_order = $order;
+		return $this;
+	}
+	
+	protected function getOrder()
+	{
+		return $this->_order;
+	}
+	
+	public function initialize($dataGrid, $sort, $order)
+	{
+		$this->setOrder($order)->setSort($sort);
+		
+		$this->setDataGrid($dataGrid);
+		
 		if ($this->getRequest()->isPost()) {
-			$this->clearSession()->searchResults();
+			$this->clearSession();
 		} elseif ((null === $this->getRequest()->getParam('page')) && (null === ($this->getRequest()->getParam('sort')))) {
 			$this->clearSession();
-		} else {
-			$this->results();
 		}
+		
+		$this->processDataSource();
 	}
 	
 	public function getData()

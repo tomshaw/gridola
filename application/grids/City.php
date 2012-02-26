@@ -25,7 +25,6 @@ class Grid_City extends App_Grid_Abstract
     {
         $model = new Model_City();
         $this->setDataSource($model->fetchCityData());
-        return parent::_prepareDataSource();
     }
     
     protected function _prepareColumns()
