@@ -53,7 +53,7 @@ abstract class App_Grid_Gridola
     protected function getResourceLoader()
     {
         if (null === $this->_resourceLoader) {
-            $loader                = new Zend_Loader_PluginLoader();
+            $loader = new Zend_Loader_PluginLoader();
             $this->_resourceLoader = $loader;
         }
         return $this->_resourceLoader;
@@ -78,7 +78,7 @@ abstract class App_Grid_Gridola
     protected function getUrl($controller = null, $module = null, array $params = array())
     {
         if ($this->_url === null) {
-            $action     = $this->getRequest()->getActionName();
+            $action = $this->getRequest()->getActionName();
             $this->_url = $this->getUrlHelper()->simple($action, $controller, $module, $params);
         }
         return $this->_url;
