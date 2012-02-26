@@ -15,7 +15,7 @@ class Grid_City extends App_Grid_Abstract
         $this->setFormId('city_grid');
         $this->setOrder('ID');
         $this->setSort('ASC');
-        $this->setScrollType('Jumping');
+        $this->setScrollType('Jumping'); // All, Elastic, Jumping, Sliding
         //$this->setTemplate('index/citiesgrid');
         //$this->setPaginatorPartial('index/gridpagination');
         parent::__construct();
