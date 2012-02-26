@@ -52,11 +52,11 @@ abstract class App_Grid_Gridola
     
     protected function getResourceLoader()
     {
-    	if(null === $this->_resourceLoader) {
-    		$loader = new Zend_Loader_PluginLoader();
-    		$this->_resourceLoader = $loader;
-    	}
-    	return $this->_resourceLoader;
+        if (null === $this->_resourceLoader) {
+            $loader                = new Zend_Loader_PluginLoader();
+            $this->_resourceLoader = $loader;
+        }
+        return $this->_resourceLoader;
     }
     
     protected function getElement()
@@ -78,7 +78,7 @@ abstract class App_Grid_Gridola
     protected function getUrl($controller = null, $module = null, array $params = array())
     {
         if ($this->_url === null) {
-            $action = $this->getRequest()->getActionName();
+            $action     = $this->getRequest()->getActionName();
             $this->_url = $this->getUrlHelper()->simple($action, $controller, $module, $params);
         }
         return $this->_url;
@@ -86,72 +86,72 @@ abstract class App_Grid_Gridola
     
     protected function setAdapterClass($adapterClass)
     {
-    	$this->_adapterClass = $adapterClass;
+        $this->_adapterClass = $adapterClass;
     }
     
     protected function getAdapterClass()
     {
-    	return $this->_adapterClass;
+        return $this->_adapterClass;
     }
     
     protected function dynamicSort()
     {
-    	$this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
-    	return $this;
+        $this->setSort($this->getRequest()->getParam('sort') == 'desc' ? 'asc' : 'desc');
+        return $this;
     }
     
     protected function showFilter()
     {
-    	return ($this->getAdapterClass() === 'DbSelect' || $this->getAdapterClass() == 'DbTableSelect') ? true : false;
+        return ($this->getAdapterClass() === 'DbSelect' || $this->getAdapterClass() == 'DbTableSelect') ? true : false;
     }
     
     protected function setDataSet($dataSet)
     {
-    	$this->_dataSet = $dataSet;
+        $this->_dataSet = $dataSet;
     }
     
     protected function getDataSet()
     {
-    	return $this->_dataSet;
+        return $this->_dataSet;
     }
     
     protected function _initDataSource()
     {
-    	$dataSource = $this->getDataSource();
-    	
-    	$loader = $this->getResourceLoader();
-    	
-    	$loader->addPrefixPath('App_Grid_Adapter', 'App/Grid/Adapter');
-    	 
-    	if (is_array($dataSource)) {
-    		$adapterClassName = 'Array';
-    	} else if ($dataSource instanceof Zend_Db_Table_Select) {
-    		$adapterClassName = 'DbTableSelect';
+        $dataSource = $this->getDataSource();
+        
+        $loader = $this->getResourceLoader();
+        
+        $loader->addPrefixPath('App_Grid_Adapter', 'App/Grid/Adapter');
+        
+        if (is_array($dataSource)) {
+            $adapterClassName = 'Array';
+        } else if ($dataSource instanceof Zend_Db_Table_Select) {
+            $adapterClassName = 'DbTableSelect';
         } else if ($dataSource instanceof Zend_Db_Select) {
-        	$adapterClassName = 'DbSelect';
-    	} else if ($dataSource instanceof Zend_Db_Table_Rowset) {
-    		$adapterClassName = 'Rowset';
-    	} else if ($dataSource instanceof Iterator) {
-    		$adapterClassName = 'Iterator';
-    	} else {
-    		throw new App_Grid_Exception('Data source provider not supported.' . get_class($dataSource));
-    	}
-    	
-    	$this->setAdapterClass($adapterClassName);
-    	
-    	$adapterObject = $loader->load($adapterClassName);
-    	 
-    	$dataSourceAdapter = new $adapterObject($dataSource);
-    	
-    	$dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
-    	
-    	$this->setDataSet($dataSourceAdapter->getData());
+            $adapterClassName = 'DbSelect';
+        } else if ($dataSource instanceof Zend_Db_Table_Rowset) {
+            $adapterClassName = 'Rowset';
+        } else if ($dataSource instanceof Iterator) {
+            $adapterClassName = 'Iterator';
+        } else {
+            throw new App_Grid_Exception('Data source provider not supported.' . get_class($dataSource));
+        }
+        
+        $this->setAdapterClass($adapterClassName);
+        
+        $adapterObject = $loader->load($adapterClassName);
+        
+        $dataSourceAdapter = new $adapterObject($dataSource);
+        
+        $dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
+        
+        $this->setDataSet($dataSourceAdapter->getData());
     }
     
     protected function _processData()
     {
-    	$this->_initDataSource();
-    	
+        $this->_initDataSource();
+        
         $searchParams = $this->getRequest()->getPost();
         foreach ($this->getGrid() as $_index => $column) {
             if (isset($searchParams[$column['index']])) {
@@ -178,9 +178,13 @@ abstract class App_Grid_Gridola
                 throw new App_Grid_Exception('A database field name must be specified when creating a clickable row.');
             }
             if (isset($rowClickUrl['url']) && is_array($rowClickUrl['url'])) {
-            	$data = array();
+                $data = array();
                 foreach ($rowClickUrl['url'] as $_index => $value) {
-                    if (in_array($_index, array('module','controller','action'))) {
+                    if (in_array($_index, array(
+                        'module',
+                        'controller',
+                        'action'
+                    ))) {
                         $data[$_index] = $value;
                     }
                 }
@@ -194,9 +198,9 @@ abstract class App_Grid_Gridola
     {
         if (sizeof($this->getActions())) {
             foreach ($this->getActions() as $_index => $value) {
-            	if (!array_key_exists('url', $value)) {
-            		throw new App_Grid_Exception('A url must be specified when creating inline row actions.');
-            	}
+                if (!array_key_exists('url', $value)) {
+                    throw new App_Grid_Exception('A url must be specified when creating inline row actions.');
+                }
                 if (sizeof($value['url'])) {
                     if (isset($value['url']['action'])) {
                         $this->_actions[$_index]['url'] = $this->getUrlHelper()->simple($value['url']['action']);
@@ -222,11 +226,11 @@ abstract class App_Grid_Gridola
     
     protected function prepareScrollType()
     {
-        if(null == $this->getScrollType()) {
+        if (null == $this->getScrollType()) {
             $this->setScrollType($this->getScrollingTypes($jumping = 2));
         } else {
             $scrollTypes = array_flip($this->getScrollingTypes());
-            if(!isset($scrollTypes[$this->getScrollType()])) {
+            if (!isset($scrollTypes[$this->getScrollType()])) {
                 throw New App_Grid_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
             }
         }
@@ -235,8 +239,8 @@ abstract class App_Grid_Gridola
     
     protected function preparePaginatorPartial()
     {
-    	// Contemplating extra functionality here.
-    	return $this;
+        // Contemplating extra functionality here.
+        return $this;
     }
     
     protected function initView()
@@ -268,10 +272,10 @@ abstract class App_Grid_Gridola
         try {
             $return = $this->getView()->render($this->getTemplate());
             return $return;
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
         return '';
-    }
-    
+    }   
 }
