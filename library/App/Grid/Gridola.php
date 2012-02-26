@@ -102,7 +102,7 @@ abstract class App_Grid_Gridola
     
     protected function showFilter()
     {
-    	return ($this->getAdapterClass()==='Select') ? true : false;
+    	return ($this->getAdapterClass() === 'DbSelect' || $this->getAdapterClass() == 'DbTableSelect') ? true : false;
     }
     
     protected function setDataSet($dataSet)
@@ -120,25 +120,28 @@ abstract class App_Grid_Gridola
     	$dataSource = $this->getDataSource();
     	
     	$loader = $this->getResourceLoader();
+    	
     	$loader->addPrefixPath('App_Grid_Adapter', 'App/Grid/Adapter');
     	 
     	if (is_array($dataSource)) {
     		$adapterClassName = 'Array';
     	} else if ($dataSource instanceof Zend_Db_Select) {
-    		$adapterClassName = 'Select';
+    		$adapterClassName = 'DbSelect';
+        } else if ($dataSource instanceof Zend_Db_Table_Select) {
+        	$adapterClassName = 'DbTableSelect';
     	} else if ($dataSource instanceof Zend_Db_Table_Rowset) {
-    		$adapterClassName = 'Table';
+    		$adapterClassName = 'Rowset';
     	} else if ($dataSource instanceof Iterator) {
     		$adapterClassName = 'Iterator';
     	} else {
-    		throw new App_Grid_Exception('Data source provider not supported.');
+    		throw new App_Grid_Exception('Data source provider not supported.' . get_class($dataSource));
     	}
     	
     	$this->setAdapterClass($adapterClassName);
     	
     	$adapterObject = $loader->load($adapterClassName);
     	 
-    	$dataSourceAdapter = new $adapterObject($dataSource); // Populate the data source.
+    	$dataSourceAdapter = new $adapterObject($dataSource);
     	
     	$dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
     	

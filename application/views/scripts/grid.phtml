@@ -43,8 +43,8 @@
     </tr>
     <?php endif; ?>
     <?php if(sizeof($this->rows)): ?>
-    <?php foreach($this->rows as $_index => $value): ?>
-    <?php $data = $value->toArray(); ?>
+    <?php foreach($this->rows as $_index => $data): ?>
+    <?php if(is_object($data)): $data = $data->toArray(); endif; ?>
     <?php $colour = $this->cycle(sizeof($this->cyclecolors) ? $this->cyclecolors : array())->next(); ?>
     <tr <?php if(sizeof($this->rowclickurl)): ?>data-href="<?php echo $this->rowclickurl['url'] ?><?php if(isset($data[$this->rowclickurl['field']])): echo urlencode($this->escape($data[$this->rowclickurl['field']])) ?><?php endif; ?>"<?php endif; ?> style="background-color:<?= $colour ?>" <?php if($this->onmouseovercolor): ?>onmouseover="this.style.background='<?php echo $this->onmouseovercolor ?>';"<?php endif; ?> <?php if($this->onmouseovercolor): ?>onmouseout="this.style.background='<?= $colour ?>';"<?php endif; ?>>
       <?php $hasMassActionCheckBox = false; ?>
