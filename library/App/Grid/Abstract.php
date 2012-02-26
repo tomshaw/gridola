@@ -221,34 +221,33 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     public function getDataGridMethods()
     {
-    	if (null === $this->_dataGridMethods) {
-    		$prefix = '_';
-    		$methodNames = get_class_methods($this);
-    		$this->_dataGridMethods = array();
-    		foreach ($methodNames as $method) {
-    			if ('_prepare' === substr($method, 0, 8)) {
-    				$this->_dataGridMethods[$prefix.lcfirst(substr($method, 8))] = $method;
-    			}
-    		}
-    	}
-    	return $this->_dataGridMethods;
+        if (null === $this->_dataGridMethods) {
+            $prefix = '_';
+            $methodNames = get_class_methods($this);
+            $this->_dataGridMethods = array();
+            foreach ($methodNames as $method) {
+                if ('_prepare' === substr($method, 0, 8)) {
+                    $this->_dataGridMethods[$prefix.lcfirst(substr($method, 8))] = $method;
+                }
+            }
+        }
+        return $this->_dataGridMethods;
     }
     
     protected function _processData()
     {
-    	$dataGridMethods = $this->getDataGridMethods();
+        $dataGridMethods = $this->getDataGridMethods();
     	
-    	$configMethods = array_flip($this->getConfigMethods());
+        $configMethods = array_flip($this->getConfigMethods());
     	
-    	foreach($dataGridMethods as $property => $method) {
-    		if (!array_key_exists($method, $configMethods)) {
-    			continue;
-    		}
-    		if(!sizeof($this->$property) || is_null($this->$property)) {
-    			$return = $this->$method();
-    		}
-    	}
-    	    	
+        foreach($dataGridMethods as $property => $method) {
+            if (!array_key_exists($method, $configMethods)) {
+                continue;
+            }
+            if(!sizeof($this->$property) || is_null($this->$property)) {
+                $return = $this->$method();
+            }
+        }
         return parent::_processData();
     }
     
