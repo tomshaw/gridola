@@ -125,10 +125,10 @@ abstract class App_Grid_Gridola
     	 
     	if (is_array($dataSource)) {
     		$adapterClassName = 'Array';
-    	} else if ($dataSource instanceof Zend_Db_Select) {
-    		$adapterClassName = 'DbSelect';
-        } else if ($dataSource instanceof Zend_Db_Table_Select) {
-        	$adapterClassName = 'DbTableSelect';
+    	} else if ($dataSource instanceof Zend_Db_Table_Select) {
+    		$adapterClassName = 'DbTableSelect';
+        } else if ($dataSource instanceof Zend_Db_Select) {
+        	$adapterClassName = 'DbSelect';
     	} else if ($dataSource instanceof Zend_Db_Table_Rowset) {
     		$adapterClassName = 'Rowset';
     	} else if ($dataSource instanceof Iterator) {
@@ -146,8 +146,6 @@ abstract class App_Grid_Gridola
     	$dataSourceAdapter->initialize($this->getGrid(), $this->getSort(), $this->getOrder());
     	
     	$this->setDataSet($dataSourceAdapter->getData());
-    	
-    	return $this;
     }
     
     protected function _processData()
