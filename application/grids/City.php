@@ -8,7 +8,7 @@ class Grid_City extends App_Grid_Abstract
 {
     protected $_exportTypes = array('csv', 'xml');
     // table-striped table-condensed table-bordered
-    protected $_tableClass = 'table table-condensed';
+    protected $_tableClass = 'table table-bordered';
     
     public function __construct()
     {
