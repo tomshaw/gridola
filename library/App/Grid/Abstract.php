@@ -266,6 +266,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         $this->_massactions[$key] = $data;
     }
     
+    abstract protected function _prepareDataSource();
+    
     abstract protected function _prepareColumns();
     
     abstract protected function _prepareActions();
