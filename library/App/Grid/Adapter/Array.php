@@ -16,11 +16,7 @@ class App_Grid_Adapter_Array extends App_Grid_DataSource
 	
 		$sort = $this->getRequest()->getParam('sort') == 'desc' ? SORT_ASC : SORT_DESC;
 	
-		$data = $this->arraySortByColumn($array, $order, $sort);
-	
-		$this->setDataSource($data);
-	
-		return $this;
+		$this->setDataSource($this->arraySortByColumn($array, $order, $sort));
 	}
 	
 }
