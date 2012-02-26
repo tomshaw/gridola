@@ -11,7 +11,7 @@
     <li class="prev disabled"><a href="#">First</a></li>
     <?php endif; ?>
     <?php if (isset($this->previous)): ?>
-    <li><a href="<?= $this->url(array('page' => $this->previous)); ?>">Previous</a></li>
+    <li><a href="<?= $this->url(array('page' => $this->previous)); ?>">&larr; Previous</a></li>
     <?php else: ?>
     <li class="prev disabled"><a href="#">Previous</a></li>
     <?php endif; ?>
@@ -19,7 +19,7 @@
     <li <?php if ($page == $this->current): ?>class="active"<?php endif; ?>><a href="<?= $this->url(array('page' => $page)); ?>"><?= $page; ?></a></li> 
     <?php endforeach; ?>
     <?php if (isset($this->next)): ?>
-    <li class="next"><a href="<?= $this->url(array('page' => $this->next)); ?>">Next</a></li>
+    <li class="next"><a href="<?= $this->url(array('page' => $this->next)); ?>">Next &rarr;</a></li>
     <?php else: ?>
     <li class="next disabled"><a href="#">Next</a></li>
     <?php endif; ?>
