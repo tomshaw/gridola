@@ -30,7 +30,7 @@ class App_Grid_Export_Csv extends App_Grid_Export
         $has = false;
         $string = '';
         foreach ($dataSource as $row) {
-            array_map(array($this, 'clean'), $row);
+            array_map(array($this, 'cleanData'), $row);
             $data = (array) $row;
             if (!$has) {
                 $string .= strtoupper(preg_replace('/[_]+/', ' ', implode(", ", array_keys($data)))) . "\n";
@@ -39,6 +39,8 @@ class App_Grid_Export_Csv extends App_Grid_Export
             $string .= implode(", ", array_values($data)) . "\n";
         }
         
-        $this->setExport($string);
+        $this->setExport($string)->export();
+        
+        exit;
     }
 }

@@ -69,6 +69,15 @@ abstract class App_Grid_Export extends App_Grid_Gridola
         return $this->_dataGridName;
     }
     
+    protected function getColumns($upperCaseNames = true)
+    {
+        $columns = array();
+        foreach($this->getDataGrid() as $row) {
+            $columns[] = ($upperCaseNames) ? strtoupper($row['index']) : $row['index'];
+        }
+        return $columns;
+    }
+    
     protected function disableLayout()
     {
         if (null !== ($layout = Zend_Layout::getMvcInstance())) {
