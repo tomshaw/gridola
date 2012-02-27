@@ -39,8 +39,6 @@ class App_Grid_Export_Csv extends App_Grid_Export
             $string .= implode(", ", array_values($data)) . "\n";
         }
         
-        $this->setExport($string)->export();
-        
-        exit;
+        $this->setExport($string);
     }
 }
