@@ -176,7 +176,7 @@ abstract class App_Grid_Gridola
     			$deploymentClass = 'Xml';
     			break;
     		default:
-    			throw new App_Grid_Exception('Support for: ' . $deploymentType . ' is not supported.');
+    			throw new App_Grid_Exception('Export support for: ' . $deploymentType . ' is not supported at this time.');
     	}
     	
     	$deploymentObject = $loader->load($deploymentClass);
@@ -184,7 +184,6 @@ abstract class App_Grid_Gridola
     	$deploymentAdapter = new $deploymentObject($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName());
     	
     	$deploymentAdapter->export();
-
     }
     
     protected function _processData()
@@ -192,7 +191,7 @@ abstract class App_Grid_Gridola
     	$this->_initDataSource();
     	
     	if($this->getExportType()) {
-    		$this->processExport();
+    		return $this->processExport();
     	}
         
         $searchParams = $this->getRequest()->getPost();

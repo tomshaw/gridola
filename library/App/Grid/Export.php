@@ -35,7 +35,11 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     
     protected function getDataSource()
     {
-        return $this->_dataSource;
+    	$dataSource = $this->_dataSource;
+        if ($this->_dataSource instanceof Zend_Db_Select) {
+        	$dataSource = $this->_dataSource->getAdapter()->fetchAll($dataSource);
+        }
+        return $dataSource;
     }
     
     protected function setDataGrid($dataGrid)
@@ -74,11 +78,20 @@ abstract class App_Grid_Export extends App_Grid_Gridola
         return $this;
     }
     
-    protected function cleanData($str)
+    protected function clean($str)
     {
         $str = str_replace(array("\r", "\n", ','), ' ', $str);
         $str = str_replace('"', '""', $str);
         return stripslashes($str);
+    }
+    
+    protected function cleanData($str)
+    {
+    	$str = str_replace('"', '""', $str);
+    	if(preg_match('/,/', $str) || preg_match("/\n/", $str) || preg_match('/"/', $str)) {
+    		return '"'.$str.'"';
+    	}
+    	return $str;
     }
     
     protected function getGridFileName()
@@ -108,5 +121,6 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     protected function printIt()
     {
         print $this->getExport();
+        exit;
     }
 }

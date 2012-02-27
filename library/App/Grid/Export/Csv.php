@@ -23,19 +23,14 @@ class App_Grid_Export_Csv extends App_Grid_Export
     
     protected function deploy()
     {
-        //$dataGrid = $this->getDataGrid();
+        $dataGrid = $this->getDataGrid();
         
         $dataSource = $this->getDataSource();
-        if ($dataSource instanceof Zend_Db_Select) {
-            $dataSource = $dataSource->getAdapter()->fetchAll($dataSource);
-        }
-        
-        // Below code is for testing only.
         
         $has = false;
         $string = '';
         foreach ($dataSource as $row) {
-            array_map(array($this, 'cleanData'), $row);
+            array_map(array($this, 'clean'), $row);
             $data = (array) $row;
             if (!$has) {
                 $string .= strtoupper(preg_replace('/[_]+/', ' ', implode(", ", array_keys($data)))) . "\n";
@@ -44,8 +39,6 @@ class App_Grid_Export_Csv extends App_Grid_Export
             $string .= implode(", ", array_values($data)) . "\n";
         }
         
-        $this->setExport($string)->export();
-        
-        exit;
+        $this->setExport($string);
     }
 }
