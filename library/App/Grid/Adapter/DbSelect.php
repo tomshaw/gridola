@@ -79,12 +79,23 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
         return $this;
     }
     
+    public function getColumnTypes()
+    {
+        $dataGrid  = $this->getDataGrid();
+        $dataTypes = array();
+        foreach ($dataGrid as $grid) {
+            $dataTypes[$grid['index']] = $grid['type'];
+        }
+        return $dataTypes;
+    }
+    
     public function processDataSource()
     {
         $this->checkData($this->getDataGrid());
         if ($this->getRequest()->isPost()) {
-
             $columnData = $this->getColumnsToTable();
+            
+            $columnTypes = $this->getColumnTypes();
             
             $postedArrayNotation = $this->postedArrayNotation();
             
@@ -97,6 +108,10 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
                 }
                 if ($value == '-1') {
                     continue;
+                }
+                $dataType = 'string';
+                if (isset($columnTypes[$_index])) {
+                    $dataType = $columnTypes[$_index];
                 }
                 if (is_array($value)) {
                     foreach ($value as $key => $val) {
@@ -123,9 +138,13 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
                     }
                 } else {
                     if (isset($columnData[$_index])) {
-                        $table                             = $columnData[$_index];
+                        $table = $columnData[$_index];
                         $this->getSession()->data{$_index} = $value;
-                        $this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
+                        if ($dataType == 'string') {
+                            $this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
+                        } else {
+                            $this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') = ?', $value);
+                        }
                     }
                 }
             }
@@ -134,6 +153,10 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
             $columnData = $this->getColumnsToTable();
             if (sizeof($this->getSession()->data)) {
                 foreach ($this->getSession()->data as $_column => $value) {
+                    $dataType = 'string';
+                    if (isset($columnTypes[$_column])) {
+                        $dataType = $columnTypes[$_column];
+                    }
                     if (isset($columnData[$_column])) {
                         $table = $columnData[$_column];
                         if (is_array($value)) {
@@ -142,7 +165,11 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
                                 $this->getDataSource()->where($table . '.' . $_column . ' ' . $operand . ' ?', $var);
                             }
                         } else {
-                            $this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') LIKE ?', '%' . strtolower($value) . '%');
+                            if ($dataType == 'string') {
+                                $this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') LIKE ?', '%' . strtolower($value) . '%');
+                            } else {
+                                $this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') = ?', $value);
+                            }
                         }
                     }
                 }
