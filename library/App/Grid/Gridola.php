@@ -26,9 +26,18 @@ abstract class App_Grid_Gridola
     
     protected $_dataSet = array();
     
+    protected $_prefixPaths = array(
+        'App_Grid_Element' => 'App/Grid/Element',
+    	'App_Grid_Adapter' => 'App/Grid/Adapter',
+    	'App_Grid_Export' => 'App/Grid/Export'
+    );
+    
     public function __construct()
     {
-
+    	$loader = $this->getResourceLoader();
+        foreach($this->_prefixPaths as $prefix => $path) {
+        	$loader->addPrefixPath($prefix, $path);
+        }
     }
     
     protected function getRequest()
@@ -129,8 +138,6 @@ abstract class App_Grid_Gridola
         
         $loader = $this->getResourceLoader();
         
-        $loader->addPrefixPath('App_Grid_Adapter', 'App/Grid/Adapter');
-        
         if (is_array($dataSource)) {
             $adapterClassName = 'Array';
         } else if ($dataSource instanceof Zend_Db_Table_Select) {
@@ -158,15 +165,11 @@ abstract class App_Grid_Gridola
     
     protected function processExport()
     {
-    	$deploymentType = $this->getExportType();
-    	
-    	if(is_null($deploymentType)) {
-    		return;
+    	if(null === ($deploymentType = $this->getExportType())) {
+    		return $this;
     	}
     	
     	$loader = $this->getResourceLoader();
-    	
-    	$loader->addPrefixPath('App_Grid_Export', 'App/Grid/Export');
     	
     	switch($deploymentType) {
     		case 'csv':

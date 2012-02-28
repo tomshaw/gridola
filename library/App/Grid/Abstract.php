@@ -60,8 +60,8 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     public function __construct()
     {
+    	parent::__construct();
         $this->_processData();
-        parent::__construct();
     }
     
     protected function getExportType()
