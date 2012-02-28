@@ -171,6 +171,9 @@ abstract class App_Grid_Gridola
     	$loader = $this->getResourceLoader();
     	
         switch($deploymentType) {
+        	case 'xls':
+        		$deploymentClass = 'Xls';
+        		break;
             case 'csv':
                 $deploymentClass = 'Csv';
                 break;

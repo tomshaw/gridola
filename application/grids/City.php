@@ -6,7 +6,10 @@
  */
 class Grid_City extends App_Grid_Abstract
 {
-    protected $_exportTypes = array('csv');
+	protected $_exportTypes = array(
+		'csv' => 'Comma Separated'
+	);
+    
     // table-striped table-condensed table-bordered
     protected $_tableClass = 'table table-bordered';
     

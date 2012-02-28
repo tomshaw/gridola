@@ -69,11 +69,11 @@ abstract class App_Grid_Export extends App_Grid_Gridola
         return $this->_dataGridName;
     }
     
-    protected function getColumns($upperCaseNames = true)
+    protected function getColumns($upperCaseWords = true)
     {
         $columns = array();
         foreach($this->getDataGrid() as $row) {
-            $columns[] = ($upperCaseNames) ? strtoupper($row['index']) : $row['index'];
+            $columns[] = (true === $upperCaseWords) ? ucwords(strtolower($row['header'])) : $row['header'];
         }
         return $columns;
     }
@@ -113,7 +113,7 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     
     protected function setExport($export)
     {
-        $this->_export = $export;
+        $this->_export = (string) $export;
         return $this;
     }
     

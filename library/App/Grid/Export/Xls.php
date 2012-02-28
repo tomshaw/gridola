@@ -4,9 +4,9 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Export_Csv extends App_Grid_Export
+class App_Grid_Export_Xls extends App_Grid_Export
 {
-    protected $_exportType = 'csv';
+    protected $_exportType = 'xls';
     
     protected function header()
     {
@@ -21,14 +21,6 @@ class App_Grid_Export_Csv extends App_Grid_Export
         return $this;
     }
     
-    /**
-     * Important note. A column header that start with an upper case ID in column A1 
-     * throws errors when opening in excel. This is a qwirk with Microsoft Excel. The
-     * error message is when Excel thinks the file is in SLYK format.
-     * 
-     * (non-PHPdoc)
-     * @see App_Grid_Export::deploy()
-     */
     protected function deploy()
     {
         $rows = $this->getDataSource();
@@ -42,7 +34,7 @@ class App_Grid_Export_Csv extends App_Grid_Export
         $string = '';
         for ($i = 0; $i < $columnCount; $i++) {
             $string .= $columns[$i];
-            $string .= ($i < $columnCount - 1) ? ", " : "\n";
+            $string .= ($i < $columnCount - 1) ? "\t" : "\n";
         }
         
         foreach ($rows as $row) {
@@ -53,7 +45,7 @@ class App_Grid_Export_Csv extends App_Grid_Export
                 } elseif ($value == '0' || $value != '') {
                     $string .= str_replace("\n", "", str_replace("\r", "", $value));
                 }
-                $string .= ($count < $columnCount - 1) ? ", " : "\n";
+                $string .= ($count < $columnCount - 1) ? "\t" : "\n";
                 $count++;
             }
         }
