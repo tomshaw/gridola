@@ -6,91 +6,72 @@
  */
 class App_Grid_Element
 {
-    protected $_type = null;
+    protected $_elementTypes = array('text', 'number', 'options', 'datetime');
     
-    protected $_style = null;
-    
-    protected $_index = null;
-    
-    protected $_value = null;
-    
-    protected $_options = null;
-    
-    protected $_start = null;
-    
-    protected $_end = null;
-    
-    protected $_elementTypes = array('text','number','options','datetime');
-    
-    /**
-     * @param array $options
-     */
-    public function addElement($options)
+    public function __construct($data)
     {
-        $this->_type    = (isset($options['type'])) ? $options['type'] : null;
-        $this->_style   = (isset($options['width'])) ? $options['width'] : null;
-        $this->_index   = (isset($options['index'])) ? $options['index'] : null;
-        $this->_value   = (isset($options['value'])) ? $options['value'] : null;
-        $this->_options = array_key_exists('options', $options) ? $options['options'] : false;
-        $this->_start   = (isset($this->_value['start'])) ? $this->_value['start'] : null;
-        $this->_end     = (isset($this->_value['end'])) ? $this->_value['end'] : null;
-        
-        switch ($this->_type) {
-            case 'text':
-                $input = new Zend_Form_Element_Text($this->_index);
-                $input->setValue($this->_value);
-                $input->setAttribs(array('style'=>'width:95%;'));
-                return $input;
-                break;
-            case 'number':
-                $numberStart = new Zend_Form_Element_Text($this->_index);
-                $numberStart->setValue($this->_start);
-                $numberStart->setAttribs(array('title'=>'Starting value.'));
-                $numberStart->removeDecorator('label')->removeDecorator('HtmlTag');
-                $numberStart->setBelongsTo('start');
-                $numberEnd = new Zend_Form_Element_Text($this->_index);
-                $numberEnd->setValue($this->_end);
-                $numberEnd->setAttribs(array('title'=>'Ending value.','style'=>'margin-top:0px;'));
-                $numberEnd->removeDecorator('label')->removeDecorator('HtmlTag');
-                $numberEnd->setBelongsTo('end');
-                return $numberStart . $numberEnd;
-                break;
-            case 'options':
-                $select = new Zend_Form_Element_Select($this->_index);
-                $select->setValue(array($this->_value));
-                $select->addMultiOptions($this->_options);
-                return $select;
-                break;
-            case 'datetime':
-                $datePickerStart = new ZendX_JQuery_Form_Element_DatePicker("'.$this->_index.'", array('value' => $this->_start), array());
-                $datePickerStart->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('start');
-                $datePickerEnd = new ZendX_JQuery_Form_Element_DatePicker("'.$this->_index.'", array('value' => $this->_end), array());
-                $datePickerEnd->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('end');
-                return $datePickerStart . $datePickerEnd;
-                break;
-            default:
-                throw New App_Grid_Exception('Only element types of : ' . implode(', ', $this->_elementTypes) . ' are supported.');
+        foreach ($data as $_index => $value) {
+            $this->$_index = $value;
         }
+        $this->start = (isset($this->value['start'])) ? $this->value['start'] : null;
+        $this->end = (isset($this->value['end'])) ? $this->value['end'] : null;
     }
     
-    public function addStyle($data)
+    public function __set($key, $value)
+    {
+        $this->{$key} = $value;
+    }
+    
+    public function hasOption($key)
+    {
+        $option = strtolower($key);
+        return isset($this->{$option});
+    }
+    
+    public function getOption($key)
+    {
+        $option = strtolower($key);
+        if ($this->hasOption($option)) {
+            return $this->{$option};
+        }
+        return null;
+    }
+    
+    public function __get($prop)
+    {
+        return $this->getOption($prop);
+    }
+    
+    public function __isset($key)
+    {
+        return isset($this->{$key});
+    }
+    
+    public function __unset($key)
+    {
+        unset($this->{$key});
+    }
+    
+    public function _toHtml()
+    {
+        return $this->addElement();
+    }
+    
+    public function _toStyle()
     {
         $style = 'style="';
-        if (isset($data['align']) && isset($data['width'])) {
-            $style .= 'text-align:' . $data['align'] . ';width:' . $data['width'] . ';';
+        if (isset($this->align) && isset($this->width)) {
+            $style .= 'text-align:' . $this->align . ';width:' . $this->width . ';';
         } else {
-            if (isset($data['align'])) {
-                $style .= 'text-align:' . $data['align'] . ';';
-            } else {
-                $style .= 'text-align:left;';
+            if (isset($this->align)) {
+                $style .= 'text-align:' . $this->align . ';';
             }
-            if (isset($data['width'])) {
-                $style .= 'width:' . $data['width'] . ';';
+            if (isset($this->width)) {
+                $style .= 'width:' . $this->width . ';';
             } else {
                 $style .= 'width:20%;';
             }
         }
         return $style .= '"';
-    }
-    
+    }   
 }

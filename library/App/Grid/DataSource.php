@@ -127,9 +127,6 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
     
     protected function getPostFilter()
     {
-    	if (false === ($this->getRequest()->isPost())) {
-    		return array();
-    	}
     	$callback = function($data) use (&$callback) {
     		if (is_array($data)) {
     			return array_filter($data, $callback);

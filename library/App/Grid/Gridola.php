@@ -67,8 +67,7 @@ abstract class App_Grid_Gridola
     protected function getResourceLoader()
     {
         if (null === $this->_resourceLoader) {
-            $loader = new Zend_Loader_PluginLoader();
-            $this->_resourceLoader = $loader;
+            $this->_resourceLoader = new Zend_Loader_PluginLoader();
         }
         return $this->_resourceLoader;
     }
@@ -140,10 +139,10 @@ abstract class App_Grid_Gridola
         
         if (is_array($dataSource)) {
             $adapterClassName = 'Array';
-        } else if ($dataSource instanceof Zend_Db_Table_Select) {
-            $adapterClassName = 'DbTableSelect';
         } else if ($dataSource instanceof Zend_Db_Select) {
             $adapterClassName = 'DbSelect';
+        } else if ($dataSource instanceof Zend_Db_Table_Select) {
+            $adapterClassName = 'DbTableSelect';
         } else if ($dataSource instanceof Zend_Db_Table_Rowset) {
             $adapterClassName = 'Rowset';
         } else if ($dataSource instanceof Iterator) {
@@ -199,6 +198,7 @@ abstract class App_Grid_Gridola
         
         $searchParams = $this->getRequest()->getPost();
         foreach ($this->getDataGrid() as $_index => $column) {
+        	
             if (isset($searchParams[$column['index']])) {
                 $column['value'] = $searchParams[$column['index']];
             } elseif (isset($this->getSession()->data[$column['index']])) {
@@ -206,9 +206,36 @@ abstract class App_Grid_Gridola
             } else {
                 $column['value'] = '';
             }
+            
             if (isset($this->_columns[$_index])) {
-                $this->_columns[$_index]['element'] = $this->getElement()->addElement($column);
-                $this->_columns[$_index]['style']   = $this->getElement()->addStyle($column);
+            	
+                $elementType = array_key_exists('type', $column) ? $column['type'] : 'text';
+                
+                $elementLoader = $this->getResourceLoader();
+
+                switch($elementType) {
+                    case 'text':
+                        $elementClass = $elementLoader->load('Text');
+                        break;
+                    case 'number':
+                        $elementClass = $elementLoader->load('Number');
+                        break;
+                    case 'options':
+                        $elementClass = $elementLoader->load('Options');
+                        break;
+                    case 'datetime':
+                        $elementClass = $elementLoader->load('DatePicker');
+                        break;
+                    default:
+                        throw new App_Grid_Exception('Element type: ' . $elementType . ' is currently not supported.'); 
+                }
+                
+                $elementObject = new $elementClass($column);
+                	
+                $this->_columns[$_index]['element'] = $elementObject->_toHtml();
+                	
+                $this->_columns[$_index]['style'] = $elementObject->_toStyle();
+                    
             }
         }
         
