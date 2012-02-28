@@ -34,9 +34,9 @@ abstract class App_Grid_Gridola
     
     public function __construct()
     {
-    	$loader = $this->getResourceLoader();
+        $loader = $this->getResourceLoader();
         foreach($this->_prefixPaths as $prefix => $path) {
-        	$loader->addPrefixPath($prefix, $path);
+            $loader->addPrefixPath($prefix, $path);
         }
     }
     
@@ -126,7 +126,7 @@ abstract class App_Grid_Gridola
     protected function getDataSet()
     {
         if(is_null($this->_dataSet)) {
-        	$this->_initDataSource();
+            $this->_initDataSource();
         }
         return $this->_dataSet;
     }
@@ -165,27 +165,27 @@ abstract class App_Grid_Gridola
     protected function processExport()
     {
     	if(null === ($deploymentType = $this->getExportType())) {
-    		return $this;
+            return $this;
     	}
     	
     	$loader = $this->getResourceLoader();
     	
-    	switch($deploymentType) {
-    		case 'csv':
-    			$deploymentClass = 'Csv';
-    			break;
-    		case 'xml':
-    			$deploymentClass = 'Xml';
-    			break;
-    		default:
-    			throw new App_Grid_Exception('Export support for: ' . $deploymentType . ' is not supported at this time.');
-    	}
+        switch($deploymentType) {
+            case 'csv':
+                $deploymentClass = 'Csv';
+                break;
+            case 'xml':
+                $deploymentClass = 'Xml';
+                break;
+            default:
+               throw new App_Grid_Exception('Export support for: ' . $deploymentType . ' is not supported at this time.');
+        }
     	
-    	$deploymentObject = $loader->load($deploymentClass);
+        $deploymentObject = $loader->load($deploymentClass);
     	
-    	$deploymentAdapter = new $deploymentObject($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName());
-    	
-    	$deploymentAdapter->export();
+        $deploymentAdapter = new $deploymentObject($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName());
+    	 
+        $deploymentAdapter->export();
     }
     
     protected function _processData()
@@ -193,7 +193,7 @@ abstract class App_Grid_Gridola
     	$this->_initDataSource();
     	
     	if($this->getExportType()) {
-    		return $this->processExport();
+            return $this->processExport();
     	}
         
         $searchParams = $this->getRequest()->getPost();
@@ -307,7 +307,6 @@ abstract class App_Grid_Gridola
     
     protected function preparePaginatorPartial()
     {
-        // Contemplating extra functionality here.
         return $this;
     }
     
