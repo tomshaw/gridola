@@ -99,25 +99,13 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
             
             $postedArrayNotation = $this->postedArrayNotation();
             
-            foreach ($this->getRequest()->getPost() as $_index => $value) {
-                if (empty($value)) {
-                    continue;
-                }
-                if ($_index == 'selected') {
-                    continue;
-                }
-                if ($value == '-1') {
-                    continue;
-                }
+            foreach ($this->getPostFilter() as $_index => $value) {
                 $dataType = 'string';
                 if (isset($columnTypes[$_index])) {
                     $dataType = $columnTypes[$_index];
                 }
                 if (is_array($value)) {
                     foreach ($value as $key => $val) {
-                        if (empty($val)) {
-                            continue;
-                        }
                         if (isset($postedArrayNotation[$key])) {
                             $this->getSession()->data{$key} = $postedArrayNotation[$key];
                         }

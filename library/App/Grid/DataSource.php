@@ -125,6 +125,22 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
         return false;
     }
     
+    protected function getPostFilter()
+    {
+    	if (false === ($this->getRequest()->isPost())) {
+    		return array();
+    	}
+    	$callback = function($data) use (&$callback) {
+    		if (is_array($data)) {
+    			return array_filter($data, $callback);
+    		}
+    		if (!empty($data) && $data != '-1') {
+    			return true;
+    		}
+    	};
+    	return array_filter($this->getRequest()->getPost(), $callback);
+    }
+    
     protected function clearSession()
     {
         unset($this->getSession()->data);
