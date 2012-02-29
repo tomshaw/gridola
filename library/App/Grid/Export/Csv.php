@@ -33,29 +33,23 @@ class App_Grid_Export_Csv extends App_Grid_Export
     {
         $rows = $this->getDataSource();
         
-        $dataCount = count($rows);
+        $rowCount = $this->getRowCount();
         
         $columns = $this->getColumns(true);
         
-        $columnCount = count($columns);
+        $columnCount = $this->getColumnCount();
+        
+        $header = $this->showHeader();
         
         $string = '';
-        for ($i = 0; $i < $columnCount; $i++) {
-            $string .= $columns[$i];
-            $string .= ($i < $columnCount - 1) ? ", " : "\n";
-        }
-        
-        foreach ($rows as $row) {
-            $count = 0;
-            foreach ($row as $_index => $value) {
-                if (is_null($value) || empty($value)) {
-                    $string .= '';
-                } elseif ($value == '0' || $value != '') {
-                    $string .= str_replace("\n", "", str_replace("\r", "", $value));
-                }
-                $string .= ($count < $columnCount - 1) ? ", " : "\n";
-                $count++;
-            }
+        foreach($rows as $row) {
+        	array_map(array($this, 'filter'), $row);
+        	$data = (array) $row;
+        	if(!$header) {
+        		$string .= ucwords(strtolower(implode(", ", array_keys($data)))) . "\n";
+        		$header = true;
+        	}
+        	$string .= implode(", ", array_values($data)) . "\n";
         }
         
         $this->setExport($string);

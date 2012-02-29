@@ -5,11 +5,7 @@
  * MIT Licensed
  */
 class Grid_City extends App_Grid_Abstract
-{
-    protected $_exportTypes = array(
-        'csv' => 'Comma Separated'
-    );
-    
+{    
     // table-striped table-condensed table-bordered
     protected $_tableClass = 'table table-bordered';
     
@@ -160,6 +156,27 @@ class Grid_City extends App_Grid_Abstract
     protected function _prepareOnMouseOverColor()
     {
         $this->setOnMouseOverColor('#DBDFE2');
+    }
+    
+    protected function _prepareExport()
+    {
+        $this->addExport('csv' , array(
+            'label' => 'Comma Separated',
+            'header' => false,
+            'write' => false
+        ));
+    	
+        $this->addExport('xls' , array(
+            'label' => 'Microsoft Excel - NA - In Development',
+            'header' => true,
+            'write' => false
+        ));
+    	
+        $this->addExport('xml' , array(
+            'label' => 'XML Data - NA - In Development',
+            'header' => true,
+            'write' => false
+        ));
     }
     
     /**

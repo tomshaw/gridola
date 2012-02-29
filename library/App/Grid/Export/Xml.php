@@ -6,7 +6,7 @@
  */
 class App_Grid_Export_Xml extends App_Grid_Export
 {
-    protected $_exportType = 'xml';
+    protected $_exportType = 'xls';
     
     protected function header()
     {
@@ -23,33 +23,27 @@ class App_Grid_Export_Xml extends App_Grid_Export
     
     protected function deploy()
     {
-        $rows = $this->getDataSource();
-        
-        $dataCount = count($rows);
-        
-        $columns = $this->getColumns(true);
-        
-        $columnCount = count($columns);
-        
-        $string = '';
-        for ($i = 0; $i < $columnCount; $i++) {
-            $string .= $columns[$i];
-            $string .= ($i < $columnCount - 1) ? "\t" : "\n";
-        }
-        
-        foreach ($rows as $row) {
-            $count = 0;
-            foreach ($row as $_index => $value) {
-                if (is_null($value) || empty($value)) {
-                    $string .= '-';
-                } elseif ($value == '0' || $value != '') {
-                    $string .= str_replace("\t", "", str_replace("\r", "", $value));
-                }
-                $string .= ($count < $columnCount - 1) ? "\t" : "\n";
-                $count++;
-            }
-        }
-        
-        $this->setExport($string);
+    	$rows = $this->getDataSource();
+    
+    	$rowCount = $this->getRowCount();
+    
+    	$columns = $this->getColumns(true);
+    
+    	$columnCount = $this->getColumnCount();
+    
+    	$header = $this->showHeader();
+    
+    	$string = '';
+    	foreach($rows as $row) {
+    		array_map(array($this, 'filter'), $row);
+    		$data = (array) $row;
+    		if(!$header) {
+    			$string .= ucwords(strtolower(implode("\t", array_keys($data)))) . "\n";
+    			$header = true;
+    		}
+    		$string .= implode("\t", array_values($data)) . "\n";
+    	}
+    
+    	$this->setExport($string);
     }
 }

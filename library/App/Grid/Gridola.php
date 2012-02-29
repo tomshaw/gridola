@@ -164,31 +164,26 @@ abstract class App_Grid_Gridola
     
     protected function processExport()
     {
-    	if(null === ($deploymentType = $this->getExportType())) {
+    	if(null === ($exportType = $this->getExportType())) {
             return $this;
     	}
     	
-    	$loader = $this->getResourceLoader();
+    	$export = $this->getExport();
     	
-        switch($deploymentType) {
-        	case 'xls':
-        		$deploymentClass = 'Xls';
-        		break;
-            case 'csv':
-                $deploymentClass = 'Csv';
-                break;
-            case 'xml':
-                $deploymentClass = 'Xml';
-                break;
-            default:
-               throw new App_Grid_Exception('Export support for: ' . $deploymentType . ' is not supported at this time.');
-        }
+    	if(isset($export[$exportType])) {
+    		
+            $settings = (array) $export[$exportType];
     	
-        $deploymentObject = $loader->load($deploymentClass);
+            try {
+                $handler = $this->getResourceLoader()->load($exportType);
+    	    } catch(Zend_Loader_Exception $e) {
+        	    throw new App_Grid_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
+            }
     	
-        $deploymentAdapter = new $deploymentObject($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName());
+            $adapter = new $handler($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName(), $settings);
     	 
-        $deploymentAdapter->export();
+            $adapter->export();   
+    	}
     }
     
     protected function _processData()
@@ -308,17 +303,6 @@ abstract class App_Grid_Gridola
         return $this;
     }
     
-    protected function preparePaginatorPartial()
-    {
-        return $this;
-    }
-    
-    protected function prepareExportTypes()
-    {
-    	$exportTypes = $this->getExportTypes();
-    	return $this;
-    }
-    
     protected function initView()
     {
         $this->getView()
@@ -331,7 +315,7 @@ abstract class App_Grid_Gridola
             ->setActions($this->prepareActionUrls()->getActions())
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
-            ->setExportTypes($this->prepareExportTypes()->getExportTypes())
+            ->setExport($this->getExport())
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
@@ -341,7 +325,7 @@ abstract class App_Grid_Gridola
             ->setCycleColors($this->getCycleColors())
             ->setOnMouseOverColor($this->getOnMouseOverColor())
             ->setScrollType($this->prepareScrollType()->getScrollType())
-            ->setPaginatorPartial($this->preparePaginatorPartial()->getPaginatorPartial());
+            ->setPaginatorPartial($this->getPaginatorPartial());
     }
     
     public function __toString()

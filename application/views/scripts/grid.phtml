@@ -12,12 +12,12 @@
 
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->url ?>">
 
-<?php if(sizeof($this->exporttypes)): ?>
+<?php if(sizeof($this->export)): ?>
 <fieldset class="grid-elements">
 <select id="export" name="export" class="span2">
   <option value="-1"></option>
-  <?php foreach($this->exporttypes as $_index => $value): ?>
-  <option value="<?php echo $_index ?>"><?php echo $value ?></option>
+  <?php foreach($this->export as $_index => $value): ?>
+  <option value="<?php echo $_index ?>"><?php echo $value['label'] ?></option>
   <?php endforeach; ?>
 </select> <button class="btn">Export</button>
 </fieldset><br />

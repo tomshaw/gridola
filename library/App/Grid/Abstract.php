@@ -53,10 +53,11 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     	'_prepareMassActions',
     	'_prepareRowClickUrl',
     	'_prepareCycleColors',
-    	'_prepareOnMouseOverColor'
+    	'_prepareOnMouseOverColor',
+        '_prepareExport'
     );
     
-    protected $_exportType = null;
+    protected $_export = null;
     
     public function __construct()
     {
@@ -68,9 +69,14 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     {
     	$export = $this->getRequest()->getParam('export');
     	if($export != '-1') {
-    		$this->_exportType = $export;
+    		return $export;
     	}
-    	return $this->_exportType;
+    	return null;
+    }
+    
+    protected function getExport()
+    {
+    	return $this->_export;
     }
     
     protected function getDataGrid()
@@ -295,6 +301,11 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
         $this->_massactions[$key] = $data;
     }
     
+    protected function addExport($key, $data = array())
+    {
+    	$this->_export[$key] = $data;
+    }
+    
     abstract protected function _prepareDataSource();
     
     abstract protected function _prepareColumns();
@@ -307,5 +318,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     abstract protected function _prepareCycleColors();
     
-    abstract protected function _prepareOnMouseOverColor();   
+    abstract protected function _prepareOnMouseOverColor();
+
+    abstract protected function _prepareExport();
 }

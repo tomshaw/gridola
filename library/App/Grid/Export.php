@@ -16,9 +16,11 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     
     protected $_export = null;
     
-    public function __construct($dataSource, $dataGrid, $dataGridName)
+    protected $_settings = array();
+    
+    public function __construct($dataSource, $dataGrid, $dataGridName, $settings)
     {
-        $this->setDataSource($dataSource)->setDataGrid($dataGrid)->setDataGridName($dataGridName);
+        $this->setDataSource($dataSource)->setDataGrid($dataGrid)->setDataGridName($dataGridName)->setSettings($settings);
         $this->header()->deploy();
         //$this->deploy();
     }
@@ -87,20 +89,11 @@ abstract class App_Grid_Export extends App_Grid_Gridola
         return $this;
     }
     
-    protected function clean($str)
+    protected function filter($string)
     {
-        $str = str_replace(array("\r", "\n", ','), ' ', $str);
-        $str = str_replace('"', '""', $str);
-        return stripslashes($str);
-    }
-    
-    protected function cleanData($str)
-    {
-    	$str = str_replace('"', '""', $str);
-    	if(preg_match('/,/', $str) || preg_match("/\n/", $str) || preg_match('/"/', $str)) {
-    		return '"'.$str.'"';
-    	}
-    	return $str;
+        $string = str_replace(array("\r","\t","\n",","), " ", $string);
+        $string = str_replace('"', '""', $string);
+        return stripslashes($string);
     }
     
     protected function getGridFileName()
@@ -120,6 +113,35 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     protected function getExport()
     {
         return $this->_export;
+    }
+    
+    protected function setSettings($settings)
+    {
+        $this->_settings = $settings;
+    }
+    
+    protected function getSettings()
+    {
+        return $this->_settings;
+    }
+    
+    protected function getRowCount()
+    {
+    	return count($this->getDataSource());
+    }
+    
+    protected function getColumnCount()
+    {
+        return count($this->getDataGrid());
+    }
+    
+    protected function showHeader()
+    {
+        $settings = $this->getSettings();
+        if(array_key_exists('header', $settings)) {
+            return (true === $settings['header']) ? false : true;
+        }
+        return true;
     }
     
     protected function export()
