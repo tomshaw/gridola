@@ -119,7 +119,8 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
     protected function hasExport()
     {
         $export = $this->getRequest()->getParam('export');
-        if(in_array($export, array('csv','xml','exl'))) {
+        // @todo define this array somewhere else.
+        if(in_array($export, array('csv','xml','xls'))) {
             return true;
         }
         return false;
@@ -127,15 +128,15 @@ abstract class App_Grid_DataSource extends App_Grid_Gridola
     
     protected function getPostFilter()
     {
-    	$callback = function($data) use (&$callback) {
-    		if (is_array($data)) {
-    			return array_filter($data, $callback);
-    		}
-    		if (!empty($data) && $data != '-1') {
-    			return true;
-    		}
-    	};
-    	return array_filter($this->getRequest()->getPost(), $callback);
+        $callback = function($data) use (&$callback) {
+            if (is_array($data)) {
+                return array_filter($data, $callback);
+            }
+            if (!empty($data) && $data != '-1') {
+                return true;
+            }
+        };
+        return array_filter($this->getRequest()->getPost(), $callback);
     }
     
     protected function clearSession()
