@@ -18,9 +18,9 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     
     protected $_exportTypes = array();
     
-    protected $_Sort = null;
+    protected $_sort = null;
     
-    protected $_Order = null;
+    protected $_order = null;
     
     protected $_itemsPerPage = 10;
     
