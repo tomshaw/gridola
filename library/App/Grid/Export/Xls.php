@@ -24,27 +24,27 @@ class App_Grid_Export_Xls extends App_Grid_Export
 
     protected function deploy()
     {
-    	$rows = $this->getDataSource();
+        $rows = $this->getDataSource();
     
-    	$rowCount = $this->getRowCount();
+        $rowCount = $this->getRowCount();
     
-    	$columns = $this->getColumns(true);
+        $columns = $this->getColumns(true);
     
-    	$columnCount = $this->getColumnCount();
+        $columnCount = $this->getColumnCount();
     
-    	$header = $this->showHeader();
+        $header = $this->showHeader();
     
-    	$string = '';
-    	foreach($rows as $row) {
-    		array_map(array($this, 'filter'), $row);
-    		$data = (array) $row;
-    		if(!$header) {
-    			$string .= ucwords(strtolower(implode("\t", array_keys($data)))) . "\n";
-    			$header = true;
-    		}
-    		$string .= implode("\t", array_values($data)) . "\n";
-    	}
-    
-    	$this->setExport($string);
+        $string = '';
+        foreach($rows as $row) {
+            array_map(array($this, 'filter'), $row);
+            $data = (array) $row;
+            if(!$header) {
+                $string .= ucwords(strtolower(implode("\t", array_keys($data)))) . "\n";
+                $header = true;
+            }
+            $string .= implode("\t", array_values($data)) . "\n";
+        }
+        
+        $this->setExport($string);
     }
 }

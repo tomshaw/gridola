@@ -177,7 +177,7 @@ abstract class App_Grid_Gridola
             try {
                 $handler = $this->getResourceLoader()->load($exportType);
     	    } catch(Zend_Loader_Exception $e) {
-        	    throw new App_Grid_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
+                throw new App_Grid_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
             }
     	
             $adapter = new $handler($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName(), $settings);

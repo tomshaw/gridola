@@ -39,7 +39,7 @@ abstract class App_Grid_Export extends App_Grid_Gridola
     {
     	$dataSource = $this->_dataSource;
         if ($this->_dataSource instanceof Zend_Db_Select) {
-        	$dataSource = $this->_dataSource->getAdapter()->fetchAll($dataSource);
+            $dataSource = $this->_dataSource->getAdapter()->fetchAll($dataSource);
         }
         return $dataSource;
     }

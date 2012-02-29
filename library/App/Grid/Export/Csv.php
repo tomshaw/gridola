@@ -43,13 +43,13 @@ class App_Grid_Export_Csv extends App_Grid_Export
         
         $string = '';
         foreach($rows as $row) {
-        	array_map(array($this, 'filter'), $row);
-        	$data = (array) $row;
-        	if(!$header) {
-        		$string .= ucwords(strtolower(implode(", ", array_keys($data)))) . "\n";
-        		$header = true;
-        	}
-        	$string .= implode(", ", array_values($data)) . "\n";
+            array_map(array($this, 'filter'), $row);
+            $data = (array) $row;
+            if(!$header) {
+                $string .= ucwords(strtolower(implode(", ", array_keys($data)))) . "\n";
+                $header = true;
+            }
+            $string .= implode(", ", array_values($data)) . "\n";
         }
         
         $this->setExport($string);

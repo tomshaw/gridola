@@ -69,7 +69,7 @@ abstract class App_Grid_Abstract extends App_Grid_Gridola
     {
     	$export = $this->getRequest()->getParam('export');
     	if($export != '-1') {
-    		return $export;
+           return $export;
     	}
     	return null;
     }
