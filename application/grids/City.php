@@ -6,8 +6,7 @@
  */
 class Grid_City extends App_Grid_Abstract
 {    
-    // table-striped table-condensed table-bordered
-    protected $_tableClass = 'table table-bordered';
+    protected $_tableClass = 'table table-bordered'; // table-striped table-condensed table-bordered
     
     protected $_itemsPerPage = 25;
     
@@ -17,7 +16,7 @@ class Grid_City extends App_Grid_Abstract
         $this->setOrder('ID');
         $this->setSort('ASC');
         $this->setScrollType('Jumping'); // All, Elastic, Jumping, Sliding
-        //$this->setItemsPerPage(50);
+        $this->setItemsPerPage(50);
         //$this->setTemplate('index/citiesgrid');
         //$this->setPaginatorPartial('index/gridpagination');
         parent::__construct();
