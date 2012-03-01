@@ -1,8 +1,8 @@
 # Gridola - Zend Framework 1.x Grid
       
-  Gridola is a simple to use generic grid developed to be used with Zend Framework 1.x series. It was somewhat hastily developed out of curiosity in that I wondered how much code would actually be required to develop a fully functional grid. Having developed Magento applications for several years and being accustomed to using their grids, I decided to use the same array initialization strategy that Magento uses. My goals for the project were to develop a grid that supported in line actions, mass actions and clickable rows. To also support generic simple data types including integers and date time fields that could be used to narrow down query results from a start and finish or greater than less than perspective. 
+  Gridola is a simple to use generic grid developed to be used with Zend Framework 1.11.11. It was somewhat hastily developed out of curiosity in that I wondered how much code would actually be required to develop a fully functional grid. Having developed Magento applications for several years and being accustomed to using their grids, I decided to use the same array initialization strategy that Magento uses. My goals for the project were to develop a grid that supported in line actions, mass actions and clickable rows. To also support generic simple data types including integers and date time fields that could be used to narrow down query results from a start and finish or greater than less than perspective. 
   
-  The included sample application was built with [Twitter Bootstrap](http://twitter.github.com/bootstrap/), a simple and flexible HTML, CSS, and Javascript rapid application development framework and is copyright by Twitter. Gridola has been tested using Zend Framework 1.11.11 and PHP 5.3.10. I'm sure it will also work with the PHP 5.4 release candidates. 
+  The included sample application was built with [Twitter Bootstrap](http://twitter.github.com/bootstrap/), a simple and flexible HTML, CSS, and Javascript rapid application development framework and is copyright by Twitter. Gridola has been tested using Zend Framework 1.11.11 and PHP 5.3.10 and with PHP 5.4. 
  
 ## Features
 
@@ -173,7 +173,7 @@
         $this->addExport('csv' , array(
             'label' => 'Comma Separated', // Drop down label.
             'header' => false, // Display header in output.
-            'write' => false // Write file to disk.
+            'write' => false // Write file to disk. 
         ));
     	
         $this->addExport('xls' , array(
@@ -205,9 +205,9 @@
 
  List of todo items:
 
-  * Refactor Db and Element objects.
-  * Add check all and checked remember cookie support.
-  * Add export functionality.
+  * Add security token support.
+  * Add support for more export formats.
+  * Consider SQL pattern matching.
   * Currency support.
   * Consider caching paginated results.
   * Review any security concerns.
@@ -220,11 +220,7 @@
   * [MySQL World Database](http://dev.mysql.com/doc/world-setup/en/world-setup.html) Copyright (c) 2005, 2011, Oracle and/or its affiliates. All rights reserved.
   * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
   * [Zend Framework-1.11.11](http://framework.zend.com/) I don't always use frameworks but when I do I choose Zend Framework.
-  * [PHP 5.3.10](http://www.php.net/) Will test with 5.4 Release Candidates.
-  
-# Requirements
-
-  * Nothing special.
+  * [PHP 5.3.10 - 5.4](http://www.php.net/) Works great with the latest versions of PHP.
 
 # API 
 
