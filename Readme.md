@@ -17,9 +17,9 @@
   
   Example grid:
      
-    protected $_exportTypes = array('csv', 'xml');
-    // table-striped table-condensed table-bordered
-    protected $_tableClass = 'table table-condensed';
+    protected $_tableClass = 'table table-bordered'; // table-striped table-condensed table-bordered
+    
+    protected $_itemsPerPage = 25;
     
     public function __construct()
     {
@@ -27,6 +27,7 @@
         $this->setOrder('ID');
         $this->setSort('ASC');
         $this->setScrollType('Jumping'); // All, Elastic, Jumping, Sliding
+        $this->setItemsPerPage(50);
         //$this->setTemplate('index/citiesgrid');
         //$this->setPaginatorPartial('index/gridpagination');
         parent::__construct();
@@ -165,6 +166,27 @@
     protected function _prepareOnMouseOverColor()
     {
         $this->setOnMouseOverColor('#DBDFE2');
+    }
+    
+    protected function _prepareExport()
+    {
+        $this->addExport('csv' , array(
+            'label' => 'Comma Separated', // Drop down label.
+            'header' => false, // Display header in output.
+            'write' => false // Write file to disk.
+        ));
+    	
+        $this->addExport('xls' , array(
+            'label' => 'Microsoft Excel - NA - In Development',
+            'header' => true,
+            'write' => false
+        ));
+    	
+        $this->addExport('xml' , array(
+            'label' => 'XML Data - NA - In Development',
+            'header' => true,
+            'write' => false
+        ));
     }
 
 ## Installation
