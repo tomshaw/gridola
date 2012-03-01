@@ -28,8 +28,8 @@
         $this->setSort('ASC');
         $this->setScrollType('Jumping'); // All, Elastic, Jumping, Sliding
         $this->setItemsPerPage(50);
-        //$this->setTemplate('index/citiesgrid');
-        //$this->setPaginatorPartial('index/gridpagination');
+        $this->setTemplate('index/citiesgrid'); // Defaults to grid.phtml
+        $this->setPaginatorPartial('index/gridpagination'); // Defaults to gridpagination.phtml
         parent::__construct();
     }
     
@@ -177,13 +177,13 @@
         ));
     	
         $this->addExport('xls' , array(
-            'label' => 'Microsoft Excel - NA - In Development',
+            'label' => 'Microsoft Excel',
             'header' => true,
             'write' => false
         ));
     	
         $this->addExport('xml' , array(
-            'label' => 'XML Data - NA - In Development',
+            'label' => 'XML Data',
             'header' => true,
             'write' => false
         ));
