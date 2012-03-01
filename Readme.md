@@ -210,6 +210,7 @@
   * Consider SQL pattern matching.
   * Currency support.
   * Consider caching paginated results.
+  * API documentation.
   * Review any security concerns.
   * Unit test.
 
