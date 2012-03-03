@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
 */
-class App_Grid_Exception extends Zend_Exception
+class Gridola_Exception extends Zend_Exception
 {
 
 }

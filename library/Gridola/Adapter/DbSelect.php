@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
+class Gridola_Adapter_DbSelect extends Gridola_DataSource
 {
     protected $_arrayNotationKeys = array('start', 'end');
     
@@ -36,7 +36,7 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
             $columnData[$field] = $table;
         }
         if (isset($columnData['*'])) {
-            throw new App_Grid_Exception('Wild cards column types are not allowed. Please narrow down your query to specific columns.');
+            throw new Gridola_Exception('Wild cards column types are not allowed. Please narrow down your query to specific columns.');
         }
         return $columnData;
     }
@@ -66,14 +66,14 @@ class App_Grid_Adapter_DbSelect extends App_Grid_DataSource
             foreach ($dataGrid as $_index => $data) {
                 $column = isset($data['index']) ? $data['index'] : null;
                 if (null === $column) {
-                    throw new App_Grid_Exception('A column index must be specified when creating your data grid.');
+                    throw new Gridola_Exception('A column index must be specified when creating your data grid.');
                 }
                 if (!isset($columns[$column])) {
                     $errors[] = $column;
                 }
             }
             if (sizeof($errors)) {
-                throw new App_Grid_Exception('The following grid columns do not exist in your database select statement: ' . implode(', ', $errors) . '.');
+                throw new Gridola_Exception('The following grid columns do not exist in your database select statement: ' . implode(', ', $errors) . '.');
             }
         }
         return $this;

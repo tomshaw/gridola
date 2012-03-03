@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Element
+class Gridola_Element
 {
     protected $_elementTypes = array('text', 'number', 'options', 'datetime');
     

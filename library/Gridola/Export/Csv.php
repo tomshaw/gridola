@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Export_Csv extends App_Grid_Export
+class Gridola_Export_Csv extends Gridola_Export
 {
     protected $_exportType = 'csv';
     
@@ -27,7 +27,7 @@ class App_Grid_Export_Csv extends App_Grid_Export
      * error message is when Excel thinks the file is in SLYK format.
      * 
      * (non-PHPdoc)
-     * @see App_Grid_Export::deploy()
+     * @see Gridola_Export::deploy()
      */
     protected function deploy()
     {

@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Export_Xls extends App_Grid_Export
+class Gridola_Export_Xls extends Gridola_Export
 {
     protected $_exportType = 'xls';
     

@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class App_Grid_Adapter_Rowset extends App_Grid_DataSource
+class Gridola_Adapter_Rowset extends Gridola_DataSource
 {
     public function __construct(Zend_Db_Table_Rowset $dataSource)
     {

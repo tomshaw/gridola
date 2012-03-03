@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-abstract class App_Grid_Export extends App_Grid_Gridola
+abstract class Gridola_Export extends Gridola_Grid
 {
     protected $_exportType = null;
     

@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
 */
-class App_Grid_Element_DatePicker extends App_Grid_Element
+class Gridola_Element_DatePicker extends Gridola_Element
 {
     public function addElement()
     {	

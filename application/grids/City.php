@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-class Grid_City extends App_Grid_Abstract
+class Grid_City extends Gridola_Abstract
 {    
     protected $_tableClass = 'table table-bordered'; // table-striped table-condensed table-bordered
     

@@ -4,7 +4,7 @@
  * Copyright(c) 2011 Tom Shaw <tom@tomshaw.info>
  * MIT Licensed
  */
-abstract class App_Grid_Gridola
+abstract class Gridola_Grid
 {
     protected $_request = null;
     
@@ -27,9 +27,9 @@ abstract class App_Grid_Gridola
     protected $_dataSet = array();
     
     protected $_prefixPaths = array(
-        'App_Grid_Element' => 'App/Grid/Element',
-    	'App_Grid_Adapter' => 'App/Grid/Adapter',
-    	'App_Grid_Export' => 'App/Grid/Export'
+        'Gridola_Element' => 'Gridola/Element',
+    	'Gridola_Adapter' => 'Gridola/Adapter',
+    	'Gridola_Export' => 'Gridola/Export'
     );
     
     public function __construct()
@@ -59,7 +59,7 @@ abstract class App_Grid_Gridola
     protected function getView()
     {
         if ($this->_view === null) {
-            $this->_view = new App_Grid_View();
+            $this->_view = new Gridola_View();
         }
         return $this->_view;
     }
@@ -75,7 +75,7 @@ abstract class App_Grid_Gridola
     protected function getElement()
     {
         if ($this->_element === null) {
-            $this->_element = new App_Grid_Element();
+            $this->_element = new Gridola_Element();
         }
         return $this->_element;
     }
@@ -148,7 +148,7 @@ abstract class App_Grid_Gridola
         } else if ($dataSource instanceof Iterator) {
             $adapterClassName = 'Iterator';
         } else {
-            throw new App_Grid_Exception('The data source provider: ' . get_class($dataSource) . ' is not supported.');
+            throw new Gridola_Exception('The data source provider: ' . get_class($dataSource) . ' is not supported.');
         }
         
         $this->setAdapterClass($adapterClassName);
@@ -177,7 +177,7 @@ abstract class App_Grid_Gridola
             try {
                 $handler = $this->getResourceLoader()->load($exportType);
     	    } catch(Zend_Loader_Exception $e) {
-                throw new App_Grid_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
+                throw new Gridola_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
             }
     	
             $adapter = new $handler($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName(), $settings);
@@ -225,7 +225,7 @@ abstract class App_Grid_Gridola
                         $elementClass = $elementLoader->load('DatePicker');
                         break;
                     default:
-                        throw new App_Grid_Exception('Element type: ' . $elementType . ' is currently not supported.'); 
+                        throw new Gridola_Exception('Element type: ' . $elementType . ' is currently not supported.'); 
                 }
                 
                 $elementObject = new $elementClass($column);
@@ -245,7 +245,7 @@ abstract class App_Grid_Gridola
         $data = $this->getRowClickUrl();
         if (sizeof($data)) {
             if (!array_key_exists('field', $data)) {
-                throw new App_Grid_Exception('A database column-field name must be specified when creating clickable rows.');
+                throw new Gridola_Exception('A database column-field name must be specified when creating clickable rows.');
             }
             if (isset($data['url']) && is_array($data['url'])) {
                 $route = array();
@@ -265,7 +265,7 @@ abstract class App_Grid_Gridola
         if (sizeof($this->getActions())) {
             foreach ($this->getActions() as $_index => $value) {
                 if (!array_key_exists('url', $value)) {
-                    throw new App_Grid_Exception('A url must be specified when creating inline row actions.');
+                    throw new Gridola_Exception('A url must be specified when creating inline row actions.');
                 }
                 if (sizeof($value['url'])) {
                     if (isset($value['url']['action'])) {
@@ -297,7 +297,7 @@ abstract class App_Grid_Gridola
         } else {
             $scrollTypes = array_flip($this->getScrollingTypes());
             if (!isset($scrollTypes[$this->getScrollType()])) {
-                throw New App_Grid_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
+                throw New Gridola_Exception('Available scroll types include, ' . implode(', ', array_flip($scrollTypes)));
             }
         }
         return $this;
