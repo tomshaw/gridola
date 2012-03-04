@@ -37,7 +37,7 @@ abstract class Gridola_Export extends Gridola_Grid
     
     protected function getDataSource()
     {
-    	$dataSource = $this->_dataSource;
+        $dataSource = $this->_dataSource;
         if ($this->_dataSource instanceof Zend_Db_Select) {
             $dataSource = $this->_dataSource->getAdapter()->fetchAll($dataSource);
         }
@@ -74,7 +74,7 @@ abstract class Gridola_Export extends Gridola_Grid
     protected function getColumns($upperCaseWords = true)
     {
         $columns = array();
-        foreach($this->getDataGrid() as $row) {
+        foreach ($this->getDataGrid() as $row) {
             $columns[] = (true === $upperCaseWords) ? ucwords(strtolower($row['header'])) : $row['header'];
         }
         return $columns;
@@ -127,7 +127,7 @@ abstract class Gridola_Export extends Gridola_Grid
     
     protected function getRowCount()
     {
-    	return count($this->getDataSource());
+        return count($this->getDataSource());
     }
     
     protected function getColumnCount()
@@ -138,15 +138,58 @@ abstract class Gridola_Export extends Gridola_Grid
     protected function showHeader()
     {
         $settings = $this->getSettings();
-        if(array_key_exists('header', $settings)) {
+        if (array_key_exists('header', $settings)) {
             return (true === $settings['header']) ? false : true;
         }
         return true;
     }
     
+    protected function hasWrite()
+    {
+        $settings = $this->getSettings();
+        if (array_key_exists('write', $settings)) {
+            return $settings['write'];
+        }
+        return false;
+    }
+    
+    protected function writeFile()
+    {
+        if (true === ($this->hasWrite())) {
+        	
+            foreach(array('fopen','fwrite','fclose','tempnam','rename','is_dir','mkdir','sys_get_temp_dir') as $_index => $method) {
+                if (!function_exists($method)) {
+                    return $this;
+                }
+            }
+        	
+            $export = $this->getExport();
+            
+            $writePath = APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR;
+            
+            if (false === (is_dir($writePath))) {
+                mkdir($writePath);
+            }
+            
+            $gridFileName = $this->getGridFileName();
+            
+            $temporaryName = tempnam(sys_get_temp_dir(), $gridFileName);
+            
+            $handle = fopen($temporaryName, 'w');
+            
+            fwrite($handle, $export);
+            
+            fclose($handle);
+            
+            rename($temporaryName, $writePath . $gridFileName);    
+        }
+        
+        return $this;
+    }
+    
     protected function export()
     {
-        $this->disableLayout()->printIt();
+        $this->disableLayout()->writeFile()->printIt();
     }
     
     protected function printIt()
