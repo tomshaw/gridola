@@ -35,8 +35,8 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
             }
             $columnData[$field] = $table;
         }
-        if (isset($columnData['*'])) {
-            throw new Gridola_Exception('Wild cards column types are not allowed. Please narrow down your query to specific columns.');
+        if (isset($columnData[Zend_Db_Select::SQL_WILDCARD])) {
+            throw new Gridola_Exception('Wild cards are not allowed in your search query. Please narrow down your results to specific columns.');
         }
         return $columnData;
     }
@@ -100,10 +100,12 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
             $postedArrayNotation = $this->postedArrayNotation();
             
             foreach ($this->getPostFilter() as $_index => $value) {
-                $dataType = 'string';
+                
+            	$dataType = 'string';
                 if (isset($columnTypes[$_index])) {
                     $dataType = $columnTypes[$_index];
                 }
+                
                 if (is_array($value)) {
                     foreach ($value as $key => $val) {
                         if (isset($postedArrayNotation[$key])) {

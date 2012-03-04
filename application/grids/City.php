@@ -161,7 +161,7 @@ class Grid_City extends Gridola_Abstract
     {
         $this->addExport('csv' , array(
             'label' => 'Comma Separated', // Drop down label.
-            'header' => false, // Display header in output.
+            'header' => true, // Display header in output.
             'write' => false // Write file to disk.
         ));
     	

@@ -1,4 +1,10 @@
 <?php
+function getmicrotime() 
+{
+    list($usec, $sec) = explode(" ",microtime());
+    return ((float)$usec + (float)$sec); 
+}
+$start = getmicrotime();
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -24,3 +30,10 @@ $application = new Zend_Application(
 );
 $application->bootstrap()
             ->run();
+
+$finish = getmicrotime();
+
+printf("Microtime: %.3f seconds<br/>", $finish - $start);
+printf("Memory Peak: %s<br/>", memory_get_peak_usage(false));
+printf("Memory Peak Real: %s<br/>", memory_get_peak_usage(true));
+printf("Memory Limit: %s<br/>", ini_get('memory_limit'));
