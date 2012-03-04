@@ -66,8 +66,12 @@ abstract class Gridola_Export extends Gridola_Grid
         return $this->_exportType;
     }
     
-    protected function getDataGridName()
+    protected function getDataGridName($pop = true)
     {
+        if($pop) {
+            $parts = explode('_', $this->_dataGridName);
+            $this->_dataGridName = array_pop($parts);
+        }
         return $this->_dataGridName;
     }
     
@@ -99,7 +103,7 @@ abstract class Gridola_Export extends Gridola_Grid
     protected function getGridFileName()
     {
         if (!$this->_gridFileName) {
-            $this->_gridFileName = strtolower($this->getDataGridName()) . '-' . date("Ymd") . '.' . $this->getExportType();
+            $this->_gridFileName = ucfirst(strtolower($this->getDataGridName())) . '-' . date("Y-m-d") . '-' . substr(md5(microtime().mt_rand()), 0,7) . '.' . $this->getExportType();
         }
         return $this->_gridFileName;
     }
