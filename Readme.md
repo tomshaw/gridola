@@ -173,7 +173,7 @@
         $this->addExport('csv' , array(
             'label' => 'Comma Separated', // Drop down label.
             'header' => false, // Display header in output.
-            'write' => false // Write file to disk. 
+            'write' => false // Write file to disk rootdir/export/filename.xml 
         ));
     	
         $this->addExport('xls' , array(

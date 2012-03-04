@@ -157,7 +157,7 @@ abstract class Gridola_Export extends Gridola_Grid
     {
         if (true === ($this->hasWrite())) {
         	
-            foreach(array('fopen','fwrite','fclose','tempnam','rename','is_dir','mkdir','sys_get_temp_dir') as $_index => $method) {
+            foreach (array('fopen','fwrite','fclose','tempnam','rename','is_dir','mkdir','sys_get_temp_dir') as $_index => $method) {
                 if (!function_exists($method)) {
                     return $this;
                 }
