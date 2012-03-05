@@ -60,13 +60,12 @@ class Gridola_Export_Xml extends Gridola_Export
         
         $spreadsheet .= '<ss:Styles>';
         $spreadsheet .= '<ss:Style ss:ID="Default" ss:Name="Normal"><ss:Font ss:Color="blue"/></ss:Style>';
-        //$spreadsheet .= '<ss:Style ss:ID="xl1"><ss:Font ss:Bold="1"/></ss:Style>';
         $spreadsheet .= '<ss:Style ss:ID="Row1"><ss:Font ss:Bold="1" ss:Color="red"/></ss:Style>';
         $spreadsheet .= '</ss:Styles>';
         
         $spreadsheet .= '<Worksheet ss:Name="' . $this->getGridFileName() . '" ss:Description="' . $this->getGridFileName() . '"><ss:Table>';
         
-        foreach ($rows[0] as $_index => $value) {
+        for ($i = 0; $i < $columnCount; $i++) {
             $spreadsheet .= '<ss:Column ss:Width="120"/>';
         }
         
