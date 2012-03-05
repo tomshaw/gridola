@@ -21,19 +21,6 @@ class Gridola_Export_Xml extends Gridola_Export
         return $this;
     }
     
-    protected function findDataType($value)
-    {
-        // preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $value)
-        if (preg_match("/^\d{4}-\d{2}-\d{2} [0-2][0-3]:[0-5][0-9]:[0-5][0-9]$/", $value)) {
-            $type = 'DateTime';
-        } else if (!is_numeric($value)) {
-            $type = 'String';
-        } else {
-            $type = 'Number';
-        }
-        return $type;
-    }
-    
     /**
      * SpreadsheetML
      * 
@@ -53,6 +40,8 @@ class Gridola_Export_Xml extends Gridola_Export
         $columns = $this->getColumns(true);
         
         $columnCount = $this->getColumnCount();
+        
+        $columnTypes = $this->getColumnTypes();
         
         $header = $this->showHeader();
         
@@ -76,7 +65,7 @@ class Gridola_Export_Xml extends Gridola_Export
         if ($header == false) {
             $spreadsheet .= '<ss:Row ss:StyleID="ColumnHeader">';
             foreach ($columns as $column) {
-                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($column) . '">' . $column . '</Data></ss:Cell>';
+                $spreadsheet .= '<ss:Cell><Data ss:Type="String">' . $column . '</Data></ss:Cell>';
             }
             $spreadsheet .= '</ss:Row>';
         }
@@ -84,12 +73,29 @@ class Gridola_Export_Xml extends Gridola_Export
         foreach ($rows as $data) {
             $spreadsheet .= '<ss:Row>';
             foreach ($data as $_index => $value) {
-                $dataType = $this->findDataType($value);
-                if ($dataType == 'DateTime') {
-                    $timestamp = strtotime($value);
-                    $value     = strftime("%Y-%m-%d", $timestamp);
+                if (isset($columnTypes[$_index])) {
+                    $dataTypes = $columnTypes[$_index];
+                    switch ($dataTypes) {
+                        case 'number';
+                            $dataType = 'Number';
+                            break;
+                        case 'text';
+                            $dataType = 'String';
+                            break;
+                        case 'datetime';
+                            $dataType  = 'DateTime';
+                            $timestamp = strtotime($value);
+                            $value     = strftime("%Y-%m-%d", $timestamp);
+                            break;
+                        case 'options';
+                            $dataType = 'String';
+                            break;
+                        default:
+                            $dataType = 'String';
+                            break;
+                    }
+                    $spreadsheet .= '<ss:Cell><Data ss:Type="' . $dataType . '">' . $value . '</Data></ss:Cell>';
                 }
-                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($value) . '">' . $value . '</Data></ss:Cell>';
             }
             $spreadsheet .= '</ss:Row>';
         }

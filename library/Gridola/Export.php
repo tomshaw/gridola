@@ -84,6 +84,15 @@ abstract class Gridola_Export extends Gridola_Grid
         return $columns;
     }
     
+    protected function getColumnTypes()
+    {
+        $columnTypes = array();
+        foreach ($this->getDataGrid() as $row) {
+            $columnTypes[$row['index']] = $row['type'];
+        }
+        return $columnTypes;
+    }
+    
     protected function disableLayout()
     {
         if (null !== ($layout = Zend_Layout::getMvcInstance())) {
