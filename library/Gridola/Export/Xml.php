@@ -72,8 +72,8 @@ class Gridola_Export_Xml extends Gridola_Export
         
         if ($header == false) {
             $spreadsheet .= '<ss:Row ss:StyleID="Row1">';
-            foreach ($rows[0] as $_index => $value) {
-                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($_index) . '">' . ucwords(strtolower(preg_replace('/[_]+/', ' ', $_index))) . '</Data></ss:Cell>';
+            foreach ($columns as $column) {
+                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($column) . '">' . $column . '</Data></ss:Cell>';
             }
             $spreadsheet .= '</ss:Row>';
         }
