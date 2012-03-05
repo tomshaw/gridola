@@ -56,45 +56,45 @@ class Gridola_Export_Xml extends Gridola_Export
         
         $header = $this->showHeader();
         
-        $xml = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
+        $spreadsheet = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
         
-        $xml .= '<ss:Styles>';
-        $xml .= '<ss:Style ss:ID="Default" ss:Name="Normal"><ss:Font ss:Color="red"/></ss:Style>';
-        $xml .= '<ss:Style ss:ID="xl1"><ss:Font ss:Bold="1"/></ss:Style>';
-        $xml .= '<ss:Style ss:ID="Row1"><ss:Font ss:Bold="1"/></ss:Style>';
-        $xml .= '</ss:Styles>';
+        $spreadsheet .= '<ss:Styles>';
+        $spreadsheet .= '<ss:Style ss:ID="Default" ss:Name="Normal"><ss:Font ss:Color="blue"/></ss:Style>';
+        //$spreadsheet .= '<ss:Style ss:ID="xl1"><ss:Font ss:Bold="1"/></ss:Style>';
+        $spreadsheet .= '<ss:Style ss:ID="Row1"><ss:Font ss:Bold="1" ss:Color="red"/></ss:Style>';
+        $spreadsheet .= '</ss:Styles>';
         
-        $xml .= '<Worksheet ss:Name="' . $this->getGridFileName() . '" ss:Description="' . $this->getGridFileName() . '"><ss:Table>';
+        $spreadsheet .= '<Worksheet ss:Name="' . $this->getGridFileName() . '" ss:Description="' . $this->getGridFileName() . '"><ss:Table>';
         
         foreach ($rows[0] as $_index => $value) {
-            $xml .= '<ss:Column ss:Width="120"/>';
+            $spreadsheet .= '<ss:Column ss:Width="120"/>';
         }
         
         if ($header == false) {
-            $xml .= '<ss:Row ss:StyleID="Row1">';
+            $spreadsheet .= '<ss:Row ss:StyleID="Row1">';
             foreach ($rows[0] as $_index => $value) {
-                $xml .= '<ss:Cell><Data ss:Type="' . $this->findDataType($_index) . '">' . ucwords(strtolower(preg_replace('/[_]+/', ' ', $_index))) . '</Data></ss:Cell>';
+                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($_index) . '">' . ucwords(strtolower(preg_replace('/[_]+/', ' ', $_index))) . '</Data></ss:Cell>';
             }
-            $xml .= '</ss:Row>';
+            $spreadsheet .= '</ss:Row>';
         }
         
         foreach ($rows as $data) {
-            $xml .= '<ss:Row>';
+            $spreadsheet .= '<ss:Row>';
             foreach ($data as $_index => $value) {
                 $dataType = $this->findDataType($value);
                 if ($dataType == 'DateTime') {
                     $timestamp = strtotime($value);
                     $value     = strftime("%Y-%m-%d", $timestamp);
                 }
-                $xml .= '<ss:Cell><Data ss:Type="' . $this->findDataType($value) . '">' . $value . '</Data></ss:Cell>';
+                $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($value) . '">' . $value . '</Data></ss:Cell>';
             }
-            $xml .= '</ss:Row>';
+            $spreadsheet .= '</ss:Row>';
         }
         
-        $xml .= '</ss:Table></Worksheet>';
+        $spreadsheet .= '</ss:Table></Worksheet>';
         
-        $xml .= '</Workbook>';
+        $spreadsheet .= '</Workbook>';
         
-        $this->setExport($xml);
+        $this->setExport($spreadsheet);
     }
 }
