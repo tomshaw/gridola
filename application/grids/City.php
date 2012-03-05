@@ -160,19 +160,13 @@ class Grid_City extends Gridola_Abstract
     protected function _prepareExport()
     {
         $this->addExport('csv' , array(
-            'label' => 'Comma Separated', // Drop down label.
+            'label' => 'CSV - Comma Separated', // Drop down label.
             'header' => true, // Display header in output.
             'write' => false // Write file to disk rootdir/export/filename.xml
         ));
     	
-        $this->addExport('xls' , array(
-            'label' => 'Microsoft Excel - NA - In Development',
-            'header' => true,
-            'write' => false
-        ));
-    	
         $this->addExport('xml' , array(
-            'label' => 'XML Data - NA - In Development',
+            'label' => 'XML - SpreadsheetML',
             'header' => true,
             'write' => false
         ));
