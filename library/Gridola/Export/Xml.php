@@ -94,7 +94,7 @@ class Gridola_Export_Xml extends Gridola_Export
                             $dataType = 'String';
                             break;
                     }
-                    $spreadsheet .= '<ss:Cell><Data ss:Type="' . $dataType . '">' . $value . '</Data></ss:Cell>';
+                    $spreadsheet .= '<ss:Cell><Data ss:Type="' . $dataType . '">' . $this->filter($value) . '</Data></ss:Cell>';
                 }
             }
             $spreadsheet .= '</ss:Row>';
