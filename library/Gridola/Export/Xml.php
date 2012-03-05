@@ -56,21 +56,25 @@ class Gridola_Export_Xml extends Gridola_Export
         
         $header = $this->showHeader();
         
-        $spreadsheet = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
+        $spreadsheet = '<?xml version="1.0" encoding="utf-8"?>';
+        $spreadsheet .= '<?mso-application progid="Excel.Sheet"?>';
+        $spreadsheet .= '<Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
         
         $spreadsheet .= '<ss:Styles>';
         $spreadsheet .= '<ss:Style ss:ID="Default" ss:Name="Normal"><ss:Font ss:Color="blue"/></ss:Style>';
-        $spreadsheet .= '<ss:Style ss:ID="Row1"><ss:Font ss:Bold="1" ss:Color="red"/></ss:Style>';
+        $spreadsheet .= '<ss:Style ss:ID="ColumnHeader"><ss:Font ss:Bold="1" ss:Color="red"/></ss:Style>';
         $spreadsheet .= '</ss:Styles>';
         
-        $spreadsheet .= '<Worksheet ss:Name="' . $this->getGridFileName() . '" ss:Description="' . $this->getGridFileName() . '"><ss:Table>';
+        $spreadsheet .= '<Worksheet ss:Name="' . $this->getGridFileName() . '" ss:Description="' . $this->getGridFileName() . '">';
+        
+        $spreadsheet .= '<ss:Table>';
         
         for ($i = 0; $i < $columnCount; $i++) {
             $spreadsheet .= '<ss:Column ss:Width="120"/>';
         }
         
         if ($header == false) {
-            $spreadsheet .= '<ss:Row ss:StyleID="Row1">';
+            $spreadsheet .= '<ss:Row ss:StyleID="ColumnHeader">';
             foreach ($columns as $column) {
                 $spreadsheet .= '<ss:Cell><Data ss:Type="' . $this->findDataType($column) . '">' . $column . '</Data></ss:Cell>';
             }
@@ -90,8 +94,8 @@ class Gridola_Export_Xml extends Gridola_Export
             $spreadsheet .= '</ss:Row>';
         }
         
-        $spreadsheet .= '</ss:Table></Worksheet>';
-        
+        $spreadsheet .= '</ss:Table>';
+        $spreadsheet .= '</Worksheet>';
         $spreadsheet .= '</Workbook>';
         
         $this->setExport($spreadsheet);
