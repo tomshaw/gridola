@@ -27,8 +27,6 @@ abstract class Gridola_Export extends Gridola_Grid
     
     abstract protected function deploy();
     
-    abstract protected function header();
-    
     protected function setDataSource($dataSource)
     {
         $this->_dataSource = $dataSource;
@@ -104,7 +102,7 @@ abstract class Gridola_Export extends Gridola_Grid
     
     protected function filter($string)
     {
-        $string = str_replace(array("\r","\t","\n",","), " ", $string);
+        $string = str_replace(array("\r","\t","\n"), " ", $string);
         $string = str_replace('"', '""', $string);
         return stripslashes($string);
     }
@@ -136,6 +134,26 @@ abstract class Gridola_Export extends Gridola_Grid
     protected function getSettings()
     {
         return $this->_settings;
+    }
+    
+    protected function header()
+    {
+        header('Content-Description: File Transfer');
+        header('Cache-Control: public, must-revalidate, max-age=0');
+        header('Pragma: public');
+        header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        switch($this->getExportType()) {
+            case 'csv':
+                header("Content-Type: application/" . $this->getExportType());
+                break;
+            case 'xml';
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                break;
+        }
+        header('Content-Disposition: attachment; filename="' . $this->getGridFileName() . '"');
+        header('Content-Transfer-Encoding: binary');
+        return $this;
     }
     
     protected function getRowCount()

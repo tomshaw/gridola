@@ -8,19 +8,6 @@ class Gridola_Export_Csv extends Gridola_Export
 {
     protected $_exportType = 'csv';
     
-    protected function header()
-    {
-        header('Content-Description: File Transfer');
-        header('Cache-Control: public, must-revalidate, max-age=0');
-        header('Pragma: public');
-        header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header("Content-Type: application/" . $this->getExportType());
-        header('Content-Disposition: attachment; filename="' . $this->getGridFileName() . '"');
-        header('Content-Transfer-Encoding: binary');
-        return $this;
-    }
-    
     /**
      * Important note. A column header that start with an upper case ID in column A1 
      * throws errors when opening in excel. This is a qwirk with Microsoft Excel. The
