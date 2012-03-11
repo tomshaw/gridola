@@ -44,8 +44,8 @@
     Action.prototype = {
         constructor: Action,
         process: function () {
-            var $el = this.$element,
-                $jsonActions = this.$jsonActions;
+            var $el = this.$element
+              , $jsonActions = this.$jsonActions;
             jQuery.each($jsonActions, function (key, val) {
                 if (key == $el.val()) {
                     $(gridolaFormId).attr('action', val.url);
@@ -57,8 +57,8 @@
 
     $.fn.action = function (option) {
         return this.each(function () {
-            var $this = $(this),
-                data = $this.data('action');
+            var $this = $(this)
+              , data = $this.data('action');
             if (!this.$default) this.$default = $(gridolaFormId).attr("action");
             $(gridolaFormId).attr('action', this.$default);
             if (!data) $this.data('action', (data = new Action(this)));
@@ -83,12 +83,15 @@
  * MIT Licensed
  */
 
-!function ($) {
+!
+function ($) {
 
     "use strict";
 
     var selector = 'tbody tr[data-href]',
         namespace = 'click.table-row.data-api',
+        checkboxes = '#checkall',
+        checknamespace = 'click.checkall.data-api',
         Row = function (element) {
             this.checkboxes($(element).on(namespace, this.location));
         };
@@ -104,8 +107,11 @@
             $element.find('input').hover(function () {
                 $(this).parents('tr').unbind(namespace);
             }).parents('tr').on(namespace, function () {
-                this.location();
+                $(this).attr('data-href');
             });
+        },
+        checkall: function () {
+            $(this).parents('table:eq(0)').find(':checkbox').attr('checked', this.checked);
         }
     };
 
@@ -121,6 +127,7 @@
     $.fn.tablerow.Constructor = Row;
 
     $(function () {
+        $('body').on(checknamespace, checkboxes, Row.prototype.checkall);
         $(selector).each(function () {
             var $this = $(this);
             if ($this.data('tablerow')) return;
