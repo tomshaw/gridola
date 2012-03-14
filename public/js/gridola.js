@@ -35,11 +35,13 @@
 
     "use strict";
 
-    var Action = function (element) {
-        this.$element = $(element);
-        this.$jsonActions = jsonActions;
-        this.process();
-    };
+    var namespace = 'change.massaction.data-api'
+      , selector = '#massaction'
+      , Action = function (element) {
+          this.$element = $(element);
+          this.$jsonActions = jsonActions;
+          this.process();
+      };
 
     Action.prototype = {
         constructor: Action,
@@ -59,7 +61,7 @@
         return this.each(function () {
             var $this = $(this)
               , data = $this.data('action');
-            if (!this.$default) this.$default = $(gridolaFormId).attr("action");
+            if (!this.$default) this.$default = $(gridolaFormId).attr('action');
             $(gridolaFormId).attr('action', this.$default);
             if (!data) $this.data('action', (data = new Action(this)));
             if (typeof option == 'string') data[option].call($this);
@@ -69,7 +71,7 @@
     $.fn.action.Constructor = Action;
 
     $(function () {
-        $('body').on('change', '#massaction', function () {
+        $('body').on(namespace, selector, function () {
             var $switch = $(this);
             $switch.action($switch.data());
         });
@@ -83,16 +85,15 @@
  * MIT Licensed
  */
 
-!
-function ($) {
+!function ($) {
 
     "use strict";
 
-    var selector = 'tbody tr[data-href]',
-        namespace = 'click.table-row.data-api',
-        checkboxes = '#checkall',
-        checknamespace = 'click.checkall.data-api',
-        Row = function (element) {
+    var selector = 'tbody tr[data-href]'
+      , namespace = 'click.table-row.data-api'
+      , checkboxes = '#checkall'
+      , checknamespace = 'click.checkall.data-api'
+      , Row = function (element) {
             this.checkboxes($(element).on(namespace, this.location));
         };
 
