@@ -85,7 +85,8 @@
  * MIT Licensed
  */
 
-!function ($) {
+!
+function ($) {
 
     "use strict";
 
@@ -101,19 +102,20 @@
         constructor: Row,
         resource: function () {
             window.location = $(this).attr('data-href');
+            return false;
         },
         input: function (element) {
-            var $element = $(element).find('input')
-              , $hoveron = $element.hover(function () {
-                $(this).parents('tr').unbind(namespace);
-            });
-            return $hoveron.parents('tr').on(namespace, function () {
-                $(this).attr('data-href');
-            });
+            $(element).find('input').on('mouseenter', this.enter);
+            $(element).find('input').on('mouseleave', this.leave);
+        },
+        enter: function (e) {
+            $(this).parents('tr').unbind(namespace);
+        },
+        leave: function (e) {
+            $(this).attr('data-href');
         },
         checkall: function () {
-            var $boxes = $(this).parents('table:eq(0)').find(':checkbox');
-            $boxes.attr('checked', this.checked);
+            $(this).parents('table:eq(0)').find(':checkbox').attr('checked', this.checked);
         }
     };
 

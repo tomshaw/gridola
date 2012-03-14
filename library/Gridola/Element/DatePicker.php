@@ -8,9 +8,9 @@ class Gridola_Element_DatePicker extends Gridola_Element
 {
     public function addElement()
     {	
-        $datePickerStart = new ZendX_JQuery_Form_Element_DatePicker("'.$this->index.'", array('value' => $this->start, 'jQueryParams' => array('dateFormat' => 'yy-mm-dd')), array());
+        $datePickerStart = new ZendX_JQuery_Form_Element_DatePicker($this->index, array('value'=>$this->start,'jQueryParams'=>array('dateFormat'=>'yy-mm-dd')), array());
         $datePickerStart->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('start');
-        $datePickerEnd = new ZendX_JQuery_Form_Element_DatePicker("'.$this->index.'", array('value' => $this->end, 'jQueryParams' => array('dateFormat' => 'yy-mm-dd')), array());
+        $datePickerEnd = new ZendX_JQuery_Form_Element_DatePicker($this->index, array('value'=>$this->end,'jQueryParams'=>array('dateFormat'=>'yy-mm-dd')), array());
         $datePickerEnd->removeDecorator('label')->removeDecorator('HtmlTag')->setBelongsTo('end');
         return $datePickerStart . $datePickerEnd;
     }
