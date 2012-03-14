@@ -108,12 +108,11 @@
                 $(this).parents('tr').unbind(namespace);
             });
             return $hoveron.parents('tr').on(namespace, function () {
-            	$(this).unbind('mouseenter').unbind('mouseleave');
                 $(this).attr('data-href');
             });
         },
         checkall: function () {
-        	var $boxes = $(this).parents('table:eq(0)').find(':checkbox');
+            var $boxes = $(this).parents('table:eq(0)').find(':checkbox');
             $boxes.attr('checked', this.checked);
         }
     };
