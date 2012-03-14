@@ -94,45 +94,47 @@
       , checkboxes = '#checkall'
       , checknamespace = 'click.checkall.data-api'
       , Row = function (element) {
-            this.checkboxes($(element).on(namespace, this.location));
+            this.input($(element).on(namespace, this.resource));
         };
 
     Row.prototype = {
         constructor: Row,
-        location: function () {
+        resource: function () {
             window.location = $(this).attr('data-href');
-            return false;
         },
-        checkboxes: function (element) {
-            var $element = $(element);
-            $element.find('input').hover(function () {
+        input: function (element) {
+            var $element = $(element).find('input')
+              , $hoveron = $element.hover(function () {
                 $(this).parents('tr').unbind(namespace);
-            }).parents('tr').on(namespace, function () {
+            });
+            return $hoveron.parents('tr').on(namespace, function () {
+            	$(this).unbind('mouseenter').unbind('mouseleave');
                 $(this).attr('data-href');
             });
         },
         checkall: function () {
-            $(this).parents('table:eq(0)').find(':checkbox').attr('checked', this.checked);
+        	var $boxes = $(this).parents('table:eq(0)').find(':checkbox');
+            $boxes.attr('checked', this.checked);
         }
     };
 
-    $.fn.tablerow = function (option) {
+    $.fn.gridrow = function (option) {
         return this.each(function () {
             var $this = $(this),
-                data = $this.data('tablerow');
-            if (!data) $this.data('tablerow', (data = new Row(this)));
+                data = $this.data('row');
+            if (!data) $this.data('row', (data = new Row(this)));
             if (typeof option == 'string') data[option].call($this);
         });
     };
 
-    $.fn.tablerow.Constructor = Row;
+    $.fn.gridrow.Constructor = Row;
 
     $(function () {
         $('body').on(checknamespace, checkboxes, Row.prototype.checkall);
         $(selector).each(function () {
             var $this = $(this);
-            if ($this.data('tablerow')) return;
-            $this.tablerow($this.data());
+            if ($this.data('gridrow')) return;
+            $this.gridrow($this.data());
         });
     });
 
