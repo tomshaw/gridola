@@ -10,6 +10,8 @@ abstract class Gridola_Grid
     
     protected $_session = null;
     
+    protected $_token = null;
+    
     protected $_view = null;
     
     protected $_element = null;
@@ -54,6 +56,14 @@ abstract class Gridola_Grid
             $this->_session = new Zend_Session_Namespace('store');
         }
         return $this->_session;
+    }
+    
+    protected function getToken()
+    {
+    	if ($this->_token === null) {
+    		$this->_token = new Gridola_Token();
+    	}
+    	return $this->_token;
     }
     
     protected function getView()
@@ -188,17 +198,26 @@ abstract class Gridola_Grid
     
     protected function _processData()
     {
+    	$request = $this->getRequest();
+    	
+        if ($request->isPost()) {
+            $token = $this->getToken();
+            if (false === ($token->validate())) {
+                throw new Gridola_Exception('There was a problem submitting your search.');
+            }
+        }
+    	
     	$this->_initDataSource();
     	
     	if($this->getExportType()) {
             return $this->processExport();
     	}
         
-        $searchParams = $this->getRequest()->getPost();
+        $post = $request->getPost();
         foreach ($this->getDataGrid() as $_index => $column) {
         	
-            if (isset($searchParams[$column['index']])) {
-                $column['value'] = $searchParams[$column['index']];
+            if (isset($post[$column['index']])) {
+                $column['value'] = $post[$column['index']];
             } elseif (isset($this->getSession()->data[$column['index']])) {
                 $column['value'] = $this->getSession()->data[$column['index']];
             } else {
@@ -316,6 +335,7 @@ abstract class Gridola_Grid
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
             ->setExport($this->getExport())
+            ->setToken($this->getToken()->setSalt($this->getDataGridName())->setTimeout(120))
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
             ->setJsonActions($this->encodeMassactions()->getMassActions())

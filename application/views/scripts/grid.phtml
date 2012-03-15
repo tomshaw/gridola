@@ -12,6 +12,8 @@
 
 <form method="post" id="<?php echo $this->formid ?>" action="<?php echo $this->url ?>">
 
+<?php echo $this->token; ?>
+
 <?php if(sizeof($this->export)): ?>
 <fieldset class="grid-elements">
 <select id="export" name="export" class="span2">
