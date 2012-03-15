@@ -101,7 +101,7 @@ function ($) {
     Row.prototype = {
         constructor: Row,
         resource: function () {
-            window.location = $(this).attr('data-href');
+            window.location = $(this).data().href;
             return false;
         },
         input: function (element) {
