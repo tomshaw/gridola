@@ -176,12 +176,7 @@
             'write' => false // Write file to disk rootdir/export/filename.xml 
         ));
     	
-        $this->addExport('xls' , array(
-            'label' => 'Microsoft Excel',
-            'header' => true,
-            'write' => false
-        ));
-    	
+    	/* SpreadsheetML */
         $this->addExport('xml' , array(
             'label' => 'XML Data',
             'header' => true,
@@ -205,8 +200,6 @@
 
  List of todo items:
 
-  * Add security token support.
-  * Add support for more export formats.
   * Consider SQL pattern matching.
   * Currency support.
   * Consider caching paginated results.
