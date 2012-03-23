@@ -47,10 +47,10 @@ class Gridola_Token extends Gridola_Grid
     
     protected function getSession()
     {
-    	if ($this->_session === null) {
-    		$this->_session = new Zend_Session_Namespace('token');
-    	}
-    	return $this->_session;
+        if ($this->_session === null) {
+            $this->_session = new Zend_Session_Namespace('token');
+        }
+        return $this->_session;
     }
     
     public function getToken()
