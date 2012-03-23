@@ -87,9 +87,9 @@ abstract class Gridola_DataSource extends Gridola_Grid
         }
         
         if ($this->getRequest()->isPost()) {
-            $this->clearSession();
+        	$this->clearSession();
         } elseif ((null === $this->getRequest()->getParam('page')) && (null === ($this->getRequest()->getParam('sort')))) {
-            $this->clearSession();
+        	$this->clearSession();
         }
         
         $this->processDataSource();

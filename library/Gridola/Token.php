@@ -45,6 +45,19 @@ class Gridola_Token extends Gridola_Grid
         return $this->_timeout;
     }
     
+    protected function getSession()
+    {
+    	if ($this->_session === null) {
+    		$this->_session = new Zend_Session_Namespace('token');
+    	}
+    	return $this->_session;
+    }
+    
+    public function getToken()
+    {
+    	return $this->_token;
+    }
+    
     public function getHash()
     {
         if (null === $this->_hash) {
@@ -66,7 +79,7 @@ class Gridola_Token extends Gridola_Grid
     {
         $session = $this->getSession();
         if (isset($session->hash)) {
-            if ($session->hash == $this->_token) {
+            if ($session->hash == $this->getToken()) {
                 return true;
             } else {
                 return false;
