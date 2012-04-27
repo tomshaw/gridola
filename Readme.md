@@ -17,7 +17,7 @@
   
   Example grid:
      
-    protected $_tableClass = 'table table-bordered'; // table-striped table-condensed table-bordered
+    protected $_tableClass = 'table table-bordered';
     
     protected $_itemsPerPage = 25;
     
