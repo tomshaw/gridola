@@ -15,7 +15,7 @@
   * User defined grid template paths. Specifiy the template you would like to use.
   * Pure HTML grid templates, allows designers to edit markup directly.
   
-	Example grid:
+### Example grid:
      
 		protected $_tableClass = 'table table-bordered';
     
