@@ -29,15 +29,14 @@ abstract class Gridola_Grid
     protected $_dataSet = array();
     
     protected $_prefixPaths = array(
-        'Gridola_Element' => 'Gridola/Element',
-    	'Gridola_Adapter' => 'Gridola/Adapter',
-    	'Gridola_Export' => 'Gridola/Export'
-    );
+        'Gridola_Element' => 'Gridola/Element', 
+        'Gridola_Adapter' => 'Gridola/Adapter', 
+        'Gridola_Export' => 'Gridola/Export');
     
     public function __construct()
     {
         $loader = $this->getResourceLoader();
-        foreach($this->_prefixPaths as $prefix => $path) {
+        foreach ($this->_prefixPaths as $prefix => $path) {
             $loader->addPrefixPath($prefix, $path);
         }
     }
@@ -60,10 +59,10 @@ abstract class Gridola_Grid
     
     protected function getToken()
     {
-    	if ($this->_token === null) {
-    		$this->_token = new Gridola_Token();
-    	}
-    	return $this->_token;
+        if ($this->_token === null) {
+            $this->_token = new Gridola_Token();
+        }
+        return $this->_token;
     }
     
     protected function getView()
@@ -101,7 +100,7 @@ abstract class Gridola_Grid
     protected function getUrl($controller = null, $module = null, array $params = array())
     {
         if ($this->_url === null) {
-            $action = $this->getRequest()->getActionName();
+            $action     = $this->getRequest()->getActionName();
             $this->_url = $this->getUrlHelper()->simple($action, $controller, $module, $params);
         }
         return $this->_url;
@@ -135,7 +134,7 @@ abstract class Gridola_Grid
     
     protected function getDataSet()
     {
-        if(is_null($this->_dataSet)) {
+        if (is_null($this->_dataSet)) {
             $this->_initDataSource();
         }
         return $this->_dataSet;
@@ -174,75 +173,76 @@ abstract class Gridola_Grid
     
     protected function _mapDataGridOptions()
     {
-    	$options = array();
-    	foreach ($this->getDataGrid() as $_index => $column) {
-    		if (!array_key_exists('options', $column)) {
-    			continue;
-    		}
-    		if (is_array($column['options'])) {
-    			foreach ($column['options'] as $_key => $value) {
-    				if (is_numeric($_key) && $_key != '-1') {
-    					$options[$_index][$_key] = $value;
-    				}
-    			}
-    		}
-    	}
-    
-    	if (sizeof($options)) {
-    		foreach ($this->getDataSet() as $_index => $value) {
-    			foreach ($value as $key => $var) {
-    				if (isset($options[$key])) {
-    					$value->{$key} = $options[$key][$var];
-    				}
-    			}
-    		}
-    	}
-    
-    	return $this;
+        $options = array();
+        foreach ($this->getDataGrid() as $_index => $column) {
+            if (!array_key_exists('options', $column)) {
+                continue;
+            }
+            if (is_array($column['options'])) {
+                foreach ($column['options'] as $_key => $value) {
+                    if (is_numeric($_key) && $_key != '-1') {
+                        $options[$_index][$_key] = $value;
+                    }
+                }
+            }
+        }
+        
+        if (sizeof($options)) {
+            foreach ($this->getDataSet() as $_index => $value) {
+                foreach ($value as $key => $var) {
+                    if (isset($options[$key])) {
+                        $value->{$key} = $options[$key][$var];
+                    }
+                }
+            }
+        }
+        
+        return $this;
     }
     
     protected function processExport()
     {
-    	if (null === ($exportType = $this->getExportType())) {
+        if (null === ($exportType = $this->getExportType())) {
             return $this;
-    	}
-    	
-    	$export = $this->getExport();
-    	
-    	if (isset($export[$exportType])) {
-    		
+        }
+        
+        $export = $this->getExport();
+        
+        if (isset($export[$exportType])) {
+        	
             $settings = (array) $export[$exportType];
-    	
+            
             try {
                 $handler = $this->getResourceLoader()->load($exportType);
-    	    } catch(Zend_Loader_Exception $e) {
+            }
+            catch (Zend_Loader_Exception $e) {
                 throw new Gridola_Exception('Export support for: ' . $exportType . ' is not supported at this time.');
             }
-    	
+            
             $adapter = new $handler($this->getDataSource(), $this->getDataGrid(), $this->getDataGridName(), $settings);
-    	 
-            $adapter->export();   
-    	}
+            
+            $adapter->export();
+        }
     }
     
     protected function _processData()
     {
-    	$request = $this->getRequest();
-    	
+        $request = $this->getRequest();
+        
         if ($request->isPost()) {
             $token = $this->getToken();
             if (false === ($token->validate())) {
                 throw new Gridola_Exception('There was a problem submitting your search.');
             }
         }
-    	
-    	$this->_initDataSource();
-    	
+        
+        $this->_initDataSource();
+        
         $this->_mapDataGridOptions();
-    	
-    	if($this->getExportType()) {
+        
+        if ($this->getExportType()) {
             return $this->processExport();
-    	}
+        }
         
         $post = $request->getPost();
         foreach ($this->getDataGrid() as $_index => $column) {
@@ -260,8 +260,8 @@ abstract class Gridola_Grid
                 $elementType = array_key_exists('type', $column) ? $column['type'] : 'text';
                 
                 $elementLoader = $this->getResourceLoader();
-
-                switch($elementType) {
+                
+                switch ($elementType) {
                     case 'text':
                         $elementClass = $elementLoader->load('Text');
                         break;
@@ -275,15 +275,15 @@ abstract class Gridola_Grid
                         $elementClass = $elementLoader->load('DatePicker');
                         break;
                     default:
-                        throw new Gridola_Exception('Element type: ' . $elementType . ' is currently not supported.'); 
+                        throw new Gridola_Exception('Element type: ' . $elementType . ' is currently not supported.');
                 }
                 
                 $elementObject = new $elementClass($column);
-                	
+                
                 $this->_columns[$_index]['element'] = $elementObject->_toHtml();
-                	
+                
                 $this->_columns[$_index]['style'] = $elementObject->_toStyle();
-                    
+                
             }
         }
         
@@ -300,7 +300,11 @@ abstract class Gridola_Grid
             if (isset($data['url']) && is_array($data['url'])) {
                 $route = array();
                 foreach ($data['url'] as $_index => $value) {
-                    if (in_array($_index, array('module','controller','action'))) {
+                    if (in_array($_index, array(
+                        'module',
+                        'controller',
+                        'action'
+                    ))) {
                         $route[$_index] = $value;
                     }
                 }
@@ -366,7 +370,8 @@ abstract class Gridola_Grid
             ->setMassActions($this->getMassActions())
             ->setMassActionField($this->getMassactionField())
             ->setExport($this->getExport())
-            ->setToken($this->getToken()->setSalt($this->getDataGridName())->setTimeout(120))
+            ->setToken($this->getToken()->setSalt($this->getDataGridName())
+            ->setTimeout(120))
             ->setFormId($this->getFormId())
             ->setTableClass($this->getTableClass())
             ->setJsonActions($this->encodeMassactions()->getMassActions())
@@ -389,5 +394,5 @@ abstract class Gridola_Grid
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
         return '';
-    }   
+    }
 }
