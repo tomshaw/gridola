@@ -190,7 +190,7 @@ abstract class Gridola_Grid
         if (sizeof($options)) {
             foreach ($this->getDataSet() as $_index => $value) {
                 foreach ($value as $key => $var) {
-                    if (isset($options[$key])) {
+                    if (isset($options[$key][$var])) {
                         $value->{$key} = $options[$key][$var];
                     }
                 }
