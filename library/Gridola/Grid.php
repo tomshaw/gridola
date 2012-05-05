@@ -172,15 +172,44 @@ abstract class Gridola_Grid
         $this->setDataSet($dataSourceAdapter->getData());
     }
     
+    protected function _mapDataGridOptions()
+    {
+    	$options = array();
+    	foreach ($this->getDataGrid() as $_index => $column) {
+    		if (!array_key_exists('options', $column)) {
+    			continue;
+    		}
+    		if (is_array($column['options'])) {
+    			foreach ($column['options'] as $_key => $value) {
+    				if (is_numeric($_key) && $_key != '-1') {
+    					$options[$_index][$_key] = $value;
+    				}
+    			}
+    		}
+    	}
+    
+    	if (sizeof($options)) {
+    		foreach ($this->getDataSet() as $_index => $value) {
+    			foreach ($value as $key => $var) {
+    				if (isset($options[$key])) {
+    					$value->{$key} = $options[$key][$var];
+    				}
+    			}
+    		}
+    	}
+    
+    	return $this;
+    }
+    
     protected function processExport()
     {
-    	if(null === ($exportType = $this->getExportType())) {
+    	if (null === ($exportType = $this->getExportType())) {
             return $this;
     	}
     	
     	$export = $this->getExport();
     	
-    	if(isset($export[$exportType])) {
+    	if (isset($export[$exportType])) {
     		
             $settings = (array) $export[$exportType];
     	
@@ -208,6 +237,8 @@ abstract class Gridola_Grid
         }
     	
     	$this->_initDataSource();
+    	
+        $this->_mapDataGridOptions();
     	
     	if($this->getExportType()) {
             return $this->processExport();
