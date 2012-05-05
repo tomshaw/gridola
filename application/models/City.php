@@ -18,7 +18,7 @@ class Model_City extends Zend_Db_Table_Abstract
     {
     	$select = $this->select()
     	    ->setIntegrityCheck(false)
-    	    ->from($this->_name, array('ID','Name','CountryCode','District','Population','status'))
+    	    ->from($this->_name, array('ID','Name','CountryCode','District','Population'))
     	    ->joinLeft(array('country' => 'country'), 'country.Code = city.CountryCode', array('Region','Continent'));
     	return $select; // Zend_Db_Select
     	//return $this->fetchAll($select); // Zend_Db_Table_Rowset

@@ -92,7 +92,9 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
     public function processDataSource()
     {
         $this->checkData($this->getDataGrid());
+        
         if ($this->getRequest()->isPost()) {
+        	
             $columnData = $this->getColumnsToTable();
             
             $columnTypes = $this->getColumnTypes();

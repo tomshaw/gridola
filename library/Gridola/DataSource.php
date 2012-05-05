@@ -132,7 +132,7 @@ abstract class Gridola_DataSource extends Gridola_Grid
             if (is_array($data)) {
                 return array_filter($data, $callback);
             }
-            if (!empty($data) && $data != '-1') {
+            if ($data != '' && $data != '-1') {
                 return true;
             }
         };
