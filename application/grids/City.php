@@ -66,7 +66,7 @@ class Grid_City extends Gridola_Abstract
             'header' => 'Population',
             'align' => 'left',
             'width' => '200px',
-            'type' => 'text',
+            'type' => 'number',
             'index' => 'Population'
         ));
         

@@ -103,13 +103,16 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
             
             foreach ($this->getPostFilter() as $_index => $value) {
                 
-            	$dataType = 'string';
+            	$dataType = 'text';
                 if (isset($columnTypes[$_index])) {
                     $dataType = $columnTypes[$_index];
                 }
                 
                 if (is_array($value)) {
                     foreach ($value as $key => $val) {
+                    	if (empty($val)) {
+                    		continue;
+                    	}
                         if (isset($postedArrayNotation[$key])) {
                             $this->getSession()->data{$key} = $postedArrayNotation[$key];
                         }
@@ -132,7 +135,7 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
                     if (isset($columnData[$_index])) {
                         $table = $columnData[$_index];
                         $this->getSession()->data{$_index} = $value;
-                        if ($dataType == 'string') {
+                        if ($dataType == 'text') {
                             $this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') LIKE ?', '%' . strtolower($value) . '%');
                         } else {
                             $this->getDataSource()->where('LOWER(' . $table . '.' . $_index . ') = ?', $value);
@@ -145,7 +148,7 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
             $columnData = $this->getColumnsToTable();
             if (sizeof($this->getSession()->data)) {
                 foreach ($this->getSession()->data as $_column => $value) {
-                    $dataType = 'string';
+                    $dataType = 'text';
                     if (isset($columnTypes[$_column])) {
                         $dataType = $columnTypes[$_column];
                     }
@@ -157,7 +160,7 @@ class Gridola_Adapter_DbSelect extends Gridola_DataSource
                                 $this->getDataSource()->where($table . '.' . $_column . ' ' . $operand . ' ?', $var);
                             }
                         } else {
-                            if ($dataType == 'string') {
+                            if ($dataType == 'text') {
                                 $this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') LIKE ?', '%' . strtolower($value) . '%');
                             } else {
                                 $this->getDataSource()->where('LOWER(' . $table . '.' . $_column . ') = ?', $value);
