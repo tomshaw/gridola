@@ -107,6 +107,7 @@ function ($) {
         input: function (element) {
             $(element).find('input').on('mouseenter', this.enter);
             $(element).find('input').on('mouseleave', this.leave);
+            $(element).find('#inline').on('click', this.enter);
         },
         enter: function (e) {
             $(this).parents('tr').unbind(namespace);
