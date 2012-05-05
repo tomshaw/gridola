@@ -4,6 +4,16 @@ class Model_City extends Zend_Db_Table_Abstract
 {
     protected $_name = 'city';
     
+    public function getColumns()
+    {
+    	return $this->info(self::COLS);
+    }
+    
+    public function getTableName()
+    {
+    	return $this->_name;
+    }
+    
     public function fetchCityData()
     {
     	$select = $this->select()
