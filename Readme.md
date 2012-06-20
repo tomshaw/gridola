@@ -19,7 +19,7 @@
      
 		protected $_tableClass = 'table table-bordered';
     
-		protected $_itemsPerPage = 25;
+		protected $_itemsPerPage = 20;
     
 		public function __construct()
     	{
