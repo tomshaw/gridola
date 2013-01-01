@@ -27,7 +27,18 @@ table th {
 }
 
 table tbody tr td input {
-	width: 95%;
+	margin: 2px 2px;
+	width: 90%;
+}
+
+table input[type="text"] {
+	margin-bottom: 1px;
+}
+
+.grid-inputs {
+	white-space:nowrap;
+	text-align:left;
+	vertical-align:top;
 }
 
 fieldset select {

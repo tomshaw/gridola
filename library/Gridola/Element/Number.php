@@ -10,14 +10,15 @@ class Gridola_Element_Number extends Gridola_Element
     {	
         $numberStart = new Zend_Form_Element_Text($this->index);
         $numberStart->setValue($this->start);
-        $numberStart->setAttribs(array('title'=>'Starting value.'));
+        $numberStart->setAttribs(array('title'=>'Starting value.','class'=>'input-mini'));
         $numberStart->removeDecorator('label')->removeDecorator('HtmlTag');
         $numberStart->setBelongsTo('start');
+        
         $numberEnd = new Zend_Form_Element_Text($this->index);
         $numberEnd->setValue($this->end);
-        $numberEnd->setAttribs(array('title'=>'Ending value.','style'=>'margin-top:0px;'));
+        $numberEnd->setAttribs(array('title'=>'Ending value.','class'=>'input-mini'));
         $numberEnd->removeDecorator('label')->removeDecorator('HtmlTag');
         $numberEnd->setBelongsTo('end');
-        return $numberStart . $numberEnd;
+        return $numberStart . '<br>' . $numberEnd;
     }
 }

@@ -63,7 +63,7 @@
     <tr>
       <?php if(sizeof($this->massactions)): ?><td style="text-align:center;"><input type="checkbox" id="checkall" name="checkall"></td><?php endif; ?>
       <?php foreach($this->datagrid as $element): ?>
-      <td <?php echo $element['style'] ?>><?php echo $element['element']; ?></td>
+      <td <?php echo $element['style'] ?> class="grid-inputs"><?php echo $element['element']; ?></td>
       <?php endforeach; ?>
       <?php if(sizeof($this->actions)): ?><td>&nbsp;</td><?php endif; ?>
     </tr>

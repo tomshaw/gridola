@@ -10,7 +10,8 @@ class Gridola_Element_Text extends Gridola_Element
     {
         $input = new Zend_Form_Element_Text($this->index);
         $input->setValue($this->value);
-        $input->setAttribs(array('style'=>'width:95%;'));
+        //$input->setAttribs(array());
+        $input->removeDecorator('label')->removeDecorator('HtmlTag');
         return $input;
     }
 }

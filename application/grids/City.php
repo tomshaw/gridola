@@ -33,7 +33,7 @@ class Grid_City extends Gridola_Abstract
         $this->addColumn('id', array(
             'header' => 'ID',
             'align' => 'center',
-            'width' => '7%',
+            'width' => '5%',
             'type' => 'number',
             'index' => 'ID'
         ));
@@ -62,13 +62,13 @@ class Grid_City extends Gridola_Abstract
             'index' => 'District'
         ));
         
-        $this->addColumn('population', array(
-            'header' => 'Population',
-            'align' => 'left',
-            'width' => '200px',
-            'type' => 'number',
-            'index' => 'Population'
-        ));
+//         $this->addColumn('population', array(
+//             'header' => 'Population',
+//             'align' => 'left',
+//             'width' => '300px',
+//             'type' => 'number',
+//             'index' => 'Population'
+//         ));
         
         $this->addColumn('region', array(
             'header' => 'Region',

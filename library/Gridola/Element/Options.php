@@ -11,6 +11,7 @@ class Gridola_Element_Options extends Gridola_Element
         $select = new Zend_Form_Element_Select($this->index);
         $select->setValue(array($this->value));
         $select->addMultiOptions($this->options);
+        $select->removeDecorator('label')->removeDecorator('HtmlTag');
         return $select;
     }
 }
