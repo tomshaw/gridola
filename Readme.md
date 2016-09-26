@@ -1,8 +1,6 @@
 # Gridola - Zend Framework 1.11.11 Grid
       
-  Gridola is a simple to use generic grid developed to be used with Zend Framework 1.11.11. It was somewhat hastily developed out of curiosity in that I wondered how much code would actually be required to develop a fully functional grid. Having developed Magento applications for several years and being accustomed to using their grids, I decided to use the same array initialization strategy that Magento uses. My goals for the project were to develop a grid that supported in line actions, mass actions and clickable rows. To also support generic simple data types including integers and date time fields that could be used to narrow down query results from a start and finish or greater than less than perspective. 
-  
-  The included sample application was built with [Twitter Bootstrap](http://twitter.github.com/bootstrap/), a simple and flexible HTML, CSS, and Javascript rapid application development framework. Gridola has been tested using Zend Framework 1.11.11, PHP 5.3.10 and with PHP 5.4. 
+  Gridola is a simple to use generic grid developed to be used with Zend Framework 1.11.11. Goals for the project were to develop a grid that supported in line actions, mass actions and clickable rows and to support generic simple data types including integers and date time fields that could be used to narrow down query results from a start and finish or greater than less than perspective. 
  
 ## Features
 
@@ -196,7 +194,7 @@
 
 ## Todo
 
- The Gridola project was hastily developed over a single star bucks red bull guzzling weekend. In other words it was slammed together without much thought other than getting it to work. That being said the code base could use some very close scrutiny. Any input, help, pull requests or ideas from the general public would be greatly appreciated. 
+ The Gridola project was hastily developed over a single star bucks red bull guzzling weekend. Any input, help, pull requests or ideas from the general public would be greatly appreciated. 
 
  List of todo items:
 
@@ -215,10 +213,6 @@
   * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
   * [Zend Framework-1.11.11](http://framework.zend.com/) I don't always use frameworks but when I do I choose Zend Framework.
   * [PHP 5.3.10 - 5.4](http://www.php.net/) Works great with the latest versions of PHP.
-
-# API 
-
-Documentation on how to use the API will be coming soon but for now the API is somewhat self explanatory via the example cities grid in the grids namespace.
 
 ## License 
 
